@@ -149,7 +149,7 @@ AppScreen.prototype = {
 
 // XXX: Hard-coded selection of apps for shortcuts
 function Shortcuts(apps) {
-  var shortcuts = ['Dialer', 'Messages', 'Market', 'Browser'];
+  var shortcuts = ['Dialer', 'Messages', 'Marketplace', 'Browser'];
 
   var shortcutApps = this.shortcutApps = [];
 
