@@ -285,7 +285,7 @@ var ConversationListView = {
     var name = escapeHTML(conversation.name);
     var body = escapeHTML(conversation.body.split('\n')[0]);
     return '<a href="#num=' + conversation.num + '"' +
-           ' data-num="' + conversation.num + ' data-name="' + number + '"' +
+           ' data-num="' + conversation.num + '" data-name="' + number + '"' +
            ' data-notempty="' + (conversation.timestamp ? 'true' : '') + '"' +
            ' class="' + (conversation.hidden ? 'hide' : '') + '">' +
            '<input type="checkbox" class="fake-checkbox"/>' + '<span></span>' +
