@@ -4,18 +4,48 @@
     <meta charset="utf-8">
     <meta http-equiv="pragma" content="no-cache">
     <title>FM Raio</title>
+    <link rel="stylesheet" href="style/fm.css" type="text/css" />
     <script src="js/fm.js"></script>
   </head>
 
   <body>
     <div id="log"></div>
-    <h1>Power:<label id="power_state">off</label></h1>
-    <h1>Antenna:<label id="antenna_state">unavailable</label></h1>
-    <h1>Current Frequency: <label id="current_freq"></label>MHZ</h1>
-    <h1><a href="javascript: checkAntenna()">Check Antenna</a></h1>
-    <h1><a href="javascript: turnOnFM();">Turn on</a>&nbsp;&nbsp;<a href="javascript: turnOffFM();">Turn off</a></h1>
-    <h1><a href="javascript: getFreq();">Get freq</a>&nbsp;&nbsp;<a href="javascript: setFreq();">Set freq</a><input id="freq" type="number" value="91.5"></input></h1>
-    <h1><a href="javascript: seekUp();">Seek up</a>&nbsp;&nbsp;<a href="javascript: seekDown();">Seek Down</a></h1>
-    <h1><a href="javascript: cancelSeek();">cancel seek</a></h1>
+    <div id="containter">
+      <div id="title-bar"></div>
+      <div id="freq-view">
+        <div style="text-align: center;">
+          <label id="frequency">105.5</label>
+          <label id="freq-unit">MHz</label>
+          <label id="bookmark-btn" class="in-fav-list"></label>
+        </div>
+      </div>
+      <div id="freq-ops">
+        <a id="freq-op-seekdown" href="#seekdown"></a>
+        <a id="freq-op-100khz-down" href="#100khz-down"></a>
+        <a id="freq-op-100khz-up" href="#100khz-up"></a>
+        <a id="freq-op-seekup" href="#seekup"></a>
+      </div>
+      <div class="auto">
+        <div id="fav-list">
+          <div id="fav-list-container">
+            <div>88.7 MHz</div>
+            <div>90 MHz</div>
+            <div>91.5 MHz</div>
+            <div>105.5 MHz</div>
+          </div>
+        </div>
+      </div>
+      <div id="status-bar">
+        <div>
+          <a id="power-switch" href="#power-switch" class="poweroff"></a>
+        </div>
+        <div>
+          <a id="audio-routing-switch" href="#audio-routing-switch" class="speaker"></a>
+        </div>
+        <div>
+          <a id="fav-list-edit" href="#edit" class="edit"></a>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

@@ -1,0 +1,176 @@
+html, body {
+  padding: 0;
+  border: 0;
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: url("images/app-texture.png") repeat scroll 0 0 #F4F4F4;
+}
+
+div {
+  position: relative;
+}
+
+div.table-view {
+  display: table;
+}
+
+div.table-view > div {
+  display: table-row;
+}
+
+div.table-view > div > div {
+  display: table-cell;
+}
+
+div#containter {
+  height: 100%;
+  width: 100%;
+}
+
+div#title-bar {
+  height: 20px;
+}
+
+div#freq-view {
+  height: 100px;
+  width: 100%;
+}
+
+div#freq-view label#bookmark-btn {
+  position: relative;
+  top: -37px;
+  font-size: 30px;
+}
+
+div#freq-view label#bookmark-btn:after {
+  content: "♡";
+}
+
+div#freq-view label.in-fav-list:after {
+  content: "♥" !important;
+}
+
+div#freq-view label#frequency {
+  font-size: 80px;
+}
+
+div#freq-view label#freq-unit {
+  font-size: 30px;
+}
+
+div#freq-ops {
+  height: 80px;
+  text-align: center;
+}
+
+div#freq-ops > a {
+  outline: 0 none;
+  text-decoration: none;
+  color: #555;
+  font-size: 80px;
+  padding-right: 40px;
+  position: relative;
+  top: -25px;
+}
+
+div#freq-ops > a:last-child {
+  padding-right: 0;
+}
+
+div#freq-ops > a:active {
+  color: #000;
+}
+
+div#freq-ops > a#freq-op-seekdown:after {
+  content: "«";
+}
+
+div#freq-ops > a#freq-op-100khz-down:after {
+  content: "<";
+}
+
+div#freq-ops > a#freq-op-seekup:after {
+  content: "»";
+}
+
+div#freq-ops > a#freq-op-100khz-up:after {
+  content: ">";
+}
+
+div.auto {
+  height: -moz-calc(100% - 200px);
+  overflow: hidden;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0 0 -60px 0;
+  padding: 0 0 60px 0;
+  clear: both;
+}
+
+div#fav-list {
+  float: left;
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+}
+
+div#fav-list > div#fav-list-container {
+  max-height: 100%;
+  position: absolute;
+  bottom: 2px;
+  width: 100%;
+}
+
+div#fav-list > div#fav-list-container > div {
+  font-size: 50px;
+  height: 65px;
+  text-align: center;
+}
+
+div#status-bar {
+  height: 60px;
+}
+
+div#status-bar > div {
+  float: left;
+  width: 33%;
+  height: 100%;
+  font-size: 40px;
+  text-align: center;
+}
+
+div#status-bar a {
+  outline: 0 none;
+  text-decoration: none;
+  color: #555;
+}
+
+div#status-bar a:active {
+  color: #000;
+}
+
+div#status-bar a.poweron:after {
+  content: "ON";
+}
+
+div#status-bar a.poweroff:after {
+  content: "OFF";
+}
+
+div#status-bar a.speaker:after {
+  content: "Speaker";
+}
+
+div#status-bar a.headset:after {
+  content: "Headset";
+}
+
+div#status-bar a.edit:after {
+  content: "Edit";
+}
