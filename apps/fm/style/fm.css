@@ -64,8 +64,10 @@ div#freq-view label#frequency {
   font-size: 80px;
 }
 
-div#freq-view label#freq-unit {
-  font-size: 30px;
+div#freq-view label#frequency:after {
+  content: "MHz";
+  font-size: 40px;
+  padding-left: 10px;
 }
 
 div#freq-ops {
@@ -136,7 +138,23 @@ div#fav-list > div#fav-list-container {
 div#fav-list > div#fav-list-container > div {
   font-size: 50px;
   height: 65px;
-  text-align: center;
+  text-align: right;
+  width: -moz-calc(50% + 70px);
+  clear: both;
+}
+
+div#fav-list > div#fav-list-container > div:after {
+  content: "MHz";
+  font-size: 28px;
+  padding-left: 10px;
+}
+
+div#fav-list > div#fav-list-container > div:before {
+  content: "♡";
+  font-size: 35px;
+  left: 0;
+  position: absolute;
+  padding: 10px 0 0 40px;
 }
 
 div#status-bar {

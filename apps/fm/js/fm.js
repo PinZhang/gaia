@@ -42,14 +42,18 @@ function setFreq(freq) {
   };
 }
 
-function getFreq() {
+function updateFreqUI() {
   $('frequency').textContent = mozFMRadio.frequency;
   $('bookmark-btn').className = favList.contains(mozFMRadio.frequency) ? 'in-fav-list' : '';
 }
 
-function getPowerStatus() {
+function updatePowerUI() {
   log('Power status: ' + (mozFMRadio.enabled ? 'on' : 'off'));
   $('power-switch').className = mozFMRadio.enabled ? 'poweron' : 'poweroff';
+}
+
+function updateAntennaUI() {
+    // TODO Show warning message if antenna is not available
 }
 
 function seekUp() {
@@ -192,19 +196,16 @@ function init() {
     } else {
       favList.add(mozFMRadio.frequency);
     }
-    $('bookmark-btn').className = favList.contains(mozFMRadio.frequency) ? 'in-fav-list' : '';
+    updateFreqUI();
   };
 
-  mozFMRadio.onfrequencychanged = getFreq;
-  mozFMRadio.onpowerchanged = getPowerStatus;
-  mozFMRadio.onantennachanged = function fm_onantennachanged() {
-    // TODO Show warning message if antenna is not available
-  };
+  mozFMRadio.onfrequencychanged = updateFreqUI;
+  mozFMRadio.onpowerchanged = updatePowerUI;
+  mozFMRadio.onantennachanged = updateAntennaUI;
 
-
-  getFreq();
+  updateFreqUI();
   enableFM(true);
-  getPowerStatus();
+  updatePowerUI();
 }
 
 window.addEventListener('load', function(e) {
