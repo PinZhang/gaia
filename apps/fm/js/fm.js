@@ -44,6 +44,7 @@ function setFreq(freq) {
 
 function getFreq() {
   $('frequency').textContent = mozFMRadio.frequency;
+  $('bookmark-btn').className = favList.contains(mozFMRadio.frequency) ? 'in-fav-list' : '';
 }
 
 function getPowerStatus() {
@@ -108,19 +109,66 @@ function checkAntenna() {
   log('Antenna: ' + mozFMRadio.antennaAvailable);
 }
 
-function enumNavigator() {
-  var names = [];
-  for (var n in navigator) {
-    names.push(n);
+var favList = {
+  // XXX replaced with localstorage
+  _favList: [
+    {name: "88.7",  frequency: 88.7},
+    {name: "90",    frequency: 90},
+    {name: "91.5",  frequency: 91.5},
+    {name: "105.5", frequency: 105.5},
+  ],
+
+  all: function() {
+    return this._favList;
+  },
+
+  /**
+   *  Check if frequency is in fav list.
+   */
+  contains: function(freq) {
+    for (var i = 0; i < this._favList.length; i++) {
+      if (this._favList[i].frequency === freq) {
+        return true;
+      }
+    }
+    return false;
+  },
+
+  /**
+   * Add frequency to fav list.
+   */
+  add: function(freq) {
+    if (!this.contains(freq)) {
+      this._favList.push({
+        name: freq + '',
+        frequency: freq
+      });
+    }
+  },
+
+  /**
+   * Remove frequency from fav list.
+   * @return
+   *   true:
+   *     frequency exists in the fav list
+   *   false
+   *     frequency doesn't exist in the fav list
+   */
+  remove: function(freq) {
+    var newList = [];
+    var exists = false;
+    for (var i = 0; i < this._favList.length; i++) {
+      if (this._favList[i].frequency === freq) {
+        exists = true;
+        continue;
+      } else {
+        newList.push(this._favList[i]);
+      }
+    }
+    this._favList = newList;
+    return exists;
   }
-  names.push(mozFMRadio);
-  log(names.join('<br/>'));
-}
-
-mozFMRadio.onantennachanged = function fm_onantennachanged() {
-  // TODO Show warning message if antenna is not available
 };
-
 
 function init() {
   $('freq-op-seekdown').onclick = seekDown;
@@ -138,8 +186,21 @@ function init() {
     enableFM(!mozFMRadio.enabled);
   };
 
+  $('bookmark-btn').onclick = function toggle_bookmark() {
+    if (favList.contains(mozFMRadio.frequency)) {
+      favList.remove(mozFMRadio.frequency);
+    } else {
+      favList.add(mozFMRadio.frequency);
+    }
+    $('bookmark-btn').className = favList.contains(mozFMRadio.frequency) ? 'in-fav-list' : '';
+  };
+
   mozFMRadio.onfrequencychanged = getFreq;
   mozFMRadio.onpowerchanged = getPowerStatus;
+  mozFMRadio.onantennachanged = function fm_onantennachanged() {
+    // TODO Show warning message if antenna is not available
+  };
+
 
   getFreq();
   enableFM(true);

@@ -40,17 +40,23 @@ div#freq-view {
   width: 100%;
 }
 
-div#freq-view label#bookmark-btn {
-  position: relative;
-  top: -37px;
-  font-size: 30px;
+div#freq-view a {
+  outline: 0 none;
+  text-decoration: none;
+  color: #555;
 }
 
-div#freq-view label#bookmark-btn:after {
+div#freq-view a#bookmark-btn {
+  position: relative;
+  top: -24px;
+  font-size: 50px;
+}
+
+div#freq-view a#bookmark-btn:after {
   content: "♡";
 }
 
-div#freq-view label.in-fav-list:after {
+div#freq-view a.in-fav-list:after {
   content: "♥" !important;
 }
 
