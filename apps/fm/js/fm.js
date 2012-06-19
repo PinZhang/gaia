@@ -114,13 +114,28 @@ function checkAntenna() {
 }
 
 var favList = {
-  // XXX replaced with localstorage
-  _favList: [
-    {name: "88.7",  frequency: 88.7},
-    {name: "90",    frequency: 90},
-    {name: "91.5",  frequency: 91.5},
-    {name: "105.5", frequency: 105.5},
-  ],
+  _favList: null,
+
+  init: function() {
+    // XXX replaced with localstorage
+    this._favList = [
+      {name: "88.7",  frequency: 88.7},
+      {name: "90",    frequency: 90},
+      {name: "91.5",  frequency: 91.5},
+      {name: "105.5", frequency: 105.5},
+    ];
+    this._showUI();
+  },
+
+  _showUI: function() {
+    var container = $('fav-list-container');
+    container.innerHTML = '';
+    this.all().forEach(function(f) {
+      var elem = document.createElement('div');
+      elem.textContent = f.frequency;
+      container.appendChild(elem);
+    });
+  },
 
   all: function() {
     return this._favList;
@@ -175,6 +190,8 @@ var favList = {
 };
 
 function init() {
+  favList.init();
+
   $('freq-op-seekdown').onclick = seekDown;
   $('freq-op-seekup').onclick = seekUp;
 
