@@ -84,7 +84,7 @@ div#freq-ops > a {
   text-decoration: none;
   color: #555;
   font-size: 80px;
-  padding-right: 40px;
+  padding-right: 30px;
   position: relative;
   top: -25px;
 }
@@ -140,7 +140,7 @@ div#fav-list > div#fav-list-container {
 }
 
 div#fav-list > div#fav-list-container > div {
-  font-size: 50px;
+  font-size: 45px;
   height: 65px;
   text-align: right;
   width: 100%;
@@ -149,7 +149,7 @@ div#fav-list > div#fav-list-container > div {
   -webkit-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
-  padding-right: -moz-calc(50% - 70px);
+  padding-right: -moz-calc(50% - 110px);
 }
 
 div#fav-list > div#fav-list-container > div.selected,
@@ -165,7 +165,7 @@ div#fav-list > div#fav-list-container > div:after {
 
 div#fav-list > div#fav-list-container > div:before {
   content: "♥";
-  font-size: 35px;
+  font-size: 30px;
   left: 0;
   position: absolute;
   padding: 10px 0 0 40px;
@@ -187,7 +187,7 @@ div#status-bar a:active {
 
 div#status-bar > div > div {
   float: left; width: 33%; height: 100%;
-  font-size: 40px;
+  font-size: 32px;
   text-align: center;
 }
 
