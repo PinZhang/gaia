@@ -225,7 +225,7 @@ var favList = {
       _timeout = window.setTimeout(function() {
         // prevent opening the frequency
         elem.onmouseup = null;
-        self._showPopupDelUI(elem);
+        self._showPopupDelUI(elem, event);
       }, 1000);
     };
 
@@ -259,8 +259,16 @@ var favList = {
     return parseFloat(elem.id.substring(elem.id.indexOf('-') + 1));
   },
 
-  _showPopupDelUI: function(elem) {
-    $('popup-del-box').style.display = 'block';
+  _showPopupDelUI: function(elem, event) {
+    // Show popup just below the cursor
+    var box = $('popup-del-box');
+    box.style.display = 'block';
+    var max = document.body.clientWidth - box.clientWidth - 10;
+    var min = 10;
+    var left = event.clientX - box.clientWidth / 2;
+    left = left < min ? min : (left > max ? max : left);
+    box.style.top = event.clientY + 10 + 'px';
+    box.style.left = left + 'px';
 
     function _hidePopup() {
       $('popup-del-box').style.display = 'none';
