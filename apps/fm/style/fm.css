@@ -14,6 +14,16 @@ div {
   position: relative;
 }
 
+a {
+  outline: 0 none;
+  text-decoration: none;
+  color: #555;
+}
+
+a:active {
+  color: #000;
+}
+
 div.table-view {
   display: table;
 }
@@ -77,9 +87,6 @@ div#freq-ops {
 }
 
 div#freq-ops > a {
-  outline: 0 none;
-  text-decoration: none;
-  color: #555;
   font-size: 80px;
   padding-right: 30px;
   position: relative;
@@ -88,10 +95,6 @@ div#freq-ops > a {
 
 div#freq-ops > a:last-child {
   padding-right: 0;
-}
-
-div#freq-ops > a:active {
-  color: #000;
 }
 
 div#freq-ops > a#freq-op-seekdown:after {
@@ -172,16 +175,6 @@ div#status-bar {
   height: 60px;
 }
 
-div#status-bar a {
-  outline: 0 none;
-  text-decoration: none;
-  color: #555;
-}
-
-div#status-bar a:active {
-  color: #000;
-}
-
 div#status-bar > div > div {
   float: left; width: 33%; height: 100%;
   font-size: 32px;
@@ -224,6 +217,7 @@ div#edit-bar a.delete:after {
   content: "Delete";
 }
 
+/***  styles for antenna warning box ****/
 div#antenna-warning {
   display: none;
   position: absolute;
@@ -241,4 +235,26 @@ div#antenna-warning div {
   text-align: center;
   vertical-align: middle;
 }
+/******* end *******/
+
+/***** styles for popup delete box ****/
+div#popup-del-box {
+  display: none;
+  position: absolute;
+  height: 40px;
+  width: 150px;
+  top: 0;
+  left: 0;
+  border: 1px solid #555;
+  border-radius: 10px;
+  text-align: center;
+  background-color: #F4F4F4;
+  z-index: 1000;
+}
+
+div#popup-del-box a#popup-del-btn:after {
+  content: "Delete";
+  font-size: 30px;
+}
+/******* end *******/
 

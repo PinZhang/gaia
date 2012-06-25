@@ -205,7 +205,29 @@ var favList = {
     elem.textContent = item.frequency;
     container.appendChild(elem);
 
-    elem.onclick = this.onclick_item.bind(this);
+    var self = this;
+    var _timeout = null;
+    elem.onmousedown = function onmousedown_item(event) {
+      elem.onmouseup = function onmouseup_item(event) {
+        window.clearTimeout(_timeout);
+        if (!self.editting) {
+          setFreq(self._getElemFreq(event.target));
+        } else {
+          toggleClass(event.target, 'selected');
+        }
+      };
+
+      if (self.editting) {
+        return;
+      }
+
+      window.clearTimeout(_timeout);
+      _timeout = window.setTimeout(function() {
+        // prevent opening the frequency
+        elem.onmouseup = null;
+        self._showPopupDelUI(elem);
+      }, 1000);
+    };
 
     this._autoShowHideEditBtn();
   },
@@ -237,12 +259,44 @@ var favList = {
     return parseFloat(elem.id.substring(elem.id.indexOf('-') + 1));
   },
 
-  onclick_item: function(event) {
-    if (!this.editting) {
-      setFreq(this._getElemFreq(event.target));
-    } else {
-      toggleClass(event.target, 'selected');
+  _showPopupDelUI: function(elem) {
+    $('popup-del-box').style.display = 'block';
+
+    function _hidePopup() {
+      $('popup-del-box').style.display = 'none';
+      $('popup-del-btn').onclick = null;
     }
+
+    function _mousedown_del_box(event) {
+      event.stopPropagation();
+    }
+
+    function _mousedown_body(event) {
+      _hidePopup();
+      _clearEventListeners();
+    }
+
+    function _clearEventListeners() {
+      document.body.removeEventListener('mousedown', _mousedown_body, false);
+      $('popup-del-box').removeEventListener('mousedown',
+                                             _mousedown_del_box, true);
+    }
+
+    function _addEventListeners() {
+      // Hide popup when tapping
+      document.body.addEventListener('mousedown', _mousedown_body, false);
+      $('popup-del-box').addEventListener('mousedown',
+                                          _mousedown_del_box, true);
+    }
+    _addEventListeners();
+
+    var self = this;
+    $('popup-del-btn').onclick = function onclick_del(event) {
+      self.remove(self._getElemFreq(elem));
+      updateFreqUI();
+      _hidePopup();
+      _clearEventListeners();
+    };
   },
 
   startEdit: function(event) {
