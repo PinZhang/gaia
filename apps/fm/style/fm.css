@@ -112,8 +112,8 @@ div#freq-ops > a#freq-op-100khz-up:after {
 div.auto {
   height: -moz-calc(100% - 200px);
   overflow: hidden;
-  -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
   margin: 0 0 -60px 0;
@@ -139,8 +139,17 @@ div#fav-list > div#fav-list-container > div {
   font-size: 50px;
   height: 65px;
   text-align: right;
-  width: -moz-calc(50% + 70px);
+  width: 100%;
   clear: both;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  padding-right: -moz-calc(50% - 70px);
+}
+
+div#fav-list > div#fav-list-container > div:active {
+  background-color: lightGray;
 }
 
 div#fav-list > div#fav-list-container > div:after {
