@@ -124,21 +124,63 @@ var favList = {
       {name: "91.5",  frequency: 91.5},
       {name: "105.5", frequency: 105.5},
     ];
-    this._showUI();
+    this._showListUI();
   },
 
-  _showUI: function() {
+  _showListUI: function() {
+    this._emptyListUI();
+    var self = this;
+    var idx = 0;
+    this.all().forEach(function(f) {
+      self._addItemToListUI(f, idx++);
+    });
+  },
+
+  _addItemToListUI: function(item, index) {
+    var container = $('fav-list-container');
+    var elem = document.createElement('div');
+    elem.id = this._getUIElemId(index);
+    elem.textContent = item.frequency;
+    container.appendChild(elem);
+
+    elem.onclick = this.onclick_item.bind(this);
+  },
+
+  _removeItemFromListUI: function(idx) {
+    var itemElem = $(this._getUIElemId(idx));
+    if (itemElem) {
+      itemElem.parentNode.removeChild(itemElem);
+    }
+  },
+
+  _emptyListUI: function() {
     var container = $('fav-list-container');
     container.innerHTML = '';
-    this.all().forEach(function(f) {
-      var elem = document.createElement('div');
-      elem.textContent = f.frequency;
-      container.appendChild(elem);
-    });
+  },
+
+  _getUIElemId: function(idx) {
+    return 'freq-' + this._favList[idx].frequency;
+  },
+
+  _getElemFreq: function(elem) {
+    return parseFloat(elem.id.substring(elem.id.indexOf('-') + 1));
+  },
+
+  onclick_item: function(event) {
+    setFreq(this._getElemFreq(event.target));
   },
 
   all: function() {
     return this._favList;
+  },
+
+  indexOf: function(freq) {
+    for (var i = 0; i < this._favList.length; i++) {
+      if (this._favList[i].frequency === freq) {
+        return i;
+      }
+    }
+    return -1;
   },
 
   /**
@@ -162,6 +204,9 @@ var favList = {
         name: freq + '',
         frequency: freq
       });
+      this._addItemToListUI(this._favList.length - 1);
+    } else {
+      // TODO show the item in frequency list.
     }
   },
 
@@ -179,6 +224,7 @@ var favList = {
     for (var i = 0; i < this._favList.length; i++) {
       if (this._favList[i].frequency === freq) {
         exists = true;
+        this._removeItemFromListUI(i);
         continue;
       } else {
         newList.push(this._favList[i]);
