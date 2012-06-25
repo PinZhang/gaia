@@ -204,6 +204,10 @@ div#status-bar a.headset:after {
   content: "Headset";
 }
 
+div#status-bar a#fav-list-edit {
+  display: none;
+}
+
 div#status-bar a.edit:after {
   content: "Edit";
 }

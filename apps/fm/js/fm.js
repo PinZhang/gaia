@@ -130,36 +130,43 @@ var favList = {
   _showListUI: function() {
     this._emptyListUI();
     var self = this;
-    var idx = 0;
     this.all().forEach(function(f) {
-      self._addItemToListUI(f, idx++);
+      self._addItemToListUI(f);
     });
   },
 
-  _addItemToListUI: function(item, index) {
+  _addItemToListUI: function(item) {
     var container = $('fav-list-container');
     var elem = document.createElement('div');
-    elem.id = this._getUIElemId(index);
+    elem.id = this._getUIElemId(item);
     elem.textContent = item.frequency;
     container.appendChild(elem);
 
     elem.onclick = this.onclick_item.bind(this);
+
+    this._autoShowHideEditBtn();
   },
 
   _removeItemFromListUI: function(idx) {
-    var itemElem = $(this._getUIElemId(idx));
+    var itemElem = $(this._getUIElemId(this._favList[idx]));
     if (itemElem) {
       itemElem.parentNode.removeChild(itemElem);
     }
+    this._autoShowHideEditBtn();
   },
 
   _emptyListUI: function() {
     var container = $('fav-list-container');
     container.innerHTML = '';
+    this._autoShowHideEditBtn();
   },
 
-  _getUIElemId: function(idx) {
-    return 'freq-' + this._favList[idx].frequency;
+  _autoShowHideEditBtn: function() {
+    $('fav-list-edit').style.display =  $('fav-list-container').querySelectorAll('div').length > 0 ? 'block' : 'none';
+  },
+
+  _getUIElemId: function(item) {
+    return 'freq-' + item.frequency;
   },
 
   _getElemFreq: function(elem) {
@@ -204,7 +211,7 @@ var favList = {
         name: freq + '',
         frequency: freq
       });
-      this._addItemToListUI(this._favList.length - 1);
+      this._addItemToListUI(this._favList[this._favList.length - 1]);
     } else {
       // TODO show the item in frequency list.
     }
