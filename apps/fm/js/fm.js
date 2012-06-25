@@ -15,7 +15,7 @@ function toggleClass(elem, className) {
 }
 
 function log(msg) {
-  $('log').innerHTML = msg;
+  console.log(msg);
 }
 
 // XXX fake mozFMRadio object for UI testing on PC

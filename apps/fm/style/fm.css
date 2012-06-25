@@ -26,10 +26,6 @@ div.table-view > div > div {
   display: table-cell;
 }
 
-div#log {
-  position: absolute;
-}
-
 div#containter {
   height: 100%;
   width: 100%;
