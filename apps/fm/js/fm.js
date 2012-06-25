@@ -2,6 +2,14 @@ function $(id) {
   return document.getElementById(id);
 }
 
+function toggleClass(elem, className) {
+  if (elem.classList.contains(className)) {
+    elem.classList.remove(className);
+  } else {
+    elem.classList.add(className);
+  }
+}
+
 function log(msg) {
   $('log').innerHTML = msg;
 }
@@ -116,8 +124,10 @@ function checkAntenna() {
 var favList = {
   _favList: null,
 
+  editting: false,
+
   init: function() {
-    // XXX replaced with localstorage
+    // TODO read from local data 
     this._favList = [
       {name: "88.7",  frequency: 88.7},
       {name: "90",    frequency: 90},
@@ -125,6 +135,14 @@ var favList = {
       {name: "105.5", frequency: 105.5},
     ];
     this._showListUI();
+
+    $('edit-btn').onclick = this.startEdit.bind(this);
+    $('cancel-btn').onclick = this.cancelEdit.bind(this);
+    $('delete-btn').onclick = this.delSelectedItems.bind(this);
+  },
+
+  _save: function() {
+    // TODO save to local data
   },
 
   _showListUI: function() {
@@ -162,7 +180,7 @@ var favList = {
   },
 
   _autoShowHideEditBtn: function() {
-    $('fav-list-edit').style.display =  $('fav-list-container').querySelectorAll('div').length > 0 ? 'block' : 'none';
+    $('edit-btn').style.display =  $('fav-list-container').querySelectorAll('div').length > 0 ? 'block' : 'none';
   },
 
   _getUIElemId: function(item) {
@@ -174,7 +192,35 @@ var favList = {
   },
 
   onclick_item: function(event) {
-    setFreq(this._getElemFreq(event.target));
+    if (!this.editting) {
+      setFreq(this._getElemFreq(event.target));
+    } else {
+      toggleClass(event.target, "selected");
+    }
+  },
+
+  startEdit: function(event) {
+    this.editting = true;
+    $('switch-bar').style.display = 'none';
+    $('edit-bar').style.display = 'block';
+  },
+
+  cancelEdit: function(event) {
+    this.editting = false;
+    $('switch-bar').style.display = 'block';
+    $('edit-bar').style.display = 'none';
+    var selectedItems = document.querySelectorAll('#fav-list-container > div.selected');
+    for (var i = 0; i < selectedItems.length; i++) {
+      selectedItems[i].classList.remove('selected');
+    }
+  },
+
+  delSelectedItems: function(event) {
+    var selectedItems = document.querySelectorAll('#fav-list-container > div.selected');
+    for (var i = 0; i < selectedItems.length; i++) {
+      this.remove(this._getElemFreq(selectedItems[i]));
+    }
+    updateFreqUI();
   },
 
   all: function() {
@@ -212,7 +258,7 @@ var favList = {
         frequency: freq
       });
       this._addItemToListUI(this._favList[this._favList.length - 1]);
-    } else {
+      this._save();
       // TODO show the item in frequency list.
     }
   },
@@ -238,6 +284,7 @@ var favList = {
       }
     }
     this._favList = newList;
+    this._save();
     return exists;
   }
 };

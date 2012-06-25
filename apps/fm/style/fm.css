@@ -26,6 +26,10 @@ div.table-view > div > div {
   display: table-cell;
 }
 
+div#log {
+  position: absolute;
+}
+
 div#containter {
   height: 100%;
   width: 100%;
@@ -148,6 +152,7 @@ div#fav-list > div#fav-list-container > div {
   padding-right: -moz-calc(50% - 70px);
 }
 
+div#fav-list > div#fav-list-container > div.selected,
 div#fav-list > div#fav-list-container > div:active {
   background-color: lightGray;
 }
@@ -159,7 +164,7 @@ div#fav-list > div#fav-list-container > div:after {
 }
 
 div#fav-list > div#fav-list-container > div:before {
-  content: "♡";
+  content: "♥";
   font-size: 35px;
   left: 0;
   position: absolute;
@@ -168,14 +173,6 @@ div#fav-list > div#fav-list-container > div:before {
 
 div#status-bar {
   height: 60px;
-}
-
-div#status-bar > div {
-  float: left;
-  width: 33%;
-  height: 100%;
-  font-size: 40px;
-  text-align: center;
 }
 
 div#status-bar a {
@@ -188,26 +185,45 @@ div#status-bar a:active {
   color: #000;
 }
 
-div#status-bar a.poweron:after {
+div#status-bar > div > div {
+  float: left; width: 33%; height: 100%;
+  font-size: 40px;
+  text-align: center;
+}
+
+div#switch-bar a.poweron:after {
   content: "ON";
 }
 
-div#status-bar a.poweroff:after {
+div#switch-bar a.poweroff:after {
   content: "OFF";
 }
 
-div#status-bar a.speaker:after {
+div#switch-bar a.speaker:after {
   content: "Speaker";
 }
 
-div#status-bar a.headset:after {
+div#switch-bar a.headset:after {
   content: "Headset";
 }
 
-div#status-bar a#fav-list-edit {
+div#switch-bar a#edit-btn {
   display: none;
 }
 
-div#status-bar a.edit:after {
+div#switch-bar a.edit:after {
   content: "Edit";
 }
+
+div#edit-bar {
+  display: none;
+}
+
+div#edit-bar a.cancel:after {
+  content: "Cancel";
+}
+
+div#edit-bar a.delete:after {
+  content: "Delete";
+}
+
