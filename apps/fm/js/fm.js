@@ -24,6 +24,8 @@ var mozFMRadio = navigator.mozFMRadio || {
 
   enabled: false,
 
+  antennaAvailable: true,
+
   onfrequencychanged: function() { },
 
   onpowerchanged: function() { },
@@ -59,6 +61,11 @@ var mozFMRadio = navigator.mozFMRadio || {
 };
 
 function enableFM(enable) {
+  if (!mozFMRadio.antennaAvailable) {
+    this.updateAntennaUI();
+    return;
+  }
+
   var request = null;
   try {
     request = mozFMRadio.setEnabled(enable);
@@ -104,7 +111,8 @@ function updatePowerUI() {
 }
 
 function updateAntennaUI() {
-    // TODO Show warning message if antenna is not available
+  $('antenna-warning').style.display = mozFMRadio.antennaAvailable ?
+                                         'none' : 'table';
 }
 
 function seekUp() {
@@ -158,10 +166,6 @@ function cancelSeek() {
   request.onerror = function cancel_onerror() {
     log('Failed to cancel seek.');
   };
-}
-
-function checkAntenna() {
-  log('Antenna: ' + mozFMRadio.antennaAvailable);
 }
 
 var favList = {
@@ -356,7 +360,12 @@ function init() {
 
   mozFMRadio.onfrequencychanged = updateFreqUI;
   mozFMRadio.onpowerchanged = updatePowerUI;
-  mozFMRadio.onantennachanged = updateAntennaUI;
+  mozFMRadio.onantennachanged = function onAntennaChange() {
+    updateAntennaUI();
+    if (mozFMRadio.antennaAvailable) {
+      enableFM(true);
+    }
+  };
 
   updateFreqUI();
   enableFM(true);

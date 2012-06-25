@@ -227,3 +227,21 @@ div#edit-bar a.delete:after {
   content: "Delete";
 }
 
+div#antenna-warning {
+  display: none;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  font-size: 50px;
+  color: #FFF;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+div#antenna-warning div {
+  text-align: center;
+  vertical-align: middle;
+}
+
