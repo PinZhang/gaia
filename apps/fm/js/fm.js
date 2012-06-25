@@ -2,6 +2,10 @@ function $(id) {
   return document.getElementById(id);
 }
 
+function $$(expr) {
+  return document.querySelectorAll(expr);
+}
+
 function toggleClass(elem, className) {
   if (elem.classList.contains(className)) {
     elem.classList.remove(className);
@@ -90,7 +94,8 @@ function setFreq(freq) {
 
 function updateFreqUI() {
   $('frequency').textContent = mozFMRadio.frequency;
-  $('bookmark-btn').className = favList.contains(mozFMRadio.frequency) ? 'in-fav-list' : '';
+  $('bookmark-btn').className = favList.contains(mozFMRadio.frequency) ?
+                                    'in-fav-list' : '';
 }
 
 function updatePowerUI() {
@@ -165,12 +170,12 @@ var favList = {
   editting: false,
 
   init: function() {
-    // TODO read from local data 
+    // TODO read from local data
     this._favList = [
-      {name: "88.7",  frequency: 88.7},
-      {name: "90",    frequency: 90},
-      {name: "91.5",  frequency: 91.5},
-      {name: "105.5", frequency: 105.5},
+      {name: '88.7', frequency: 88.7},
+      {name: '90', frequency: 90},
+      {name: '91.5', frequency: 91.5},
+      {name: '105.5', frequency: 105.5}
     ];
     this._showListUI();
 
@@ -218,7 +223,7 @@ var favList = {
   },
 
   _autoShowHideEditBtn: function() {
-    $('edit-btn').style.display =  $('fav-list-container').querySelectorAll('div').length > 0 ? 'block' : 'none';
+    $('edit-btn').style.display = $$('#fav-list-container div').length > 0 ? 'block' : 'none';
   },
 
   _getUIElemId: function(item) {
@@ -233,7 +238,7 @@ var favList = {
     if (!this.editting) {
       setFreq(this._getElemFreq(event.target));
     } else {
-      toggleClass(event.target, "selected");
+      toggleClass(event.target, 'selected');
     }
   },
 
@@ -247,14 +252,14 @@ var favList = {
     this.editting = false;
     $('switch-bar').style.display = 'block';
     $('edit-bar').style.display = 'none';
-    var selectedItems = document.querySelectorAll('#fav-list-container > div.selected');
+    var selectedItems = $$('#fav-list-container > div.selected');
     for (var i = 0; i < selectedItems.length; i++) {
       selectedItems[i].classList.remove('selected');
     }
   },
 
   delSelectedItems: function(event) {
-    var selectedItems = document.querySelectorAll('#fav-list-container > div.selected');
+    var selectedItems = $$('#fav-list-container > div.selected');
     for (var i = 0; i < selectedItems.length; i++) {
       this.remove(this._getElemFreq(selectedItems[i]));
     }
@@ -303,11 +308,6 @@ var favList = {
 
   /**
    * Remove frequency from fav list.
-   * @return
-   *   true:
-   *     frequency exists in the fav list
-   *   false
-   *     frequency doesn't exist in the fav list
    */
   remove: function(freq) {
     var newList = [];
