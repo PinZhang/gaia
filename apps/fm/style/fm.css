@@ -54,6 +54,7 @@ div#freq-view a#bookmark-btn {
   position: relative;
   top: -24px;
   font-size: 50px;
+  cursor: pointer;
 }
 
 div#freq-view a#bookmark-btn:after {

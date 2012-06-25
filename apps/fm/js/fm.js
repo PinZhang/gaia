@@ -171,16 +171,14 @@ function cancelSeek() {
 var favList = {
   _favList: null,
 
+  KEYNAME: 'favlist',
+
   editting: false,
 
   init: function() {
-    // TODO read from local data
-    this._favList = [
-      {name: '88.7', frequency: 88.7},
-      {name: '90', frequency: 90},
-      {name: '91.5', frequency: 91.5},
-      {name: '105.5', frequency: 105.5}
-    ];
+    var savedList = localStorage.getItem(this.KEYNAME);
+    this._favList = !savedList ? [] : JSON.parse(savedList);
+
     this._showListUI();
 
     $('edit-btn').onclick = this.startEdit.bind(this);
@@ -189,7 +187,7 @@ var favList = {
   },
 
   _save: function() {
-    // TODO save to local data
+    localStorage.setItem(this.KEYNAME, JSON.stringify(this._favList));
   },
 
   _showListUI: function() {
