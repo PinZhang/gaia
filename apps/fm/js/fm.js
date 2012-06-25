@@ -14,7 +14,45 @@ function log(msg) {
   $('log').innerHTML = msg;
 }
 
-var mozFMRadio = navigator.mozFMRadio;
+// XXX fake mozFMRadio object for UI testing on PC
+var mozFMRadio = navigator.mozFMRadio || {
+  frequency: 91.5,
+
+  enabled: false,
+
+  onfrequencychanged: function() { },
+
+  onpowerchanged: function() { },
+
+  onantennachanged: function() { },
+
+  setEnabled: function(enabled) {
+    var preValue = this.enabled;
+    this.enabled = enabled;
+    if (preValue != enabled) {
+      this.onpowerchanged();
+    }
+  },
+
+  setFrequency: function(freq) {
+    freq = parseFloat(freq.toFixed(1));
+    var preValue = this.frequency;
+    this.frequency = freq;
+    if (preValue != freq) {
+      this.onfrequencychanged();
+    }
+  },
+
+  seekUp: function() {
+    this.setFrequency(this.frequency + 0.2);
+  },
+
+  seekDown: function() {
+    this.setFrequency(this.frequency - 0.2);
+  },
+
+  cancelSeek: function() { }
+};
 
 function enableFM(enable) {
   var request = null;
