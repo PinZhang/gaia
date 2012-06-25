@@ -227,7 +227,8 @@ var favList = {
   },
 
   _autoShowHideEditBtn: function() {
-    $('edit-btn').style.display = $$('#fav-list-container div').length > 0 ? 'block' : 'none';
+    $('edit-btn').style.display =
+        $$('#fav-list-container div').length > 0 ? 'block' : 'none';
   },
 
   _getUIElemId: function(item) {
