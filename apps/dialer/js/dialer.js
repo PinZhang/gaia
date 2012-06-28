@@ -93,7 +93,8 @@ var TonePlayer = {
     var soundDataSize = this._sampleRate / 4;
     var soundData = new Float32Array(soundDataSize);
     this.generateFrames(soundData, frequencies[0], frequencies[1]);
-    this._audio.mozWriteAudio(soundData);
+    // XXX comment audio to prevent no responding
+    // this._audio.mozWriteAudio(soundData);
   }
 };
 

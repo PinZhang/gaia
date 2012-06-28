@@ -5,7 +5,7 @@ html, body {
   overflow: hidden;
   margin: 0;
 
-  font-size: 2.5mozmm;
+  font-size: 6mozmm;
   color: white;
   font-family: 'Open Sans', sans-serif;
 
@@ -171,12 +171,12 @@ html * {
 #phone-number-view-container > div {
   display: block;
   position: relative;
-  height: 11mozmm;
+  height: 24mozmm;
   margin: auto;
 
   color: #FFFFFF;
-  font-size: 5mozmm;
-  line-height: 11mozmm;
+  font-size: 12mozmm;
+  line-height: 24mozmm;
   text-align: center;
   white-space: nowrap;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
@@ -192,12 +192,12 @@ html * {
 	display: block;
 	right: 0;
 	top: 0;
-	width: 11mozmm;
-	height: 11mozmm;
+	width: 24mozmm;
+	height: 24mozmm;
 
   border: 0;
   background: url(images/backspace.png) 50% 50% no-repeat;
-  background-size: 10mozmm 10mozmm;
+  background-size: 24mozmm 24mozmm;
 }
 .keyboard-key[data-value="del"]:active {
   background: url(images/backspace-active.png) 50% 50% no-repeat;
@@ -212,12 +212,12 @@ html * {
 }
 
 #keyboard-container {
-  height: -moz-calc(100% - 11mozmm);
+  height: -moz-calc(100% - 24mozmm);
 }
 
 #mainKeyset {
   width: 100%;
-  height: -moz-calc(100% - 15mozmm);
+  height: -moz-calc(100% - 30mozmm);
   min-height: 265px;
   padding: 0;
   margin: 0;
@@ -280,7 +280,7 @@ html * {
 
 #additionalKeyset {
   width: 100%;
-  height: 15mozmm;
+  height: 30mozmm;
   padding: 0;
   margin: 0;
 }
@@ -310,7 +310,7 @@ html * {
 	display: block;
 
   color: white;
-  line-height: 15mozmm;
+  line-height: 30mozmm;
   font-size: 37px;
   font-weight: bold;
   text-align: center;
@@ -851,7 +851,7 @@ label.favorite > input[type=checkbox] + span {
 }
 
 #call-status-view {
-  font-size: 1.3em;
+  font-size: 2.3em;
 	text-shadow:0 0 3px hsla(0,0%,0%,.5);
 }
 
@@ -876,7 +876,7 @@ label.favorite > input[type=checkbox] + span {
 
 #call-number-view {
   color: #929CA4;
-  font-size: 0.6em;
+  font-size: 1.6em;
 }
 
 #call-actions-container {
@@ -913,7 +913,7 @@ label.favorite > input[type=checkbox] + span {
   display: block;
 
 	color: hsla(208,9%,61%,1);
-  font-size: 0.25em;
+  font-size: 0.75em;
   line-height: 2.2em;
 }
 
@@ -968,7 +968,7 @@ label.favorite > input[type=checkbox] + span {
   height: 100%;
   margin: 0;
 
-  font-size: 0.6em;
+  font-size: 1.6em;
   font-weight: bold;
   text-align: center;
   text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.5);

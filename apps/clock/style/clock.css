@@ -111,7 +111,7 @@ html * {
 
 .chrono-view-container {
   width: -moz-calc(100% - 38px);
-  height: -moz-calc(100% - 20px - 30mozmm - 94px);
+  height: -moz-calc(100% - 20px - 48mozmm - 94px);
   margin: 20px auto;
   padding: 9px;
 
@@ -130,7 +130,7 @@ html * {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.3) inset;
 
   text-align: center;
-  font-size: 4em;
+  font-size: 10em;
   text-overflow: ellipsis;
   text-shadow:0 0 3px rgba(0,0,0,.5);
   white-space: nowrap;
@@ -201,14 +201,14 @@ html * {
 .button-container > div > span {
   display: block;
   width: -moz-calc(100% - 2px);
-  height: 15mozmm;
+  height: 24mozmm;
 
   border-radius: 3px;
 
   background: -moz-linear-gradient(center top , #A5A5A5 0pt, #878787 1px, #545454 100%) repeat scroll 0 0 transparent;
 
-  line-height: 15mozmm;
-  font-size: 2em;
+  line-height: 24mozmm;
+  font-size: 4em;
   font-weight: bold;
   text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 }
@@ -220,7 +220,7 @@ html * {
 /* === Stop watch === */
 
 #reset-button {
-  bottom: -moz-calc(15mozmm + 38px);
+  bottom: -moz-calc(23mozmm + 38px);
 }
 
 #stopwatch-action-button {
@@ -286,13 +286,13 @@ html * {
 }
 
 #duration-field {
-  height: 15mozmm;
+  height: 24mozmm;
   border: none;
   background: none;
-
+  width: 100%;
   color: white;
   text-align: center;
-  font-size: 2em;
+  font-size: 4em;
   font-weight: bold;
   text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 }

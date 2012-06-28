@@ -22,10 +22,10 @@ header {
 
 /* ------------- Button ------------- */
 a.button, span.button {
-	margin:4px;
-	padding:12px;
+	margin: 10px;
+	padding: 10px 20px;
   min-width: 6mozmm;
-	line-height: 22px;
+	line-height: 40px;
 	border:1px solid #282d32;
 	background-image: -moz-linear-gradient(#5c636c, #3d434a);
 	color:#c7d8e4;

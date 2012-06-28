@@ -11,7 +11,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  font-size: 3mozmm;
+  font-size: 8mozmm;
   font-family: "Open Sans", sans-serif;
   overflow: hidden !important;
 }
@@ -34,8 +34,8 @@ input {
 
 header {
   position: relative;
-  height: 62px;
-  line-height: 62px;
+  height: 88px;
+  line-height: 88px;
   text-align: center;
   background-color: #fff;
   background-image: -moz-linear-gradient(#4d555f, #292e33);
@@ -50,7 +50,7 @@ body > header {
 header h1 {
   margin: 0;
   padding: 0;
-  line-height: 64px;
+  line-height: 88px;
   text-align: center;
   font-family: "Open Sans", sans-serif;
   font-weight: bold;
