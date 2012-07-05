@@ -409,8 +409,19 @@ var favoritesList = {
   }
 };
 
+function addSampleFavs() {
+  favoritesList.add(87.5);
+  favoritesList.add(88);
+  favoritesList.add(88.5);
+  favoritesList.add(89);
+  favoritesList.add(100);
+  favoritesList.add(103);
+}
+
 function init() {
   favoritesList.init();
+
+  addSampleFavs();
 
   $('freq-op-seekdown').addEventListener('click', seekDown, false);
   $('freq-op-seekup').addEventListener('click', seekUp, false);

@@ -118,6 +118,8 @@ let homescreen = HOMESCREEN + (GAIA_PORT ? GAIA_PORT : '');
 content += "user_pref(\"browser.homescreenURL\",\"" + homescreen + "\");\n";
 content += "user_pref(\"browser.manifestURL\",\"" + homescreen + "/manifest.webapp\");\n\n";
 
+content += "user_pref(\"dom.fm.antenna.internal\", true);\n\n";
+
 let privileges = [];
 let domains = [];
 domains.push(GAIA_DOMAIN);
