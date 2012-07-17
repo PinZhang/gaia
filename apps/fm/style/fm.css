@@ -20,8 +20,20 @@ a {
   color: #555;
 }
 
+a label {
+  cursor: pointer;
+}
+
 a:active {
   color: #000;
+}
+
+a:active label {
+  color: #000;
+}
+
+.hidden-block {
+  visibility: hidden;
 }
 
 div#containter {
@@ -47,9 +59,12 @@ div#freq-view a {
 
 a#bookmark-button {
   position: relative;
-  top: -24px;
-  font-size: 50px;
+  top: -10px;
+  font-size: 30px;
   cursor: pointer;
+  position: absolute;
+  right: 10px;
+  z-index: 1;
 }
 
 a#bookmark-button:after {
@@ -58,6 +73,28 @@ a#bookmark-button:after {
 
 div#freq-view a.in-fav-list:after {
   content: "♥" !important;
+}
+
+a#audio-routing-switch {
+  position: absolute;
+  left: 10px;
+  z-index: 1;
+}
+
+div#freq-view a.speaker label.speaker {
+  display: block;
+}
+
+div#freq-view a.speaker label.headset {
+  display: none;
+}
+
+div#freq-view a.headset label.speaker {
+  display: none;
+}
+
+div#freq-view a.headset label.headset {
+  display: block;
 }
 
 label#frequency {
@@ -71,38 +108,64 @@ label#frequency:after {
 }
 /*****  end  *****/
 
-/*** styles for the operations of frequency ***/
+/**** styles for frequency dialer *****/
 div#freq-ops {
   height: 80px;
-  text-align: center;
+  padding-left: 50%;
 }
 
-div#freq-ops > a {
-  font-size: 80px;
-  padding-right: 30px;
-  position: relative;
-  top: -25px;
+div#freq-indicator:after {
+  content: "|";
 }
 
-div#freq-ops > a:last-child {
-  padding-right: 0;
+div.animation-on {
+  -moz-transition-duration: 0.5s;
+  -moz-transition-property: top, left;
 }
 
-a#freq-op-seekdown:after {
-  content: "«";
+#freq-dialer {
+  display: inline-block;
+  display: -moz-inline-box;
+  -moz-user-select: none;
 }
 
-a#freq-op-100khz-down:after {
-  content: "<";
+#freq-dialer .dialer-unit-mark-box {
+  overflow: hidden;
 }
 
-a#freq-op-seekup:after {
-  content: "»";
+#freq-dialer .dialer-unit {
+  text-align: left;
+  width: 250px;
+  height: 40px;
+  float: left;
 }
 
-a#freq-op-100khz-up:after {
-  content: ">";
+#freq-dialer .dialer-mark {
+  height: 20px;
+  width: 50px;
+  float: left;
+  font-size: 10px;
 }
+
+#freq-dialer .dialer-mark:after {
+  content: "|";
+  position: absolute;
+  bottom: 0;
+}
+
+#freq-dialer .dialer-mark-long {
+  font-size: 20px;
+}
+
+#freq-dialer .dialer- {
+}
+
+#freq-dialer .dialer- {
+}
+
+#freq-dialer .dialer- {
+}
+
 /**** end *******/
 
 /***** styles for favorites list ******/
@@ -199,20 +262,14 @@ div#switch-bar a.poweroff label.poweroff {
   display: block;
 }
 
-div#switch-bar a.speaker label.speaker {
-  display: block;
+a#freq-op-seekdown:after {
+  content: "<";
+  font-size: 50px;
 }
 
-div#switch-bar a.speaker label.headset {
-  display: none;
-}
-
-div#switch-bar a.headset label.speaker {
-  display: none;
-}
-
-div#switch-bar a.headset label.headset {
-  display: block;
+a#freq-op-seekup:after {
+  content: ">";
+  font-size: 50px;
 }
 /**** end ****/
 

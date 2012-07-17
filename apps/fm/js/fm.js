@@ -18,6 +18,13 @@ var mozFMRadio = navigator.mozFMRadio || {
 
   antennaAvailable: true,
 
+  bandRanges: {
+    FM: {
+      lower: 87.5,
+      upper: 108
+    }
+  },
+
   onfrequencychange: function emptyFunction() { },
 
   onenabled: function emptyFunction() { },
@@ -45,14 +52,17 @@ var mozFMRadio = navigator.mozFMRadio || {
     if (previousValue != freq) {
       this.onfrequencychange();
     }
+    return {};
   },
 
   seekUp: function fm_seekUp() {
     this.setFrequency(this.frequency + 0.2);
+    return {};
   },
 
   seekDown: function fm_seekDown() {
     this.setFrequency(this.frequency - 0.2);
+    return {};
   },
 
   cancelSeek: function fm_cancelSeek() { }
@@ -106,7 +116,7 @@ function setFreq(freq) {
 }
 
 function updateFreqUI() {
-  $('frequency').textContent = mozFMRadio.frequency;
+  frequencyDialer.setFrequency(mozFMRadio.frequency);
   $('bookmark-button').className =
        favoritesList.contains(mozFMRadio.frequency) ? 'in-fav-list' : '';
 }
@@ -117,7 +127,8 @@ function updatePowerUI() {
 }
 
 function updateAudioRoutingUI() {
-  $('audio-routing-switch').className = mozFMRadio.speakerEnabled ? 'speaker' : 'headset';
+  $('audio-routing-switch').className = 
+            mozFMRadio.speakerEnabled ? 'speaker' : 'headset';
 }
 
 function updateAntennaUI() {
@@ -185,12 +196,142 @@ function cancelSeek() {
   };
 }
 
+var frequencyDialer = {
+  unit: 5,
+  _minFrequency: 0,
+  _maxFrequency: 0,
+  _currentFreqency: 0,
+
+  init: function() {
+    this._initUI();
+    this.setFrequency(mozFMRadio.frequency);
+    this._addEventListeners();
+  },
+
+  _addEventListeners: function() {
+    var self = this;
+    var _initMouseX = 0;
+    var _initDialerX = 0;
+    var _initFrequency = 0;
+
+    function _calcTargetFrequency(event) {
+      var space = $('freq-dialer').clientWidth /
+                 (self._maxFrequency - self._minFrequency + 1);
+      var movingSpace = event.clientX - _initMouseX;
+      var targetFrequency = _initFrequency - movingSpace / space;
+      return parseFloat(targetFrequency.toFixed(1));
+    }
+
+    var _movetimeout = null;
+    function fd_body_mousemove(event) {
+      window.clearTimeout(_movetimeout);
+      window.setTimeout(function fd_body_mousemove_timeout() {
+        var targetFrequency = _calcTargetFrequency(event);
+        self.setFrequency(targetFrequency);
+      }, 100);
+    }
+
+    function fd_body_mouseup(event) {
+      _removeEventListeners();
+
+      var targetFrequency = _calcTargetFrequency(event);
+      self.setFrequency(targetFrequency);
+      var req = mozFMRadio.setFrequency(targetFrequency);
+      req.onerror = function onerror_setFrequency() {
+        self.setFrequency(mozFMRadio.frequency);
+      };
+
+      $('freq-dialer').classList.add('animation-on');
+    }
+
+    function _removeEventListeners() {
+      document.body.removeEventListener('mouseup', fd_body_mouseup, false);
+      document.body.removeEventListener('mousemove', fd_body_mousemove, false);
+    }
+
+    $('freq-dialer').addEventListener('mousedown', function fd_mousedown(evt) {
+      var dialer = $('freq-dialer');
+      dialer.classList.remove('animation-on');
+      _initMouseX = evt.clientX;
+      _initDialerX = parseInt(dialer.style.left);
+      _initFrequency = self._currentFreqency;
+
+      _removeEventListeners();
+      document.body.addEventListener('mousemove', fd_body_mousemove, false);
+      document.body.addEventListener('mouseup', fd_body_mouseup, false);
+    }, false);
+  },
+
+  _initUI: function() {
+    var lower = mozFMRadio.bandRanges.FM.lower;
+    var upper = mozFMRadio.bandRanges.FM.upper;
+
+    var unit = this.unit;
+    this._minFrequency = lower - lower % unit;
+    this._maxFrequency = (upper % unit == 0) ? 
+                          upper : (upper - upper % unit + unit - 1);
+    var unitCount = (this._maxFrequency - this._minFrequency) / unit;
+
+    for (var i = 0; i < unitCount; ++i) {
+      var start = this._minFrequency + i * unit;
+      start = start < lower ? lower : start;
+      var end = this._maxFrequency + i * unit + unit;
+      end = upper < end ? upper : end;
+      this._addDialerUnit(start, end);
+    }
+  },
+
+  _addDialerUnit: function(start, end) {
+    var showFloor = start % this.unit == 0;
+    var markStart = start - start % this.unit;
+    var html = [];
+
+    if (showFloor) {
+      html.push('<div class="dialer-unit-floor">' + start + '</div>');
+    } else {
+      html.push('  <div class="dialer-unit-floor hidden-block">' +
+                        start + '</div>');
+    }
+    html.push('    <div class="dialer-unit-mark-box">');
+
+    for (var i = 0; i < this.unit; i++) {
+      if (markStart + i < start || markStart + i > end) {
+        html.push('    <div class="dialer-mark hidden-block"></div>');
+      } else {
+        html.push('    <div class="dialer-mark ' +
+                            (0 == i ? 'dialer-mark-long' : '') + '"></div>');
+      }
+    }
+
+    html.push('    </div>');
+    html.push('  </div>');
+    var unit = document.createElement('div');
+    unit.className = 'dialer-unit';
+    unit.innerHTML = html.join('');
+    $('freq-dialer').appendChild(unit);
+  },
+
+  _updateUI: function() {
+    var space = $('freq-dialer').clientWidth /
+                 (this._maxFrequency - this._minFrequency + 1);
+    $('freq-dialer').style.left =
+            (this._minFrequency - this._currentFreqency) * space + 'px';
+    $('frequency').textContent = this._currentFreqency;
+  },
+
+  setFrequency: function(frequency) {
+    if (frequency < this._minFrequency || frequency > this._maxFrequency) {
+      return;
+    }
+    this._currentFreqency = frequency;
+    this._updateUI();
+  }
+};
+
 var favoritesList = {
   _favList: null,
 
   KEYNAME: 'favlist',
-
-  editing: false,
 
   init: function() {
     var savedList = localStorage.getItem(this.KEYNAME);
@@ -198,12 +339,6 @@ var favoritesList = {
 
     this._showListUI();
 
-    $('edit-button').addEventListener('click',
-                         this.startEdit.bind(this), false);
-    $('cancel-button').addEventListener('click',
-                         this.cancelEdit.bind(this), false);
-    $('delete-button').addEventListener('click',
-                         this.delSelectedItems.bind(this), false);
     var self = this;
     var _timeout = null;
     var _container = $('fav-list-container');
@@ -213,11 +348,7 @@ var favoritesList = {
       window.clearTimeout(_timeout);
       // only exec the logic when mouseup the same element as mousedown
       if (event.target == _elem) {
-        if (!self.editing) {
-          setFreq(self._getElemFreq(event.target));
-        } else {
-          event.target.classList.toggle('selected');
-        }
+        setFreq(self._getElemFreq(event.target));
       }
       _removeEventListeners();
     }
@@ -238,11 +369,8 @@ var favoritesList = {
       _removeEventListeners();
       _container.addEventListener('mouseup', _onmouseup, false);
 
-      if (self.editing) {
-        return;
-      }
-
       _elem = event.target;
+
       document.body.addEventListener('mousemove', _onmousemove_body, false);
 
       window.clearTimeout(_timeout);
@@ -271,8 +399,6 @@ var favoritesList = {
     elem.id = this._getUIElemId(item);
     elem.textContent = item.frequency;
     container.appendChild(elem);
-
-    this._autoShowHideEditBtn();
   },
 
   _removeItemFromListUI: function(freq) {
@@ -284,11 +410,6 @@ var favoritesList = {
     if (itemElem) {
       itemElem.parentNode.removeChild(itemElem);
     }
-    this._autoShowHideEditBtn();
-  },
-
-  _autoShowHideEditBtn: function() {
-    $('edit-button').hidden = $$('#fav-list-container div').length == 0;
   },
 
   _getUIElemId: function(item) {
@@ -353,30 +474,6 @@ var favoritesList = {
                                _onclick_delete_button, false);
   },
 
-  startEdit: function(event) {
-    this.editing = true;
-    $('switch-bar').hidden = true;
-    $('edit-bar').hidden = false;
-  },
-
-  cancelEdit: function(event) {
-    this.editing = false;
-    $('switch-bar').hidden = false;
-    $('edit-bar').hidden = true;
-    var selectedItems = $$('#fav-list-container > div.selected');
-    for (var i = 0; i < selectedItems.length; i++) {
-      selectedItems[i].classList.remove('selected');
-    }
-  },
-
-  delSelectedItems: function(event) {
-    var selectedItems = $$('#fav-list-container > div.selected');
-    for (var i = 0; i < selectedItems.length; i++) {
-      this.remove(this._getElemFreq(selectedItems[i]));
-    }
-    updateFreqUI();
-  },
-
   forEach: function(callback) {
     for (var freq in this._favList) {
       callback(this._favList[freq]);
@@ -432,19 +529,12 @@ function addSampleFavs() {
 
 function init() {
   favoritesList.init();
+  frequencyDialer.init();
 
   addSampleFavs();
 
   $('freq-op-seekdown').addEventListener('click', seekDown, false);
   $('freq-op-seekup').addEventListener('click', seekUp, false);
-
-  $('freq-op-100khz-down').addEventListener('click', function set_freq_down() {
-    setFreq(mozFMRadio.frequency - 0.1);
-  }, false);
-
-  $('freq-op-100khz-up').addEventListener('click', function set_freq_up() {
-    setFreq(mozFMRadio.frequency + 0.1);
-  }, false);
 
   $('power-switch').addEventListener('click', function toggle_fm() {
     enableFM(!mozFMRadio.enabled);
