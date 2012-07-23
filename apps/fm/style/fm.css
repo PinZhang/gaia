@@ -219,10 +219,16 @@ div#fav-list-container > div:after {
   padding-left: 10px;
 }
 
-div#fav-list-container > div:before {
+div#fav-list-container div.fav-list-remove-button {
+  height: 50px;
+  width: 50px;
+  float: left;
+}
+
+div#fav-list-container div.fav-list-remove-button:before {
   content: "♥";
   font-size: 30px;
-  left: 0;
+  left: -30px;
   position: absolute;
   padding: 10px 0 0 40px;
 }

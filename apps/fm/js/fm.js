@@ -18,12 +18,18 @@ var mozFMRadio = navigator.mozFMRadio || {
 
   antennaAvailable: true,
 
+  signalStrength: 1,
+
   bandRanges: {
     FM: {
       lower: 87.5,
       upper: 108
     }
   },
+
+  onsignalchange: function emptyFunction() { },
+
+  onbandchange: function emptyFunction() { },
 
   onfrequencychange: function emptyFunction() { },
 
@@ -196,6 +202,10 @@ function cancelSeek() {
   };
 }
 
+function getBand() {
+  return mozFMRadio.bandRanges;
+}
+
 var frequencyDialer = {
   unit: 5,
   _minFrequency: 0,
@@ -260,16 +270,22 @@ var frequencyDialer = {
       document.body.addEventListener('mousemove', fd_body_mousemove, false);
       document.body.addEventListener('mouseup', fd_body_mouseup, false);
     }, false);
+
+    mozFMRadio.onbandchange = function onbandchange() {
+      console.log('band is changed: ' + JSON.stringify(mozFMRadio.bandRanges));
+      self._initUI();
+      self.setFrequency(self._currentFreqency);
+    };
   },
 
   _initUI: function() {
-    var lower = mozFMRadio.bandRanges.FM.lower;
-    var upper = mozFMRadio.bandRanges.FM.upper;
+    $('freq-dialer').innerHTML = '';
+    var lower = getBand().FM.lower;
+    var upper = getBand().FM.upper;
 
     var unit = this.unit;
     this._minFrequency = lower - lower % unit;
-    this._maxFrequency = (upper % unit == 0) ? 
-                          upper : (upper - upper % unit + unit - 1);
+    this._maxFrequency = upper + unit - upper % unit;
     var unitCount = (this._maxFrequency - this._minFrequency) / unit;
 
     for (var i = 0; i < unitCount; ++i) {
@@ -348,7 +364,13 @@ var favoritesList = {
       window.clearTimeout(_timeout);
       // only exec the logic when mouseup the same element as mousedown
       if (event.target == _elem) {
-        setFreq(self._getElemFreq(event.target));
+        if (event.target.classList.contains('fav-list-remove-button')) {
+          // remove from favorites list
+          self.remove(self._getElemFreq(event.target));
+          updateFreqUI();
+        } else {
+          setFreq(self._getElemFreq(event.target));
+        }
       }
       _removeEventListeners();
     }
@@ -396,8 +418,14 @@ var favoritesList = {
   _addItemToListUI: function(item) {
     var container = $('fav-list-container');
     var elem = document.createElement('div');
+    elem.className = 'fav-list-item';
     elem.id = this._getUIElemId(item);
-    elem.textContent = item.frequency;
+    var html = [];
+    html.push('<div class="fav-list-remove-button"></div>');
+    html.push('<label class="fav-list-frequency">');
+    html.push(item.frequency);
+    html.push('</label>');
+    elem.innerHTML = html.join('');
     container.appendChild(elem);
   },
 
@@ -417,7 +445,9 @@ var favoritesList = {
   },
 
   _getElemFreq: function(elem) {
-    return parseFloat(elem.id.substring(elem.id.indexOf('-') + 1));
+    var listItem = elem.parentNode.classList.contains('fav-list-item')
+                        ? elem.parentNode : elem;
+    return parseFloat(listItem.id.substring(listItem.id.indexOf('-') + 1));
   },
 
   _showPopupDelUI: function(event) {
