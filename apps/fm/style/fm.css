@@ -156,16 +156,6 @@ div.animation-on {
 #freq-dialer .dialer-mark-long {
   font-size: 20px;
 }
-
-#freq-dialer .dialer- {
-}
-
-#freq-dialer .dialer- {
-}
-
-#freq-dialer .dialer- {
-}
-
 /**** end *******/
 
 /***** styles for favorites list ******/
@@ -193,6 +183,7 @@ div#fav-list-container {
   position: absolute;
   bottom: 2px;
   width: 100%;
+  -moz-user-select: none;
 }
 
 div#fav-list-container > div {
@@ -232,6 +223,10 @@ div#fav-list-container div.fav-list-remove-button:before {
   position: absolute;
   padding: 10px 0 0 40px;
 }
+
+div#fav-list-container div.fav-list-remove-button:active:before {
+  content: "♡" !important;
+}
 /***** end *****/
 
 /***** styles for status bar *****/
@@ -248,7 +243,7 @@ div#status-bar > div > div {
   float: left;
   height: 100%;
   width: 33%;
-  font-size: 32px;
+  font-size: 46px;
   text-align: center;
 }
 
@@ -270,12 +265,16 @@ div#switch-bar a.poweroff label.poweroff {
 
 a#freq-op-seekdown:after {
   content: "<";
-  font-size: 50px;
+  font-size: 66px;
+  position: relative;
+  top: -15px;
 }
 
 a#freq-op-seekup:after {
   content: ">";
-  font-size: 50px;
+  font-size: 66px;
+  position: relative;
+  top: -15px;
 }
 /**** end ****/
 
