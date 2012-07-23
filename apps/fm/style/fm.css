@@ -307,22 +307,6 @@ div#antenna-warning > div > div {
 }
 /******* end *******/
 
-/***** styles for popup delete box ****/
-div#popup-delete-box {
-  position: absolute;
-  height: 40px;
-  width: 150px;
-  top: 0;
-  left: 0;
-  border: 1px solid #555;
-  border-radius: 10px;
-  text-align: center;
-  background-color: #F4F4F4;
-  z-index: 1000;
-  font-size: 30px;
-}
-/******* end *******/
-
 /* localization */
 body.hidden *[data-l10n-id] {
   visibility: hidden;

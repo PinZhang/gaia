@@ -352,55 +352,17 @@ var favoritesList = {
   init: function() {
     var savedList = localStorage.getItem(this.KEYNAME);
     this._favList = !savedList ? { } : JSON.parse(savedList);
-
     this._showListUI();
-
     var self = this;
-    var _timeout = null;
     var _container = $('fav-list-container');
-    var _elem = null;
-
-    function _onmouseup(event) {
-      window.clearTimeout(_timeout);
-      // only exec the logic when mouseup the same element as mousedown
-      if (event.target == _elem) {
-        if (event.target.classList.contains('fav-list-remove-button')) {
-          // remove from favorites list
-          self.remove(self._getElemFreq(event.target));
-          updateFreqUI();
-        } else {
-          setFreq(self._getElemFreq(event.target));
-        }
+    _container.addEventListener('click', function _onclick(event) {
+      if (event.target.classList.contains('fav-list-remove-button')) {
+        // remove from favorites list
+        self.remove(self._getElemFreq(event.target));
+        updateFreqUI();
+      } else {
+        setFreq(self._getElemFreq(event.target));
       }
-      _removeEventListeners();
-    }
-
-    function _removeEventListeners() {
-      _container.removeEventListener('mouseup', _onmouseup, false);
-      document.body.removeEventListener('mousemove',
-                                        _onmousemove_body, false);
-      _elem = null;
-    }
-
-    function _onmousemove_body(event) {
-      // If mouse moved, do not show popup.
-      window.clearTimeout(_timeout);
-    }
-
-    _container.addEventListener('mousedown', function _onmousedown(event) {
-      _removeEventListeners();
-      _container.addEventListener('mouseup', _onmouseup, false);
-
-      _elem = event.target;
-
-      document.body.addEventListener('mousemove', _onmousemove_body, false);
-
-      window.clearTimeout(_timeout);
-      _timeout = window.setTimeout(function() {
-        // prevent opening the frequency
-        _removeEventListeners();
-        self._showPopupDelUI(event);
-      }, 1000);
     }, false);
   },
 
