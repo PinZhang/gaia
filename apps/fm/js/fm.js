@@ -328,7 +328,26 @@ var favoritesList = {
     html.push(item.frequency);
     html.push('</label>');
     elem.innerHTML = html.join('');
-    container.appendChild(elem);
+
+    // keep list ascending sorted
+    if (container.childNodes.length == 0) {
+      container.appendChild(elem);
+    } else {
+      var childNodes = container.childNodes;
+      for (var i = 0; i < childNodes.length; i++) {
+        var child = childNodes[i];
+        var elemFreq = this._getElemFreq(child);
+        if (item.frequency < elemFreq) {
+          container.insertBefore(elem, child);
+          break;
+        } else if (i == childNodes.length - 1) {
+          container.appendChild(elem);
+          break;
+        }
+      }
+    }
+
+    return elem;
   },
 
   _removeItemFromListUI: function(freq) {
@@ -375,12 +394,10 @@ var favoritesList = {
         frequency: freq
       };
 
-      this._addItemToListUI(this._favList[freq]);
       this._save();
 
       // show the item in favorites list.
-      $('fav-list').scrollTop =
-               $('fav-list').scrollHeight - $('fav-list').clientHeight;
+      this._addItemToListUI(this._favList[freq]).scrollIntoView();
     }
   },
 
