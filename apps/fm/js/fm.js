@@ -325,7 +325,7 @@ var favoritesList = {
     var html = [];
     html.push('<div class="fav-list-remove-button"></div>');
     html.push('<label class="fav-list-frequency">');
-    html.push(item.frequency);
+    html.push(item.frequency.toFixed(1));
     html.push('</label>');
     elem.innerHTML = html.join('');
 
