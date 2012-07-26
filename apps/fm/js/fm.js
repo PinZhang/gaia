@@ -109,6 +109,7 @@ var mozFMRadio = navigator.mozFMRadio || {
 };
 
 function enableFM(enable) {
+  console.log('Antenna available: ' + mozFMRadio.antennaAvailable);
   if (!mozFMRadio.antennaAvailable) {
     updateAntennaUI();
     return;

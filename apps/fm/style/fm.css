@@ -96,11 +96,11 @@ a:active {
 /*****  end  *****/
 
 /**** styles for frequency dialer *****/
-#dialer-view {
+#dialer-bar {
   font-size: 1rem;
 }
 
-#dialer-view-box {
+#dialer-container {
   padding-left: 50%;
   width: 100%;
 }
@@ -241,10 +241,11 @@ div#fav-list-container div.fav-list-remove-button:active::before {
 }
 
 #power-switch::after {
-  content: "▸";
+  content: "▶";
   position: relative;
-  left: 0.5rem;
-  top: -0.8rem;
+  left: 0.3rem;
+  top: -0.3rem;
+  font-size: 5rem;
 }
 
 #power-switch[data-enabled="true"]::after {
