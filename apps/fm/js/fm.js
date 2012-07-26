@@ -172,34 +172,56 @@ var frequencyDialer = {
     }
 
     var self = this;
+    var SPEED_THRESHOLD = 0.1;
     var currentEvent, startEvent, currentSpeed;
     var tunedFrequency = 0;
+
+    function toFixed(frequency) {
+      return parseFloat(frequency.toFixed(1));
+    }
 
     function _calcSpeed() {
       var movingSpace = startEvent.x - currentEvent.x;
       var deltaTime = currentEvent.timestamp - startEvent.timestamp;
       var speed = movingSpace / deltaTime;
-      currentSpeed = parseFloat(speed.toFixed(1));
+      currentSpeed = parseFloat(speed.toFixed(2));
     }
 
-    function _calcTargetFrequency(momentum) {
+    function _calcTargetFrequency() {
+      return tunedFrequency - getMovingSpace() / self._space;
+    }
+
+    // If the user swap really slow, narrow down the moving space
+    // So the user can fine tune frequency.
+    function getMovingSpace() {
       var movingSpace = currentEvent.x - startEvent.x;
-      var targetFrequency = tunedFrequency - movingSpace / self._space;
-      if (momentum === true) {
-        var direction = currentSpeed > 0 ? 1 : -1;
-        targetFrequency += Math.min(Math.abs(currentSpeed) * 5, 5) * direction;
-      }
-      return targetFrequency;
+      return Math.abs(currentSpeed) > SPEED_THRESHOLD ?
+                                  movingSpace : movingSpace / 4;
     }
 
+    var _setFreqTimeout = null;
     function fd_body_mousemove(event) {
       event.stopPropagation();
       currentEvent = cloneEvent(event);
 
       _calcSpeed();
 
-      var targetFrequency = _calcTargetFrequency();
-      tunedFrequency = self.setFrequency(targetFrequency);
+      var movingSpace = getMovingSpace();
+
+      // move dialer
+      var dialer = $('frequency-dialer');
+      dialer.style.left = parseFloat(dialer.style.left) + movingSpace + 'px';
+
+      tunedFrequency -= movingSpace / self._space;
+
+      window.clearTimeout(_setFreqTimeout);
+      _setFreqTimeout = window.setTimeout(function() {
+        var roundedFrequency = Math.round(tunedFrequency * 10) / 10;
+
+        if (roundedFrequency != self._currentFreqency) {
+          self.setFrequency(toFixed(roundedFrequency), true);
+        }
+      }, 10);
 
       startEvent = currentEvent;
     }
@@ -211,8 +233,12 @@ var frequencyDialer = {
       // Add animation back
       $('frequency-dialer').classList.add('animation-on');
 
-      var targetFrequency = _calcTargetFrequency(true);
-      tunedFrequency = self.setFrequency(targetFrequency);
+      // Add momentum if speed is higher than a given threshold.
+      if (Math.abs(currentSpeed) > SPEED_THRESHOLD) {
+        var direction = currentSpeed > 0 ? 1 : -1;
+        tunedFrequency += Math.min(Math.abs(currentSpeed) * 5, 5) * direction;
+      }
+      tunedFrequency = self.setFrequency(toFixed(tunedFrequency));
 
       var req = mozFMRadio.setFrequency(tunedFrequency);
       req.onerror = function onerror_setFrequency() {
@@ -293,13 +319,15 @@ var frequencyDialer = {
     $('frequency-dialer').appendChild(unit);
   },
 
-  _updateUI: function(frequency) {
-    $('frequency-dialer').style.left =
-            (this._minFrequency - frequency) * this._space + 'px';
+  _updateUI: function(frequency, ignoreDialer) {
     $('frequency').textContent = parseFloat(frequency.toFixed(1));
+    if (true !== ignoreDialer) {
+      $('frequency-dialer').style.left =
+            (this._minFrequency - frequency) * this._space + 'px';
+    }
   },
 
-  setFrequency: function(frequency) {
+  setFrequency: function(frequency, ignoreDialer) {
     if (frequency < mozFMRadio.bandRanges.FM.lower) {
       frequency = mozFMRadio.bandRanges.FM.lower;
     }
@@ -309,7 +337,7 @@ var frequencyDialer = {
     }
 
     this._currentFreqency = frequency;
-    this._updateUI(frequency);
+    this._updateUI(frequency, ignoreDialer);
 
     return frequency;
   }
