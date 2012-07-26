@@ -159,59 +159,82 @@ var frequencyDialer = {
   },
 
   _addEventListeners: function() {
-    var self = this;
-    var _initMouseX = 0;
-    var _initDialerX = 0;
-    var _initFrequency = 0;
-
-    function _calcTargetFrequency(event) {
-      var space = $('frequency-dialer').clientWidth /
-                 (self._maxFrequency - self._minFrequency + 1);
-      var movingSpace = event.clientX - _initMouseX;
-      var targetFrequency = _initFrequency - movingSpace / space;
-      return parseFloat(targetFrequency.toFixed(1));
-    }
-
-    var _movetimeout = null;
-    function fd_body_mousemove(event) {
-      window.clearTimeout(_movetimeout);
-      window.setTimeout(function fd_body_mousemove_timeout() {
-        var targetFrequency = _calcTargetFrequency(event);
-        self.setFrequency(targetFrequency);
-      }, 100);
-    }
-
-    function fd_body_mouseup(event) {
-      _removeEventListeners();
-
-      var targetFrequency = _calcTargetFrequency(event);
-      self.setFrequency(targetFrequency);
-      var req = mozFMRadio.setFrequency(targetFrequency);
-      req.onerror = function onerror_setFrequency() {
-        self.setFrequency(mozFMRadio.frequency);
-      };
-
-      $('frequency-dialer').classList.add('animation-on');
-    }
-
     function _removeEventListeners() {
       document.body.removeEventListener('mouseup', fd_body_mouseup, false);
       document.body.removeEventListener('mousemove', fd_body_mousemove, false);
     }
 
-    $('frequency-dialer').addEventListener('mousedown',
-        function fd_mousedown(evt) {
-          var dialer = $('frequency-dialer');
-          dialer.classList.remove('animation-on');
-          _initMouseX = evt.clientX;
-          _initDialerX = parseInt(dialer.style.left);
-          _initFrequency = self._currentFreqency;
+    function cloneEvent(evt) {
+      if ('touches' in evt) {
+        evt = evt.touches[0];
+      }
+      return { x: evt.pageX, y: evt.pageY, timestamp: evt.timeStamp };
+    }
 
-          _removeEventListeners();
-          document.body.addEventListener('mousemove', fd_body_mousemove, false);
-          document.body.addEventListener('mouseup', fd_body_mouseup, false);
-        }
-    , false);
+    var self = this;
+    var currentEvent, startEvent, currentSpeed;
+    var tunedFrequency = 0;
+
+    function _calcSpeed() {
+      var movingSpace = startEvent.x - currentEvent.x;
+      var deltaTime = currentEvent.timestamp - startEvent.timestamp;
+      var speed = movingSpace / deltaTime;
+      currentSpeed = parseFloat(speed.toFixed(1));
+    }
+
+    function _calcTargetFrequency(momentum) {
+      var movingSpace = currentEvent.x - startEvent.x;
+      var targetFrequency = tunedFrequency - movingSpace / self._space;
+      if (momentum === true) {
+        var direction = currentSpeed > 0 ? 1 : -1;
+        targetFrequency += Math.min(Math.abs(currentSpeed) * 5, 5) * direction;
+      }
+      return targetFrequency;
+    }
+
+    function fd_body_mousemove(event) {
+      event.stopPropagation();
+      currentEvent = cloneEvent(event);
+
+      _calcSpeed();
+
+      var targetFrequency = _calcTargetFrequency();
+      tunedFrequency = self.setFrequency(targetFrequency);
+
+      startEvent = currentEvent;
+    }
+
+    function fd_body_mouseup(event) {
+      event.stopPropagation();
+      _removeEventListeners();
+
+      // Add animation back
+      $('frequency-dialer').classList.add('animation-on');
+
+      var targetFrequency = _calcTargetFrequency(true);
+      tunedFrequency = self.setFrequency(targetFrequency);
+
+      var req = mozFMRadio.setFrequency(tunedFrequency);
+      req.onerror = function onerror_setFrequency() {
+        tunedFrequency = self.setFrequency(mozFMRadio.frequency);
+      };
+    }
+
+    function fd_mousedown(event) {
+      event.stopPropagation();
+
+      // Stop animation
+      $('frequency-dialer').classList.remove('animation-on');
+
+      startEvent = currentEvent = cloneEvent(event);
+      tunedFrequency = self._currentFreqency;
+
+      _removeEventListeners();
+      document.body.addEventListener('mousemove', fd_body_mousemove, false);
+      document.body.addEventListener('mouseup', fd_body_mouseup, false);
+    }
+
+    $('frequency-dialer').addEventListener('mousedown', fd_mousedown, false);
   },
 
   _initUI: function() {
@@ -231,55 +254,64 @@ var frequencyDialer = {
       end = upper < end ? upper : end;
       this._addDialerUnit(start, end);
     }
+
+    // cache the size of dialer
+    this._dialerUnits = $$('#frequency-dialer .dialer-unit');
+    this._dialerWidth = this._dialerUnits[0].clientWidth *
+                                     this._dialerUnits.length;
+    this._space = this._dialerWidth /
+                    (this._maxFrequency - this._minFrequency);
   },
 
   _addDialerUnit: function(start, end) {
     var showFloor = start % this.unit == 0;
     var markStart = start - start % this.unit;
-    var html = [];
+    var html = '';
 
     if (showFloor) {
-      html.push('<div class="dialer-unit-floor">' + start + '</div>');
+      html += '<div class="dialer-unit-floor">' + start + '</div>';
     } else {
-      html.push('  <div class="dialer-unit-floor hidden-block">' +
-                        start + '</div>');
+      html += '  <div class="dialer-unit-floor hidden-block">' +
+                        start + '</div>';
     }
-    html.push('    <div class="dialer-unit-mark-box">');
+    html += '    <div class="dialer-unit-mark-box">';
 
     for (var i = 0; i < this.unit; i++) {
       if (markStart + i < start || markStart + i > end) {
-        html.push('    <div class="dialer-mark hidden-block"></div>');
+        html += '    <div class="dialer-mark hidden-block"></div>';
       } else {
-        html.push('    <div class="dialer-mark ' +
-                            (0 == i ? 'dialer-mark-long' : '') + '"></div>');
+        html += '    <div class="dialer-mark ' +
+                            (0 == i ? 'dialer-mark-long' : '') + '"></div>';
       }
     }
 
-    html.push('    </div>');
-    html.push('  </div>');
+    html += '    </div>';
+    html += '  </div>';
     var unit = document.createElement('div');
     unit.className = 'dialer-unit';
-    unit.innerHTML = html.join('');
+    unit.innerHTML = html;
     $('frequency-dialer').appendChild(unit);
   },
 
-  _updateUI: function() {
-    var dialerUnits = $$('#frequency-dialer .dialer-unit');
-    var dialerWidth = dialerUnits[0].clientWidth * dialerUnits.length;
-    var space = dialerWidth /
-                 (this._maxFrequency - this._minFrequency);
+  _updateUI: function(frequency) {
     $('frequency-dialer').style.left =
-            (this._minFrequency - this._currentFreqency) * space + 'px';
-    $('frequency').textContent = this._currentFreqency;
+            (this._minFrequency - frequency) * this._space + 'px';
+    $('frequency').textContent = parseFloat(frequency.toFixed(1));
   },
 
   setFrequency: function(frequency) {
-    if (frequency < mozFMRadio.bandRanges.FM.lower ||
-                   frequency > mozFMRadio.bandRanges.FM.upper) {
-      return;
+    if (frequency < mozFMRadio.bandRanges.FM.lower) {
+      frequency = mozFMRadio.bandRanges.FM.lower;
     }
+
+    if (frequency > mozFMRadio.bandRanges.FM.upper) {
+      frequency = mozFMRadio.bandRanges.FM.upper;
+    }
+
     this._currentFreqency = frequency;
-    this._updateUI();
+    this._updateUI(frequency);
+
+    return frequency;
   }
 };
 
@@ -323,12 +355,12 @@ var favoritesList = {
     var elem = document.createElement('div');
     elem.id = this._getUIElemId(item);
     elem.className = 'fav-list-item';
-    var html = [];
-    html.push('<div class="fav-list-remove-button"></div>');
-    html.push('<label class="fav-list-frequency">');
-    html.push(item.frequency.toFixed(1));
-    html.push('</label>');
-    elem.innerHTML = html.join('');
+    var html = '';
+    html += '<div class="fav-list-remove-button"></div>';
+    html += '<label class="fav-list-frequency">';
+    html += item.frequency.toFixed(1);
+    html += '</label>';
+    elem.innerHTML = html;
 
     // keep list ascending sorted
     if (container.childNodes.length == 0) {
