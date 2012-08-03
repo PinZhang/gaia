@@ -9,7 +9,7 @@ function $$(expr) {
 }
 
 // XXX fake mozFMRadio object for UI testing on PC
-var mozFMRadio = navigator.mozFMRadio || {
+var mozFMRadio = navigator.mozFM || navigator.mozFMRadio || {
   speakerEnabled: false,
 
   frequency: 91.5,
@@ -147,7 +147,7 @@ function updateAntennaUI() {
 }
 
 var frequencyDialer = {
-  unit: 5,
+  unit: 1,
   _minFrequency: 0,
   _maxFrequency: 0,
   _currentFreqency: 0,
@@ -230,7 +230,7 @@ var frequencyDialer = {
       // Add momentum if speed is higher than a given threshold.
       if (Math.abs(currentSpeed) > SPEED_THRESHOLD) {
         var direction = currentSpeed > 0 ? 1 : -1;
-        tunedFrequency += Math.min(Math.abs(currentSpeed) * 5, 5) * direction;
+        tunedFrequency += Math.min(Math.abs(currentSpeed) * 3, 3) * direction;
       }
       tunedFrequency = self.setFrequency(toFixed(tunedFrequency));
 
@@ -288,17 +288,15 @@ var frequencyDialer = {
     var markStart = start - start % this.unit;
     var html = '';
 
-    if (showFloor) {
-      html += '<div class="dialer-unit-floor">' + start + '</div>';
-    } else {
-      html += '  <div class="dialer-unit-floor hidden-block">' +
-                        start + '</div>';
-    }
     html += '    <div class="dialer-unit-mark-box">';
 
-    for (var i = 0; i < this.unit; i++) {
-      if (markStart + i < start || markStart + i > end) {
+    var total = this.unit * 10;     // 0.1MHz
+    for (var i = 0; i < total; i++) {
+      var dialValue = markStart + i * 0.1;
+      if (dialValue < start || dialValue > end) {
         html += '    <div class="dialer-mark hidden-block"></div>';
+      } else if (i == 5) {
+        html += '    <div class="dialer-mark dialer-mark-middle"></div>';
       } else {
         html += '    <div class="dialer-mark ' +
                             (0 == i ? 'dialer-mark-long' : '') + '"></div>';
@@ -306,6 +304,14 @@ var frequencyDialer = {
     }
 
     html += '    </div>';
+
+    if (showFloor) {
+      html += '<div class="dialer-unit-floor">' + start + '</div>';
+    } else {
+      html += '  <div class="dialer-unit-floor hidden-block">' +
+                        start + '</div>';
+    }
+
     html += '  </div>';
     var unit = document.createElement('div');
     unit.className = 'dialer-unit';
@@ -378,10 +384,10 @@ var favoritesList = {
     elem.id = this._getUIElemId(item);
     elem.className = 'fav-list-item';
     var html = '';
-    html += '<div class="fav-list-remove-button"></div>';
-    html += '<label class="fav-list-frequency">';
+    html += '<div class="fav-list-frequency">';
     html += item.frequency.toFixed(1);
-    html += '</label>';
+    html += '</div>';
+    html += '<div class="fav-list-remove-button"></div>';
     elem.innerHTML = html;
 
     // keep list ascending sorted
@@ -526,6 +532,7 @@ function init() {
   mozFMRadio.onenabled = updatePowerUI;
   mozFMRadio.ondisabled = updatePowerUI;
   mozFMRadio.onantennachange = function onAntennaChange() {
+    console.log("Antenna is changed! " + mozFMRadio.antennaAvailable);
     updateAntennaUI();
     if (mozFMRadio.antennaAvailable) {
       enableFM(true);
