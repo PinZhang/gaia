@@ -191,12 +191,9 @@ var frequencyDialer = {
       return tunedFrequency - getMovingSpace() / self._space;
     }
 
-    // If the user swap really slow, narrow down the moving space
-    // So the user can fine tune frequency.
     function getMovingSpace() {
       var movingSpace = currentEvent.x - startEvent.x;
-      return Math.abs(currentSpeed) > SPEED_THRESHOLD ?
-                                  movingSpace : movingSpace / 4;
+      return movingSpace;
     }
 
     function fd_body_mousemove(event) {
@@ -480,7 +477,7 @@ function init() {
 
   var seeking = false;
   function onclick_seekbutton(event) {
-    var seekButton = event.target;
+    var seekButton = this;
 
     if (seeking) {
       mozFMRadio.cancelSeek();

@@ -236,7 +236,7 @@ div#fav-list-container > div {
 }
 
 div#fav-list-container > div:active {
-  background-color: lightGray;
+  background-color: #00ABCD;
 }
 
 div#fav-list-container > div:first-child {
@@ -326,54 +326,106 @@ div#fav-list-container div.fav-list-frequency::after {
   box-shadow: 0 1px 1px #3F6978 inset, 0 1px 0 #2A2A2A, 1px 3px 6px #000000;
 }
 
-#power-switch::after {
-  content: "▶";
-  position: relative;
-  left: 0.3rem;
-  top: -0.3rem;
-  font-size: 5rem;
+#power-switch > div {
+  margin: 2.2rem 2.8rem;
+  height: 0;
+  width: 0;
+  border-top: 1.3rem solid transparent;
+  border-bottom: 1.3rem solid transparent;
+  border-left: 2rem solid #FFF;
 }
 
-#power-switch[data-enabled="true"]::after {
-  content: "▪";
-  top: 0rem;
-  left: 0;
+#power-switch[data-enabled="true"] > div {
+  background: none repeat scroll 0 0 #FFFFFF;
+  border: medium none;
+  border-radius: 0.2rem 0.2rem 0.2rem 0.2rem;
+  height: 2rem;
+  margin: 2.5rem;
+  width: 2rem;
 }
 
 a#frequency-op-seekdown {
-  width: 4.6rem;
-  height: 4.6rem;
+  width: 5rem;
+  height: 5rem;
   margin: 1rem 0;
 }
 
-#frequency-op-seekdown::after {
-  content: "‹";
-  position: relative;
-  top: -1.5rem;
-  left: 0rem;
+a#frequency-op-seekdown > div {
+  -moz-box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  padding: 1.6rem;
+}
+
+a#frequency-op-seekdown > div > div {
+  float: left;
+}
+
+a#frequency-op-seekdown > div > div:first-child {
+  height: 100%;
+  width: 0.3rem;
+  background-color: #FFF;
+}
+
+a#frequency-op-seekdown > div > div:last-child {
+  height: 0;
+  width: 0;
+  border-bottom: 0.9rem solid transparent;
+  border-right: 1.5rem solid #FFF;
+  border-top: 0.9rem solid transparent;
+}
+
+#frequency-op-seekdown[data-status="seeking"] div {
+  display: none;
 }
 
 #frequency-op-seekdown[data-status="seeking"]::after {
+  position: relative;
   content: "...";
   top: -2.4rem;
+  left: 0;
 }
 
 a#frequency-op-seekup {
-  width: 4.6rem;
-  height: 4.6rem;
+  width: 5rem;
+  height: 5rem;
   margin: 1rem 0;
 }
 
-#frequency-op-seekup::after {
-  content: "›";
-  position: relative;
-  top: -1.5rem;
-  left: 0rem;
+a#frequency-op-seekup > div {
+  -moz-box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  padding: 1.6rem;
+}
+
+a#frequency-op-seekup > div > div {
+  float: right;
+}
+
+a#frequency-op-seekup > div > div:first-child {
+  height: 100%;
+  width: 0.3rem;
+  background-color: #FFF;
+}
+
+a#frequency-op-seekup > div > div:last-child {
+  height: 0;
+  width: 0;
+  border-bottom: 0.9rem solid transparent;
+  border-left: 1.5rem solid #FFF;
+  border-top: 0.9rem solid transparent;
+}
+
+#frequency-op-seekup[data-status="seeking"] div {
+  display: none;
 }
 
 #frequency-op-seekup[data-status="seeking"]::after {
+  position: relative;
   content: "...";
   top: -2.4rem;
+  left: 0;
 }
 /**** end ****/
 
