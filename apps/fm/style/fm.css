@@ -70,27 +70,24 @@ a:active {
   left: 5px;
   line-height: 4rem;
   width: 4rem;
+  height: 4rem;
   font-size: 3rem;
   border-radius: 50%;
   box-shadow: 0 -1px 1px #111;
 }
 
-#audio-routing-switch:focus {
-  border-color: #888;
-}
-
-#audio-routing-switch:active {
-  color: #FFF;
+#audio-routing-switch[data-current-state="speaker"]:active,
+#audio-routing-switch[data-current-state="headset"]:active {
   background-color: #00ABCD;
   border-color: #00ABCD;
 }
 
-#audio-routing-switch[data-current-state="speaker"]::after {
-  content: "S";
+#audio-routing-switch[data-current-state="speaker"] {
+  background: url("images/toggle-speaker-on.png") no-repeat scroll center center transparent;
 }
 
-#audio-routing-switch[data-current-state="headset"]::after {
-  content: "H";
+#audio-routing-switch[data-current-state="headset"] {
+  background: url("images/toggle-speaker-off.png") no-repeat scroll center center transparent;
 }
 
 #bookmark-button {
@@ -102,24 +99,21 @@ a:active {
   height: 4rem;
   border-radius: 50%;
   box-shadow: 0 -1px 1px #111;
+  background: url("images/toggle-fav-star-off.png") no-repeat scroll center center transparent;
 }
 
 #bookmark-button:focus {
   border-color: #888;
 }
 
-#bookmark-button:active {
-  color: #FFF;
+#bookmark-button:active,
+#bookmark-button[data-bookmarked="true"]:active {
   background-color: #00ABCD;
   border-color: #00ABCD;
 }
 
-#bookmark-button::after {
-  content: "☆";
-}
-
-#bookmark-button[data-bookmarked="true"]::after {
-  content: "★";
+#bookmark-button[data-bookmarked="true"] {
+  background: url("images/toggle-fav-star-on.png") no-repeat scroll center center transparent;
 }
 /*****  end  *****/
 
@@ -229,10 +223,6 @@ div#fav-list-container > div {
   margin: 0 2rem;
   clear: both;
   border-top: 1px solid #3D4045;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  box-sizing: border-box;
 }
 
 div#fav-list-container > div:active {
