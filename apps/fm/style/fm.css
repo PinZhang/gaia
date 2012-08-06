@@ -253,18 +253,15 @@ div#fav-list-container div.fav-list-remove-button {
   margin-left: 2rem;
   float: right;
   cursor: pointer;
+  background: url("images/fav-star-on.png") no-repeat scroll center center transparent;
 }
 
-div#fav-list-container div.fav-list-remove-button::before {
-  content: "★";
-  font-size: 3rem;
-  margin: 0 0 0 8rem;
-  left: -7rem;
-  position: relative;
+div#fav-list-container div.selected div.fav-list-remove-button {
+  background: url("images/fav-star-on-selected.png") no-repeat scroll center center transparent;
 }
 
-div#fav-list-container div.fav-list-remove-button:active::before {
-  content: "☆" !important;
+div#fav-list-container div.fav-list-remove-button:active {
+  background: url("images/fav-star-off.png") no-repeat scroll center center transparent;
 }
 
 div#fav-list-container div.fav-list-frequency {

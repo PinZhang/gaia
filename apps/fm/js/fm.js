@@ -128,6 +128,7 @@ function enableFM(enable) {
 
 function updateFreqUI() {
   frequencyDialer.setFrequency(mozFMRadio.frequency);
+  favoritesList.select(mozFMRadio.frequency);
   $('bookmark-button').setAttribute('data-bookmarked',
        favoritesList.contains(mozFMRadio.frequency));
 }
@@ -468,6 +469,18 @@ var favoritesList = {
     delete this._favList[freq];
     this._save();
     return exists;
+  },
+
+  select: function(freq) {
+    var items = $$('#fav-list-container div.fav-list-item');
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i];
+      if (this._getElemFreq(item) == freq) {
+        item.classList.add('selected');
+      } else {
+        item.classList.remove('selected');
+      }
+    }
   }
 };
 
