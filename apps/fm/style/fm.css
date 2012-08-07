@@ -142,9 +142,9 @@ a:active {
 #frequency-indicator {
   border-radius: 50%/0.2rem;
   height: 8.6rem;
-  margin: 0.2rem 0;
-  position: absolute;
   width: 0.6rem;
+  margin: 0.2rem 0 0 -0.1rem;
+  position: absolute;
   z-index: 1;
   background: -moz-linear-gradient(center top, rgba(80,80,80,0.8), rgba(135,135,135,0.8)) repeat scroll 0 0 transparent;
   box-shadow: 0 1px 1px #888 inset, 1px 3px 3px #444;
@@ -195,29 +195,23 @@ div.animation-on {
 }
 
 #frequency-dialer .dialer-mark {
-  height: 100%;
-  line-height: 3rem;
-  width: 1.6rem;
   float: left;
-  font-size: 0.8rem;
-  font-weight: bold;
-  color: gray;
-}
-
-#frequency-dialer .dialer-mark::after {
-  content: "|";
-  position: absolute;
-  bottom: 0;
-}
-
-#frequency-dialer .dialer-mark-long {
-  font-size: 2rem;
-  color: #FFF;
+  width: 0.2rem;
+  height: 1rem;
+  margin: 4rem 1.3rem 0 0.1rem;
+  background-color: #6A6E71;
 }
 
 #frequency-dialer .dialer-mark-middle {
-  font-size: 1.6rem;
-  color: #FFF;
+  height: 1.2rem;
+  margin-top: 3.9rem;
+  background-color: #B0B3B4;
+}
+
+#frequency-dialer .dialer-mark-long {
+  height: 2.2rem;
+  margin-top: 3.4rem;
+  background-color: #C2C3C4;
 }
 /**** end *******/
 
