@@ -140,14 +140,32 @@ a:active {
 }
 
 #frequency-indicator {
+  border-radius: 50%/0.2rem;
+  height: 8.6rem;
+  margin: 0.2rem 0;
   position: absolute;
-  z-Index: 1;
-  width: 1rem;
-  height: 100%;
+  width: 0.6rem;
+  z-index: 1;
+  background: -moz-linear-gradient(center top, rgba(80,80,80,0.8), rgba(135,135,135,0.8)) repeat scroll 0 0 transparent;
+  box-shadow: 0 1px 1px #888 inset, 1px 3px 3px #444;
 }
 
-#frequency-indicator::after {
-  content: "|";
+#frequency-indicator > div:first-child {
+  height: 6rem;
+  width: 0.2rem;
+  position: absolute;
+  top: 0.8rem;
+  left: 0.2rem;
+  background: -moz-linear-gradient(center top, rgba(56,120,131,0.8), rgba(77,144,155,0.8)) repeat scroll 0 0 transparent;
+}
+
+#frequency-indicator > div:last-child {
+  background-color: #ABADAF;
+  border-radius: 50%/0.2rem;
+  height: 1rem;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
 }
 
 div.animation-on {
