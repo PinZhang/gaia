@@ -169,8 +169,7 @@ a:active {
 }
 
 div.animation-on {
-  -moz-transition-duration: 0.5s;
-  -moz-transition-property: top, left;
+  transition: -moz-transform 0.4s ease 0s;
 }
 
 #frequency-dialer {

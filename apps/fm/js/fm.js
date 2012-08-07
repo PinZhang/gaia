@@ -152,6 +152,7 @@ var frequencyDialer = {
   _minFrequency: 0,
   _maxFrequency: 0,
   _currentFreqency: 0,
+  _translateX: 0,
 
   init: function() {
     this._initUI();
@@ -205,8 +206,9 @@ var frequencyDialer = {
 
       // move dialer
       var dialer = $('frequency-dialer');
-      dialer.style.left = parseFloat(dialer.style.left) +
-                                getMovingSpace() + 'px';
+      var translateX = self._translateX + getMovingSpace();
+      self._translateX = translateX;
+      dialer.style.MozTransform = 'translate(' + translateX + 'px, 0)';
 
       tunedFrequency = _calcTargetFrequency();
       var roundedFrequency = Math.round(tunedFrequency * 10) / 10;
@@ -320,8 +322,9 @@ var frequencyDialer = {
   _updateUI: function(frequency, ignoreDialer) {
     $('frequency').textContent = parseFloat(frequency.toFixed(1));
     if (true !== ignoreDialer) {
-      $('frequency-dialer').style.left =
-            (this._minFrequency - frequency) * this._space + 'px';
+      this._translateX = (this._minFrequency - frequency) * this._space;
+      $('frequency-dialer').style.MozTransform =
+                              'translate(' + this._translateX + 'px, 0)';
     }
   },
 
