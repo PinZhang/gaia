@@ -252,7 +252,7 @@ var frequencyDialer = {
       document.body.addEventListener('mouseup', fd_body_mouseup, false);
     }
 
-    $('frequency-dialer').addEventListener('mousedown', fd_mousedown, false);
+    $('dialer-container').addEventListener('mousedown', fd_mousedown, false);
   },
 
   _initUI: function() {
@@ -542,7 +542,6 @@ function init() {
   mozFMRadio.onenabled = updatePowerUI;
   mozFMRadio.ondisabled = updatePowerUI;
   mozFMRadio.onantennachange = function onAntennaChange() {
-    console.log("Antenna is changed! " + mozFMRadio.antennaAvailable);
     updateAntennaUI();
     if (mozFMRadio.antennaAvailable) {
       enableFM(true);
