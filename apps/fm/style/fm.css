@@ -125,7 +125,7 @@ a:active {
   background: -moz-linear-gradient(center top , #4C5055, #5C6064) repeat scroll 0 0 transparent;
   border-top: 1px solid #3A3D41;
   color: #FFF;
-  box-shadow: 0 2px 3px #333;
+  box-shadow: 0 3px 4px #111;
 }
 
 #dialer-container {
@@ -140,7 +140,7 @@ a:active {
 }
 
 #frequency-indicator {
-  border-radius: 50%/0.2rem;
+  border-radius: 50%/0.1rem;
   height: 8.6rem;
   width: 0.6rem;
   margin: 0.2rem 0 0 -0.1rem;
@@ -161,7 +161,7 @@ a:active {
 
 #frequency-indicator > div:last-child {
   background-color: #ABADAF;
-  border-radius: 50%/0.2rem;
+  border-radius: 50%/0.1rem;
   height: 1rem;
   width: 100%;
   position: absolute;
@@ -249,7 +249,7 @@ div#fav-list-container > div:last-child {
 }
 
 div#fav-list-container div.fav-list-remove-button {
-  height: 4rem;
+  height: 100%;
   width: 4rem;
   margin-left: 2rem;
   float: right;
@@ -270,6 +270,8 @@ div#fav-list-container div.fav-list-frequency {
   padding-right: -moz-calc(50% - 10rem);
   text-align: right;
   width: 14rem;
+  height: 100%;
+  line-height: 4.3rem;
 }
 
 div#fav-list-container div.fav-list-frequency::after {
@@ -285,6 +287,7 @@ div#fav-list-container div.fav-list-frequency::after {
   display: -moz-box;
   -moz-box-orient: horizontal;
   border-top: 0.1rem solid #3A3E46;
+  box-shadow: 0 0 2px #111;
 }
 
 /* Styles for action bar */
