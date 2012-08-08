@@ -6,6 +6,7 @@ html, body {
   overflow: hidden;
   font-size: 62.5%;
   color: #FFF;
+  font-family:'Open Sans';
 }
 
 body {
@@ -46,40 +47,51 @@ a:active {
 
 /****** styles for frequency view *******/
 #frequency-view {
-  height: 8rem;
+  height: 10rem;
   width: 100%;
   text-align: center;
   background: -moz-linear-gradient(center top , #33373C, #43464B) repeat scroll 0 0 transparent;
   -moz-box-flex: 0;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  overflow: hidden;
 }
 
-#frequency {
-  font-size: 7rem;
-  color: #fff;
+#frequency-view > div {
+  text-align: center;
+  -moz-box-flex: 1;
 }
 
-#frequency::after {
-  content: "MHz";
-  font-size: 2rem;
-  padding-left: 0.3rem;
-}
-
-#audio-routing-switch {
-  position: absolute;
-  top: 5px;
-  left: 5px;
+#frequency-view a {
   line-height: 4rem;
   width: 4rem;
   height: 4rem;
   font-size: 3rem;
   border-radius: 50%;
-  box-shadow: 0 -1px 1px #111;
+  display: inline-block;
+  margin-top: 3rem;
+  box-shadow: 0 1px 1px #111 inset;
+}
+
+#frequency {
+  font-size: 28pt;
+  font-weight: lighter;
+  color: #fff;
+  padding-top: 2.5rem;
+  width: 12rem;
+}
+
+#frequency::after {
+  content: "MHz";
+  font-size: 7pt;
+  padding-left: 0.3rem;
 }
 
 #audio-routing-switch[data-current-state="speaker"]:active,
 #audio-routing-switch[data-current-state="headset"]:active {
   background-color: #00ABCD;
   border-color: #00ABCD;
+  background: url("images/toggle-speaker-pressed.png") no-repeat scroll center center transparent;
 }
 
 #audio-routing-switch[data-current-state="speaker"] {
@@ -91,14 +103,6 @@ a:active {
 }
 
 #bookmark-button {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  font-size: 3rem;
-  width: 4rem;
-  height: 4rem;
-  border-radius: 50%;
-  box-shadow: 0 -1px 1px #111;
   background: url("images/toggle-fav-star-off.png") no-repeat scroll center center transparent;
 }
 
@@ -108,7 +112,7 @@ a:active {
 
 #bookmark-button:active,
 #bookmark-button[data-bookmarked="true"]:active {
-  background-color: #00ABCD;
+  background: url("images/toggle-fav-star-pressed.png") no-repeat scroll center center transparent;
   border-color: #00ABCD;
 }
 
@@ -119,7 +123,8 @@ a:active {
 
 /**** styles for frequency dialer *****/
 #dialer-bar {
-  font-size: 1rem;
+  font-size: 6pt;
+  font-weight: lighter;
   height: 9rem;
   overflow: hidden;
   background: -moz-linear-gradient(center top , #4C5055, #5C6064) repeat scroll 0 0 transparent;
@@ -142,30 +147,11 @@ a:active {
 #frequency-indicator {
   border-radius: 50%/0.1rem;
   height: 8.6rem;
-  width: 0.6rem;
-  margin: 0.2rem 0 0 -0.1rem;
+  width: 1.6rem;
+  margin: 0.6rem 0 0 -0.8rem;
   position: absolute;
   z-index: 1;
-  background: -moz-linear-gradient(center top, rgba(80,80,80,0.8), rgba(135,135,135,0.8)) repeat scroll 0 0 transparent;
-  box-shadow: 0 1px 1px #888 inset, 1px 3px 3px #444;
-}
-
-#frequency-indicator > div:first-child {
-  height: 6rem;
-  width: 0.2rem;
-  position: absolute;
-  top: 0.8rem;
-  left: 0.2rem;
-  background: -moz-linear-gradient(center top, rgba(56,120,131,0.8), rgba(77,144,155,0.8)) repeat scroll 0 0 transparent;
-}
-
-#frequency-indicator > div:last-child {
-  background-color: #ABADAF;
-  border-radius: 50%/0.1rem;
-  height: 1rem;
-  width: 100%;
-  position: absolute;
-  bottom: 0;
+  background: url(images/selector.png) no-repeat center center transparent;
 }
 
 div.animation-on {
@@ -177,6 +163,7 @@ div.animation-on {
   display: -moz-inline-box;
   -moz-user-select: none;
   width: 100%;
+  margin-left: -0.2rem;
 }
 
 #frequency-dialer .dialer-unit-mark-box {
@@ -229,8 +216,9 @@ div#fav-list-container {
 }
 
 div#fav-list-container > div {
-  font-size: 3rem;
-  height: 4.5rem;
+  font-size: 10pt;
+  font-weight: lighter;
+  height: 4.4rem;
   margin: 0 2rem;
   clear: both;
   border-top: 1px solid #3D4045;
@@ -261,23 +249,18 @@ div#fav-list-container div.selected div.fav-list-remove-button {
   background: url("images/fav-star-on-selected.png") no-repeat scroll center center transparent;
 }
 
-div#fav-list-container div.fav-list-remove-button:active {
-  background: url("images/fav-star-off.png") no-repeat scroll center center transparent;
-}
-
 div#fav-list-container div.fav-list-frequency {
   float: right;
-  padding-right: -moz-calc(50% - 10rem);
+  padding: 1.4rem 50% 0 0;
   text-align: right;
-  width: 14rem;
-  height: 100%;
-  line-height: 4.3rem;
+  width: 4rem;
 }
 
 div#fav-list-container div.fav-list-frequency::after {
   content: "MHz";
-  font-size: 2rem;
-  padding-left: 1rem;
+  font-size: 7pt;
+  position: absolute;
+  padding: 0.5rem 0 0 1rem;
 }
 /***** end *****/
 
@@ -327,57 +310,23 @@ div#fav-list-container div.fav-list-frequency::after {
   box-shadow: 0 1px 1px #3F6978 inset, 0 2px 0 #2A2A2A;
 }
 
-#power-switch > div {
-  margin: 2.2rem 2.8rem;
-  height: 0;
-  width: 0;
-  border-top: 1.3rem solid transparent;
-  border-bottom: 1.3rem solid transparent;
-  border-left: 2rem solid #FFF;
+#power-switch {
+  background: url(images/play.png) no-repeat center center transparent;
 }
 
-#power-switch[data-enabled="true"] > div {
-  background: none repeat scroll 0 0 #FFFFFF;
-  border: medium none;
-  border-radius: 0.2rem 0.2rem 0.2rem 0.2rem;
-  height: 2rem;
-  margin: 2.5rem;
-  width: 2rem;
+#power-switch[data-enabled="true"] {
+  background: url(images/stop.png) no-repeat center center transparent;
 }
 
 a#frequency-op-seekdown {
   width: 5rem;
   height: 5rem;
   margin: 1rem 0;
+  background: url(images/seekdown.png) no-repeat center center transparent;
 }
 
-a#frequency-op-seekdown > div {
-  -moz-box-sizing: border-box;
-  height: 100%;
-  width: 100%;
-  padding: 1.6rem;
-}
-
-a#frequency-op-seekdown > div > div {
-  float: left;
-}
-
-a#frequency-op-seekdown > div > div:first-child {
-  height: 100%;
-  width: 0.3rem;
-  background-color: #FFF;
-}
-
-a#frequency-op-seekdown > div > div:last-child {
-  height: 0;
-  width: 0;
-  border-bottom: 0.9rem solid transparent;
-  border-right: 1.5rem solid #FFF;
-  border-top: 0.9rem solid transparent;
-}
-
-#frequency-op-seekdown[data-status="seeking"] div {
-  display: none;
+#frequency-op-seekdown[data-status="seeking"] {
+  background: none;
 }
 
 #frequency-op-seekdown[data-status="seeking"]::after {
@@ -391,35 +340,11 @@ a#frequency-op-seekup {
   width: 5rem;
   height: 5rem;
   margin: 1rem 0;
+  background: url(images/seekup.png) no-repeat center center transparent;
 }
 
-a#frequency-op-seekup > div {
-  -moz-box-sizing: border-box;
-  height: 100%;
-  width: 100%;
-  padding: 1.6rem;
-}
-
-a#frequency-op-seekup > div > div {
-  float: right;
-}
-
-a#frequency-op-seekup > div > div:first-child {
-  height: 100%;
-  width: 0.3rem;
-  background-color: #FFF;
-}
-
-a#frequency-op-seekup > div > div:last-child {
-  height: 0;
-  width: 0;
-  border-bottom: 0.9rem solid transparent;
-  border-left: 1.5rem solid #FFF;
-  border-top: 0.9rem solid transparent;
-}
-
-#frequency-op-seekup[data-status="seeking"] div {
-  display: none;
+#frequency-op-seekup[data-status="seeking"] {
+  background: none;
 }
 
 #frequency-op-seekup[data-status="seeking"]::after {
