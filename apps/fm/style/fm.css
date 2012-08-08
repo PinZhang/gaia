@@ -64,13 +64,13 @@ a:active {
 
 #frequency-view a {
   line-height: 4rem;
-  width: 4rem;
-  height: 4rem;
+  width: 3.8rem;
+  height: 3.8rem;
   font-size: 3rem;
   border-radius: 50%;
   display: inline-block;
   margin-top: 3rem;
-  box-shadow: 0 1px 1px #111 inset;
+  box-shadow: 0 -1px 1px #111;
 }
 
 #frequency {
@@ -208,14 +208,14 @@ div#fav-list {
 div#fav-list-container {
   max-height: 100%;
   position: absolute;
-  bottom: 2px;
+  bottom: 0;
   width: 100%;
 }
 
 div#fav-list-container > div {
   font-size: 10pt;
   font-weight: lighter;
-  height: 4.3rem;
+  height: 4.4rem;
   margin: 0 2rem;
   clear: both;
   border-top: 1px solid #3D4045;
@@ -268,6 +268,8 @@ div#fav-list-container div.fav-list-frequency::after {
   -moz-box-orient: horizontal;
   border-top: 0.1rem solid #3A3E46;
   box-shadow: 0 0 2px #111;
+  height: 9rem;
+  overflow: hidden;
 }
 
 /* Styles for action bar */
@@ -278,7 +280,7 @@ div#fav-list-container div.fav-list-frequency::after {
 
 #action-bar > div {
   text-align: center;
-  padding: 0.9rem 0;
+  padding: 1rem 0 0;
   -moz-box-flex: 1;
 }
 
