@@ -74,16 +74,16 @@ a:active {
 }
 
 #frequency {
-  font-size: 28pt;
+  font-size: 6rem;
   font-weight: lighter;
   color: #fff;
-  padding-top: 2.5rem;
+  padding-top: .5rem;
   width: 12rem;
 }
 
 #frequency::after {
   content: "MHz";
-  font-size: 7pt;
+  font-size: 1.52rem;
   padding-left: 0.3rem;
 }
 
@@ -120,7 +120,7 @@ a:active {
 
 /**** styles for frequency dialer *****/
 #dialer-bar {
-  font-size: 6pt;
+  font-size: 1.3rem;
   font-weight: lighter;
   height: 9rem;
   overflow: hidden;
@@ -213,7 +213,7 @@ div#fav-list-container {
 }
 
 div#fav-list-container > div {
-  font-size: 10pt;
+  font-size: 2.17rem;
   font-weight: lighter;
   height: 4.4rem;
   margin: 0 2rem;
@@ -248,16 +248,16 @@ div#fav-list-container div.selected div.fav-list-remove-button {
 
 div#fav-list-container div.fav-list-frequency {
   float: right;
-  padding: 1.4rem 50% 0 0;
+  padding: 0.8rem 50% 0 0;
   text-align: right;
-  width: 4rem;
+  width: 6rem;
 }
 
 div#fav-list-container div.fav-list-frequency::after {
   content: "MHz";
-  font-size: 7pt;
+  font-size: 1.52rem;
   position: absolute;
-  padding: 0.5rem 0 0 1rem;
+  padding: 0.6rem 0 0 1rem;
 }
 /***** end *****/
 
@@ -367,14 +367,14 @@ div#antenna-warning {
 }
 
 div#antenna-warning > div:first-child {
-  font-size: 7pt;
+  font-size: 1.52rem;
   padding: 27rem 0 1rem 2.5rem;
   background: url(images/headset.png) no-repeat center 8rem transparent;
 }
 
 
 div#antenna-warning > div:last-child {
-  font-size: 10pt;
+  font-size: 2.17rem;
   padding: 0.5rem;
   margin: 0 2rem;
   border-top: 1px solid #D8D8D8;
