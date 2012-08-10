@@ -46,7 +46,7 @@ a:active {
 }
 
 /****** styles for frequency view *******/
-#frequency-view {
+#frequency-bar {
   height: 10rem;
   width: 100%;
   text-align: center;
@@ -57,12 +57,12 @@ a:active {
   overflow: hidden;
 }
 
-#frequency-view > div {
+#frequency-bar > div {
   text-align: center;
   -moz-box-flex: 1;
 }
 
-#frequency-view a {
+#frequency-bar a {
   line-height: 4rem;
   width: 3.8rem;
   height: 3.8rem;
