@@ -355,7 +355,7 @@ a#frequency-op-seekup {
 /**** end ****/
 
 /***  styles for antenna warning box ****/
-div#antenna-warning {
+#antenna-warning {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -366,14 +366,18 @@ div#antenna-warning {
   background: url(images/popup-texture.png) repeat 0 0 transparent;
 }
 
-div#antenna-warning > div:first-child {
-  font-size: 1.52rem;
-  padding: 27rem 0 1rem 2.5rem;
-  background: url(images/headset.png) no-repeat center 8rem transparent;
+#antenna-warning > div:first-child {
+  height: 60%;
+  background: url(images/headset.png) no-repeat center center transparent;
 }
 
+#antenna-warning-header {
+  padding: 1rem 0 1rem 2.5rem;
+  font-size: 1.52rem;
+  margin-top: -2.5rem;
+}
 
-div#antenna-warning > div:last-child {
+#antenna-warning-body {
   font-size: 2.17rem;
   padding: 0.5rem;
   margin: 0 2rem;
