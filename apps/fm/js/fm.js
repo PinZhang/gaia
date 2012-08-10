@@ -41,11 +41,14 @@ var mozFMRadio = navigator.mozFM || navigator.mozFMRadio || {
     var previousValue = this.enabled;
     this.enabled = enabled;
     if (previousValue != enabled) {
-      if (this.enabled) {
-        this.onenabled();
-      } else {
-        this.ondisabled();
-      }
+      var self = this;
+      window.setTimeout(function() {
+        if (self.enabled) {
+          self.onenabled();
+        } else {
+          self.ondisabled();
+        }
+      }, 500);
     }
     return {};
   },
@@ -346,6 +349,7 @@ var frequencyDialer = {
 
 var favoritesList = {
   _favList: null,
+  _frequencyToBeSet: null,
 
   KEYNAME: 'favlist',
 
@@ -363,9 +367,22 @@ var favoritesList = {
         self.remove(self._getElemFreq(event.target));
         updateFreqUI();
       } else {
-        mozFMRadio.setFrequency(self._getElemFreq(event.target));
+        if (mozFMRadio.enabled) {
+          mozFMRadio.setFrequency(self._getElemFreq(event.target));
+        } else {
+          // If fm is disabled, then turnon the radio first
+          self._frequencyToBeSet = self._getElemFreq(event.target);
+          mozFMRadio.setEnabled(true);
+        }
       }
     }, false);
+  },
+
+  onFMEnabled: function() {
+    if (this._frequencyToBeSet) {
+      mozFMRadio.setFrequency(this._frequencyToBeSet);
+      _frequencyToBeSet = null;
+    }
   },
 
   _save: function() {
@@ -542,7 +559,10 @@ function init() {
   }, false);
 
   mozFMRadio.onfrequencychange = updateFreqUI;
-  mozFMRadio.onenabled = updatePowerUI;
+  mozFMRadio.onenabled = function() {
+    updatePowerUI();
+    favoritesList.onFMEnabled();
+  };
   mozFMRadio.ondisabled = updatePowerUI;
   mozFMRadio.onantennachange = function onAntennaChange() {
     updateAntennaUI();
