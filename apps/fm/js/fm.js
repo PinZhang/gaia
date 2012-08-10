@@ -131,9 +131,10 @@ function enableFM(enable) {
 
 function updateFreqUI() {
   frequencyDialer.setFrequency(mozFMRadio.frequency);
-  favoritesList.select(mozFMRadio.frequency);
+  var frequency = frequencyDialer.getFrequency();
+  favoritesList.select(frequency);
   $('bookmark-button').setAttribute('data-bookmarked',
-       favoritesList.contains(mozFMRadio.frequency));
+       favoritesList.contains(frequency));
 }
 
 function updatePowerUI() {
@@ -344,6 +345,10 @@ var frequencyDialer = {
     this._updateUI(frequency, ignoreDialer);
 
     return frequency;
+  },
+
+  getFrequency: function() {
+    return this._currentFreqency;
   }
 };
 
@@ -550,10 +555,11 @@ function init() {
   , false);
 
   $('bookmark-button').addEventListener('click', function toggle_bookmark() {
-    if (favoritesList.contains(mozFMRadio.frequency)) {
-      favoritesList.remove(mozFMRadio.frequency);
+    var frequency = frequencyDialer.getFrequency();
+    if (favoritesList.contains(frequency)) {
+      favoritesList.remove(frequency);
     } else {
-      favoritesList.add(mozFMRadio.frequency);
+      favoritesList.add(frequency);
     }
     updateFreqUI();
   }, false);
@@ -572,6 +578,7 @@ function init() {
   };
 
   updateFreqUI();
+  // Enable FM immediately
   enableFM(true);
   updatePowerUI();
   updateAudioUI();
