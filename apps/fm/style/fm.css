@@ -239,11 +239,11 @@ div#fav-list-container div.fav-list-remove-button {
   margin-left: 2rem;
   float: right;
   cursor: pointer;
-  background: url("images/fav-star-on.png") no-repeat scroll center center transparent;
+  background: url("images/fav-star.png") no-repeat scroll center center transparent;
 }
 
 div#fav-list-container div.selected div.fav-list-remove-button {
-  background: url("images/fav-star-on-selected.png") no-repeat scroll center center transparent;
+  background: url("images/fav-star-selected.png") no-repeat scroll center center transparent;
 }
 
 div#fav-list-container div.fav-list-frequency {
