@@ -51,18 +51,16 @@ a:active {
   width: 100%;
   text-align: center;
   background: -moz-linear-gradient(center top , #33373C, #43464B) repeat scroll 0 0 transparent;
-  -moz-box-flex: 0;
-  display: -moz-box;
-  -moz-box-orient: horizontal;
   overflow: hidden;
 }
 
 #frequency-bar > div {
   text-align: center;
-  -moz-box-flex: 1;
 }
 
 #frequency-bar a {
+  position: absolute;
+  z-index: 1;
   line-height: 4rem;
   width: 3.8rem;
   height: 3.8rem;
@@ -73,12 +71,21 @@ a:active {
   box-shadow: 0 -1px 1px #111;
 }
 
+#audio-routing-switch {
+  top: 0;
+  left: 2rem;
+}
+
+#bookmark-button {
+  top: 0;
+  right: 2rem;
+}
+
 #frequency {
   font-size: 6rem;
   font-weight: lighter;
   color: #fff;
   padding-top: .5rem;
-  width: 12rem;
 }
 
 #frequency::after {
@@ -175,7 +182,7 @@ div.animation-on {
 }
 
 #frequency-dialer .dialer-unit-floor {
-  color: #8E9093;
+  color: #AAA;
 }
 
 #frequency-dialer .dialer-mark {
@@ -248,7 +255,7 @@ div#fav-list-container div.selected div.fav-list-remove-button {
 
 div#fav-list-container div.fav-list-frequency {
   float: right;
-  padding: 0.8rem 50% 0 0;
+  padding: 0.8rem -moz-calc(50% - 0.2rem) 0 0;
   text-align: right;
   width: 6rem;
 }
