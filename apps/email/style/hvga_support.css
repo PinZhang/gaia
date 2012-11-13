@@ -1,0 +1,131 @@
+html {
+  font-size: 14px;
+}
+
+/* compose-cards.css */
+.cmp-attachment-icon {
+  background-image: url("images-hvga/icons/message-list-attachment.png");
+}
+
+.cmp-contact-add {
+  background-image: url("images-hvga/add-contact.png");
+}
+
+/* custom_dialog.css */
+body[role="application"] [role="dialog"] {
+  background-image: url("images-hvga/pattern.png"), url("images-hvga/gradient.png");
+}
+
+body[role="application"] menu:not([type="toolbar"]) {
+  background-image: url("images-hvga/pattern.png");
+}
+
+body[role="application"] menu:not([type="toolbar"]) button {
+  background-image: url("images-hvga/dialog/default.png");
+}
+
+body[role="application"] menu:not([type="toolbar"]) button.negative {
+  background-image: url("images-hvga/dialog/negative.png");
+}
+
+/* folder-cards.css */
+.folder-scoller-region {
+  background-image: url(images-hvga/pattern.png);
+}
+
+.fld-nav-settings-btn {
+  background-image: url("images-hvga/icons/settings.png");
+}
+
+/* mail.css */
+.top-header.top-edit-header {
+  background-image: url("images-hvga/ui/dark_header.png");
+}
+
+.header-left-btn {
+  background-image: url("images-hvga/ui/separator-large.png");
+}
+
+.header-right-btn {
+  background-image: url("images-hvga/ui/separator.png");
+}
+
+.icon-download {
+  background-image: url("images-hvga/icons/download.png");
+}
+
+/* message-cards.css */
+.msg-header-star-starred {
+  background-image: url("images-hvga/icons/message-list-star.png");
+}
+
+.msg-header-attachments-yes {
+  background-image: url("images-hvga/icons/message-list-attachment.png");
+}
+
+.msg-attachment-icon {
+  background-image: url("images-hvga/icons/message-list-attachment.png");
+}
+
+.msg-refresh-btn {
+  background-image: url("images-hvga/icons/refresh.png");
+}
+
+.msg-search-btn {
+  background-image: url("images-hvga/icons/search.png");
+}
+
+.msg-edit-btn {
+  background-image: url("images-hvga/icons/edit-mode.png");
+}
+
+.msg-star-btn {
+  background-image: url("images-hvga/icons/star.png");
+}
+
+.msg-mark-read-btn {
+  background-image: url("images-hvga/icons/mark.png");
+}
+
+.msg-delete-btn {
+  background-image: url("images-hvga/icons/delete.png");
+}
+
+.msg-move-btn {
+  background-image: url("images-hvga/icons/move.png");
+}
+
+.msg-forward-btn {
+  background-image: url("images-hvga/icons/forward.png");
+}
+
+.msg-list-empty-container {
+  background-image: url('images-hvga/mail_watermark.png');
+}
+
+ul[role="tablist"].filter:before {
+  background-image: url(images-hvga/ui/shadow.png);
+}
+
+ul[role="tablist"].bottom.filter:before {
+  background-image: url(images-hvga/ui/shadow-revert.png);
+}
+
+/* setup-cards.css */
+.sup-progress-spinner {
+  background-image: url("images-hvga/spinner.png");
+}
+
+/* value-selector.css */
+section.valueselector [role="dialog"] {
+  background-image: url("images-hvga/pattern.png"), url("images-hvga/gradient.png");
+}
+
+section.valueselector menu:not([type="toolbar"]) {
+  background-image: url("images-hvga/pattern.png");
+}
+
+section.valueselector button {
+  background-image: url("images-hvga/default.png");
+}
+
