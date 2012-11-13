@@ -97,7 +97,7 @@ body {
 }
 
 .top-header {
-  background: -moz-linear-gradient(to top, #ffffff 0, #a3a3a3 5px, #992f21 5px, #992f21 6px, #bb492d 6px, #cc6523 100%);
+  background: -moz-linear-gradient(to top, #ffffff 0, #a3a3a3 .5rem, #992f21 .5rem, #992f21 .6rem, #bb492d .6rem, #cc6523 100%);
   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,  #cc6523), color-stop(100%, #bb492d));
   height: 5.2rem;
   width: 100%;
@@ -108,7 +108,7 @@ body {
 .top-header.top-edit-header {
   background: url("images/ui/dark_header.png") repeat-x scroll left top transparent;
   background-size: auto 5.2rem;
-  /*background: -moz-linear-gradient(to top, #ffffff 0, #a3a3a3 5px, #888888 5px, #999999 6px, #bbbbbb 6px, #cccccc 100%);
+  /*background: -moz-linear-gradient(to top, #ffffff 0, #a3a3a3 .5rem, #888888 .5rem, #999999 .6rem, #bbbbbb .6rem, #cccccc 100%);
   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,  #cccccc), color-stop(100%, #bbbbbb));*/
 }
 
@@ -149,9 +149,9 @@ body {
 .scrollregion-below-header {
   overflow-y: auto;
   overflow-x: hidden;
-  height: -moz-calc(100% - 5.8rem + 5px);
-  height: -webkit-calc(100% - 5.8rem + 5px);
-  height: calc(100% - 5.8rem + 5px);
+  height: -moz-calc(100% - 5.8rem + .5rem);
+  height: -webkit-calc(100% - 5.8rem + .5rem);
+  height: calc(100% - 5.8rem + .5rem);
 }
 .scrollregion-below-header.scrollregion-horizontal-too {
   overflow-x: auto !important;
@@ -197,12 +197,12 @@ body {
   width: 26rem;
   padding: 0.8rem;
   border: 1px solid black;
-  border-radius: 6px;
+  border-radius: .6rem;
   background-color: white;
 }
 
 .menu-item {
-  padding: 4px;
+  padding: .4rem;
   font-size: 160%;
   border-bottom: 1px solid gray;
   display: block;

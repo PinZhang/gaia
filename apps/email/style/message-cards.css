@@ -29,17 +29,18 @@
 .msg-search-tease-bar {
   height: 4.8rem;
   background-color: #eee;
-  border-radius: 4px;
+  border-radius: .4rem;
   text-align: center;
 }
 
 .msg-search-text-tease {
   width: 90%;
-  height: calc(100% - 1rem - 2px);
+  height: calc(100% - 1rem - .2rem);
   padding: 0;
   border: 1px solid;
-  border-radius: 3px;
+  border-radius: .3rem;
   margin: 0.5rem 0;
+  font-size: 1.35rem;
 }
 
 /* Sections horizontally chop up the item: unread, details, icons, avatar.
@@ -216,8 +217,8 @@
   background: -moz-linear-gradient(top, #FFFFFF, #DDDDDD);
   border: 1px solid #CCCCCC;
   border-radius: 1rem;
-  margin: 1px 0;
-  padding: 2px 0.8rem;
+  margin: .1rem 0;
+  padding: .2rem 0.8rem;
   font-size: 80%;
 }
 .msg-peep-bubble * {
@@ -291,21 +292,23 @@
 
 .msg-body-content {
   color: black;
-  margin: 4px 0px;
+  margin: .4rem 0px;
   word-wrap: break-word;
+  font-size: 1rem;
 }
+
 .msg-body-signature {
   color: blue;
-  margin: 4px 0px;
+  margin: .4rem 0px;
 }
 .msg-body-leadin {
   color: gray;
-  margin: 4px 0px;
+  margin: .4rem 0px;
 }
 .msg-body-q1, .msg-body-q2, .msg-body-q3, .msg-body-q4,
 .msg-body-q5, .msg-body-q6, .msg-body-q7, .msg-body-q8, .msg-body-q9 {
-  padding: 2px;
-  margin: 4px 0px;
+  padding: .2rem;
+  margin: .4rem 0px;
 }
 .msg-body-q1 {
   border-left: 1px solid gray;
@@ -336,7 +339,7 @@
 }
 .msg-body-disclaimer, .msg-body-list, .msg-body-product, .msg-body-ads {
   color: gray;
-  margin: 4px 0px;
+  margin: .4rem 0px;
 }
 
 .msg-reader-load-infobar {

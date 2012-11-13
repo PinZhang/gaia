@@ -17,7 +17,7 @@ section.valueselector [role="dialog"]:before {
   display: inline-block;
   height: 100%;
   vertical-align: middle;
-  width: 1px;
+  width: .1rem;
 }
 
 section.valueselector [role="dialog"] {
@@ -80,7 +80,7 @@ section.valueselector [role="dialog"] li {
   line-height: 5.9rem;
   list-style: none outside none;
   margin: 0;
-  padding-bottom: 1px;
+  padding-bottom: .1rem;
   position: relative;
   overflow: hidden;
   text-overflow: ellipsis;
