@@ -174,7 +174,8 @@ Gaia.webapps.forEach(function(webapp) {
     locales: [],         // List of locale names to copy
     resources: [],       // List of resources to copy
     styles: [],          // List of stable style names to copy
-    unstable_styles: []  // List of unstable style names to copy
+    unstable_styles: [], // List of unstable style names to copy
+    styles_hvga: [],     // List of hvga style names to copy
   };
 
   let files = ls(webapp.sourceDirectoryFile, true);
@@ -214,6 +215,11 @@ Gaia.webapps.forEach(function(webapp) {
             let unstableStyleName = path.substr(0, path.lastIndexOf('.'));
             if (used.unstable_styles.indexOf(unstableStyleName) == -1)
               used.unstable_styles.push(unstableStyleName);
+            break;
+          case 'style_hvga':
+            let hvgaStyleName = path.substr(0, path.lastIndexOf('.'));
+            if (used.styles_hvga.indexOf(unstableStyleName) == -1)
+              used.styles_hvga.push(hvgaStyleName);
             break;
         }
       }
@@ -278,6 +284,14 @@ Gaia.webapps.forEach(function(webapp) {
   used.unstable_styles.forEach(function(name) {
     try {
       copyBuildingBlock(zip, name, 'style_unstable');
+    } catch(e) {
+      throw new Error(e + ' from: ' + webapp.domain);
+    }
+  });
+
+  used.styles_hvga.forEach(function(name) {
+    try {
+      copyBuildingBlock(zip, name, 'style_hvga');
     } catch(e) {
       throw new Error(e + ' from: ' + webapp.domain);
     }

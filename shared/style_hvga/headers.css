@@ -1,0 +1,68 @@
+/* copy from header.css */
+section[role="region"] > header:first-child .icon.icon-menu {
+  background-image: url(headers/images/icons/menu.png);
+}
+
+section[role="region"] > header:first-child > button,
+section[role="region"] > header:first-child > a {
+  background: url(headers/images/ui/separator-large.png) no-repeat 2rem center;
+}
+
+section[role="region"] > header:first-child menu[type="toolbar"] a:last-child,
+section[role="region"] > header:first-child menu[type="toolbar"] button:last-child {
+  background: url(headers/images/ui/separator.png) no-repeat left center;
+}
+
+section[role="region"] > header:first-child .icon.icon-add {
+  background-image: url(headers/images/icons/add.png);
+}
+
+section[role="region"] > header:first-child .icon.icon-edit {
+  background-image: url(headers/images/icons/edit.png);
+}
+
+section[role="region"] > header:first-child .icon.icon-send {
+  background-image: url(headers/images/icons/send.png);
+}
+
+section[role="region"] > header:first-child .icon.icon-close {
+  background-image: url(headers/images/icons/close.png);
+}
+
+section[role="region"] > header:first-child .icon.icon-back {
+  background-image: url(headers/images/icons/back.png);
+}
+
+section[role="region"] > header:first-child .icon.icon-menu {
+  background-image: url(headers/images/icons/menu.png);
+}
+
+section[role="region"] > header:first-child .icon.icon-user {
+  background-image: url(headers/images/icons/user.png);
+}
+
+section[role="region"] > header:first-child .icon.icon-reply {
+  background-image: url(headers/images/icons/reply.png);
+}
+
+section[role="region"] > header:first-child .icon.icon-reply-all {
+  background-image: url(headers/images/icons/reply-all.png);
+}
+
+/* ----------------------------------
+ * HEADERS: organic
+ * ---------------------------------- */
+
+section[role="region"].skin-organic > header:first-child,
+.skin-organic section[role="region"] > header:first-child {
+  background: url(headers/images/ui/organic/header.png) repeat-x 0 0,  url(headers/images/ui/organic/pattern.png) repeat 0 0;
+}
+
+/* ----------------------------------
+ * HEADERS: dark
+ * ---------------------------------- */
+section[role="region"].skin-dark > header:first-child,
+.skin-dark section[role="region"] > header:first-child {
+  background: url(headers/images/ui/dark/header.png) repeat-x 0 0;
+}
+
