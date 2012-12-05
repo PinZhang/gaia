@@ -1,0 +1,1519 @@
+From 0e1696562a5a6b7d8e0d2ed6228b6fac12a82e6f Mon Sep 17 00:00:00 2001
+From: pzhang <pzhang@mozilla.com>
+Date: Tue, 13 Nov 2012 17:43:12 +0800
+Subject: [PATCH 3/4] Add hvga support for building block
+
+---
+ apps/email/index.html                              |    8 +-
+ build/webapp-zip.js                                |   16 ++-
+ shared/style_hvga/headers.css                      |   68 ++++++++++
+ shared/style_hvga/headers/images/icons/add.png     |  Bin 0 -> 609 bytes
+ .../style_hvga/headers/images/icons/back-rtl.png   |  Bin 0 -> 930 bytes
+ shared/style_hvga/headers/images/icons/back.png    |  Bin 0 -> 937 bytes
+ shared/style_hvga/headers/images/icons/clear.png   |  Bin 0 -> 1433 bytes
+ shared/style_hvga/headers/images/icons/close.png   |  Bin 0 -> 416 bytes
+ shared/style_hvga/headers/images/icons/edit.png    |  Bin 0 -> 1232 bytes
+ shared/style_hvga/headers/images/icons/menu.png    |  Bin 0 -> 478 bytes
+ .../style_hvga/headers/images/icons/reply-all.png  |  Bin 0 -> 4136 bytes
+ shared/style_hvga/headers/images/icons/reply.png   |  Bin 0 -> 3867 bytes
+ shared/style_hvga/headers/images/icons/send.png    |  Bin 0 -> 1063 bytes
+ shared/style_hvga/headers/images/icons/user.png    |  Bin 0 -> 1263 bytes
+ .../style_hvga/headers/images/ui/dark/header.png   |  Bin 0 -> 224 bytes
+ .../style_hvga/headers/images/ui/dark/negative.png |  Bin 0 -> 139 bytes
+ .../headers/images/ui/dark/separator.png           |  Bin 0 -> 168 bytes
+ .../headers/images/ui/dark/subheader.png           |  Bin 0 -> 90 bytes
+ shared/style_hvga/headers/images/ui/header.png     |  Bin 0 -> 149 bytes
+ shared/style_hvga/headers/images/ui/negative.png   |  Bin 0 -> 114 bytes
+ .../headers/images/ui/organic/header.png           |  Bin 0 -> 177 bytes
+ .../headers/images/ui/organic/negative.png         |  Bin 0 -> 73 bytes
+ .../headers/images/ui/organic/pattern.png          |  Bin 0 -> 1852 bytes
+ .../headers/images/ui/organic/separator.png        |  Bin 0 -> 168 bytes
+ .../headers/images/ui/organic/subheader.png        |  Bin 0 -> 828 bytes
+ .../headers/images/ui/overlay/header.png           |  Bin 0 -> 73 bytes
+ .../headers/images/ui/overlay/separator.png        |  Bin 0 -> 142 bytes
+ shared/style_hvga/headers/images/ui/search.png     |  Bin 0 -> 92 bytes
+ .../headers/images/ui/separator-large.png          |  Bin 0 -> 372 bytes
+ shared/style_hvga/headers/images/ui/separator.png  |  Bin 0 -> 415 bytes
+ shared/style_hvga/headers/images/ui/shadow.png     |  Bin 0 -> 76 bytes
+ shared/style_hvga/headers/images/ui/subheader.png  |  Bin 0 -> 73 bytes
+ shared/style_hvga/headers/index.html               |  134 ++++++++++++++++++++
+ shared/style_hvga/switches.css                     |   20 +++
+ shared/style_hvga/switches/images/check/danger.png |  Bin 0 -> 3577 bytes
+ .../style_hvga/switches/images/check/default.png   |  Bin 0 -> 3223 bytes
+ shared/style_hvga/switches/images/radio/danger.png |  Bin 0 -> 2392 bytes
+ .../style_hvga/switches/images/radio/default.png   |  Bin 0 -> 2899 bytes
+ .../switches/images/switch/background.png          |  Bin 0 -> 1015 bytes
+ .../style_hvga/switches/images/switch/handler.png  |  Bin 0 -> 769 bytes
+ shared/style_hvga/switches/images/switch/icon.png  |  Bin 0 -> 326 bytes
+ shared/style_hvga/switches/index.html              |   89 +++++++++++++
+ 42 files changed, 333 insertions(+), 2 deletions(-)
+ create mode 100644 shared/style_hvga/headers.css
+ create mode 100644 shared/style_hvga/headers/images/icons/add.png
+ create mode 100644 shared/style_hvga/headers/images/icons/back-rtl.png
+ create mode 100644 shared/style_hvga/headers/images/icons/back.png
+ create mode 100644 shared/style_hvga/headers/images/icons/clear.png
+ create mode 100644 shared/style_hvga/headers/images/icons/close.png
+ create mode 100644 shared/style_hvga/headers/images/icons/edit.png
+ create mode 100644 shared/style_hvga/headers/images/icons/menu.png
+ create mode 100644 shared/style_hvga/headers/images/icons/reply-all.png
+ create mode 100644 shared/style_hvga/headers/images/icons/reply.png
+ create mode 100644 shared/style_hvga/headers/images/icons/send.png
+ create mode 100644 shared/style_hvga/headers/images/icons/user.png
+ create mode 100644 shared/style_hvga/headers/images/ui/dark/header.png
+ create mode 100644 shared/style_hvga/headers/images/ui/dark/negative.png
+ create mode 100644 shared/style_hvga/headers/images/ui/dark/separator.png
+ create mode 100644 shared/style_hvga/headers/images/ui/dark/subheader.png
+ create mode 100644 shared/style_hvga/headers/images/ui/header.png
+ create mode 100644 shared/style_hvga/headers/images/ui/negative.png
+ create mode 100644 shared/style_hvga/headers/images/ui/organic/header.png
+ create mode 100644 shared/style_hvga/headers/images/ui/organic/negative.png
+ create mode 100644 shared/style_hvga/headers/images/ui/organic/pattern.png
+ create mode 100644 shared/style_hvga/headers/images/ui/organic/separator.png
+ create mode 100644 shared/style_hvga/headers/images/ui/organic/subheader.png
+ create mode 100644 shared/style_hvga/headers/images/ui/overlay/header.png
+ create mode 100644 shared/style_hvga/headers/images/ui/overlay/separator.png
+ create mode 100644 shared/style_hvga/headers/images/ui/search.png
+ create mode 100644 shared/style_hvga/headers/images/ui/separator-large.png
+ create mode 100644 shared/style_hvga/headers/images/ui/separator.png
+ create mode 100644 shared/style_hvga/headers/images/ui/shadow.png
+ create mode 100644 shared/style_hvga/headers/images/ui/subheader.png
+ create mode 100644 shared/style_hvga/headers/index.html
+ create mode 100644 shared/style_hvga/switches.css
+ create mode 100644 shared/style_hvga/switches/images/check/danger.png
+ create mode 100644 shared/style_hvga/switches/images/check/default.png
+ create mode 100644 shared/style_hvga/switches/images/radio/danger.png
+ create mode 100644 shared/style_hvga/switches/images/radio/default.png
+ create mode 100644 shared/style_hvga/switches/images/switch/background.png
+ create mode 100644 shared/style_hvga/switches/images/switch/handler.png
+ create mode 100644 shared/style_hvga/switches/images/switch/icon.png
+ create mode 100644 shared/style_hvga/switches/index.html
+
+diff --git a/apps/email/index.html b/apps/email/index.html
+index 9f3684f..d6f3c81 100644
+--- a/apps/email/index.html
++++ b/apps/email/index.html
+@@ -16,11 +16,17 @@
+   <link rel="stylesheet" type="text/css" href="shared/style/switches.css"/>
+   <link rel="stylesheet" type="text/css" href="shared/style/buttons.css"/>
+   <link rel="stylesheet" type="text/css" href="shared/style/status.css"/>
++  <!-- Include shared building blocks for HVGA support -->
++  <link rel="stylesheet" type="text/css" href="shared/style_hvga/headers.css"
++        media="only screen and (min-width: 480px)" />
++  <link rel="stylesheet" type="text/css" href="shared/style_hvga/switches.css"
++        media="only screen and (min-width: 480px)" />
++
+   <!-- Include building blocks that not in shared folder yet -->
+   <link rel="stylesheet" type="text/css" href="style/custom_dialog.css">
+   <!-- Support HVGA resolution -->
+   <link rel="stylesheet" type="text/css" href="style/hvga_support.css"
+-        media="only screen and (min-width: 480px)"/>
++        media="only screen and (min-width: 480px)" />
+   <!-- Localization -->
+   <link rel="resource" type="application/l10n" href="locales/locales.ini">
+   <link rel="resource" type="application/l10n" href="shared/locales/date.ini">
+diff --git a/build/webapp-zip.js b/build/webapp-zip.js
+index 3d161e1..707e2ec 100644
+--- a/build/webapp-zip.js
++++ b/build/webapp-zip.js
+@@ -168,7 +168,8 @@ Gaia.webapps.forEach(function(webapp) {
+     locales: [],         // List of locale names to copy
+     resources: [],       // List of resources to copy
+     styles: [],          // List of stable style names to copy
+-    unstable_styles: []  // List of unstable style names to copy
++    unstable_styles: [], // List of unstable style names to copy
++    styles_hvga: [],     // List of hvga style names to copy
+   };
+ 
+   let files = ls(webapp.sourceDirectoryFile, true);
+@@ -209,6 +210,11 @@ Gaia.webapps.forEach(function(webapp) {
+             if (used.unstable_styles.indexOf(unstableStyleName) == -1)
+               used.unstable_styles.push(unstableStyleName);
+             break;
++          case 'style_hvga':
++            let hvgaStyleName = path.substr(0, path.lastIndexOf('.'));
++            if (used.styles_hvga.indexOf(unstableStyleName) == -1)
++              used.styles_hvga.push(hvgaStyleName);
++            break;
+         }
+       }
+     });
+@@ -277,6 +283,14 @@ Gaia.webapps.forEach(function(webapp) {
+     }
+   });
+ 
++  used.styles_hvga.forEach(function(name) {
++    try {
++      copyBuildingBlock(zip, name, 'style_hvga');
++    } catch(e) {
++      throw new Error(e + ' from: ' + webapp.domain);
++    }
++  });
++
+   zip.close();
+ });
+ 
+diff --git a/shared/style_hvga/headers.css b/shared/style_hvga/headers.css
+new file mode 100644
+index 0000000..5f4c99e
+--- /dev/null
++++ b/shared/style_hvga/headers.css
+@@ -0,0 +1,68 @@
++/* copy from header.css */
++section[role="region"] > header:first-child .icon.icon-menu {
++  background-image: url(headers/images/icons/menu.png);
++}
++
++section[role="region"] > header:first-child > button,
++section[role="region"] > header:first-child > a {
++  background: url(headers/images/ui/separator-large.png) no-repeat 2rem center;
++}
++
++section[role="region"] > header:first-child menu[type="toolbar"] a:last-child,
++section[role="region"] > header:first-child menu[type="toolbar"] button:last-child {
++  background: url(headers/images/ui/separator.png) no-repeat left center;
++}
++
++section[role="region"] > header:first-child .icon.icon-add {
++  background-image: url(headers/images/icons/add.png);
++}
++
++section[role="region"] > header:first-child .icon.icon-edit {
++  background-image: url(headers/images/icons/edit.png);
++}
++
++section[role="region"] > header:first-child .icon.icon-send {
++  background-image: url(headers/images/icons/send.png);
++}
++
++section[role="region"] > header:first-child .icon.icon-close {
++  background-image: url(headers/images/icons/close.png);
++}
++
++section[role="region"] > header:first-child .icon.icon-back {
++  background-image: url(headers/images/icons/back.png);
++}
++
++section[role="region"] > header:first-child .icon.icon-menu {
++  background-image: url(headers/images/icons/menu.png);
++}
++
++section[role="region"] > header:first-child .icon.icon-user {
++  background-image: url(headers/images/icons/user.png);
++}
++
++section[role="region"] > header:first-child .icon.icon-reply {
++  background-image: url(headers/images/icons/reply.png);
++}
++
++section[role="region"] > header:first-child .icon.icon-reply-all {
++  background-image: url(headers/images/icons/reply-all.png);
++}
++
++/* ----------------------------------
++ * HEADERS: organic
++ * ---------------------------------- */
++
++section[role="region"].skin-organic > header:first-child,
++.skin-organic section[role="region"] > header:first-child {
++  background: url(headers/images/ui/organic/header.png) repeat-x 0 0,  url(headers/images/ui/organic/pattern.png) repeat 0 0;
++}
++
++/* ----------------------------------
++ * HEADERS: dark
++ * ---------------------------------- */
++section[role="region"].skin-dark > header:first-child,
++.skin-dark section[role="region"] > header:first-child {
++  background: url(headers/images/ui/dark/header.png) repeat-x 0 0;
++}
++
+diff --git a/shared/style_hvga/headers/images/icons/add.png b/shared/style_hvga/headers/images/icons/add.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..ebb87107e3b75d864a12cc1c0a93cbc7fa6b7d0f
+GIT binary patch
+literal 609
+zcmV-n0-pVeP)<h;3K|Lk000e1NJLTq001fg001fo1^@s6#ly*400001b5ch_0Itp)
+z=>Px#24YJ`L;(K){{a7>y{D4^000SaNLh0L01FcU01FcV0GgZ_00007bV*G`2iyw{
+z2^kkVkcemi00H4iL_t(o!|j;OY7{{fg}+m2i6j#fl`LGiF|XlH@)Y9QhjJx|xYCVF
+z7a_#A5La$QBF0G^@aG;ER>Lq%cRNnS^r8+FOgA;vr_Q}~@1dZgqGBAdJvb*K*8WaY
+zlBjI~spTih0Fu@ws>15-+1}5OpMWnZr6OyqAj!wTePCi+l1_nRNl(X?tFN6A5$(_C
+zrPfacxt;^D@O&{wqL+$Fbks!urudJ7Xo<qU648HDX0cCt$-BXbbbY%is7zYYOj4<c
+zXkdpMwjWA*&{Y#{hol4?0tbL>Bk2e54mirnc13Sn(i_{)Qc7Oglw^akliT7W;H+zE
+z-tbl%wyaD8+ym~+%~_`6uI(A{Dk9Fiyg@VI18zvVoqP9QU%0Z0E%EmMn|Ta{{1&id
+z`&(CDr*%usf{K?`(wd%K8u$vFW|hu*<_XvWuFZwmw!cf7^@SeT1wPxJ_Em{qqPC~D
+zPb6*j7>xFy90CVz3fTTB>HW}Q0=9v-z(pzVIuybewtvmpys7OcwcwAn;8*ul-BWe=
+zBP2R$*UKp|$)gCGf<#~D+mW03V11NyTrB_BT_7T8TVF(62kzz;`XQw>TX0rahxwa2
+v+eE}h9{;6mtxR;;)nfZ@6htd3D*oU%L?I33-H}C|00000NkvXXu0mjf?_d)D
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/icons/back-rtl.png b/shared/style_hvga/headers/images/icons/back-rtl.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..001270313a1b8dbc236ca9d4bbf89832509a94c6
+GIT binary patch
+literal 930
+zcmV;T16}-yP)<h;3K|Lk000e1NJLTq001fg001fo1^@s6#ly*400001b5ch_0Itp)
+z=>Px#24YJ`L;(K){{a7>y{D4^000SaNLh0L01FcU01FcV0GgZ_00007bV*G`2iyw{
+z2^lr+@X3q-00SaPL_t(o!|j+ch+Jh9g}*bq_`ggNv5=r)D~mKj2mv)<idd;^A%a?1
+z2vHCb8^Oj#5bT4+f?%PsFcucE2xuW`6a-0#7K(*SKtzRA%)~7Bz^>QA_rlxfBChj0
+zV=)&79+#Q_ow@(L=bn3EVGCQ>{4FAO_1VUD)pu#y16n{MU<_=PQljUllu`xgsKOab
+zz@5Oez=NGLGs(<q5v>9AR^Wc%@ytAJ`xHRaG{dM*Wy{kZkeRnhIt3hUQ)x3ICcqa>
+z(`<LqjffrKXAV@-LEzY*kJ<-3(muZqd^U{kJR>@iGzPk=83U`pw(b3;l#hqk|8ELx
+zR3V~20q+7|_loBr@Nk>6Cu}d3Qf?MlZR*+!pN=Bp72Ds~&WK3cX?tS(obBU7O52Tt
+zXF~Y4$F`rdeKjJo``Er=`&>jkFb&Y<DX+bscbgG$zV*Kd9BETw3_K)hyRH0-rIedM
+zZU3X3oeF68!mg^Drui`<-T@8)Pe{7EM`5dymLlTXkh<n(wnw&Kvc2BrY%dMoi-;5d
+z8-WrLx7&Wk_IgD8-WFHd{w*Tjh=}`U-9o!--vPF1nhoFsU`^6jK(<%CU(#yJwX+A>
+zf$dAYQp!eVp2^J1fHM<GWaf&bd*=qUubg(0gGOx!>$8PtMo+tG(>~SMJ_I}s9G7%U
+z?@wHnbZIU?BjPV0GxJeN&jTyHuU-c}1U{Pkh+=ywB3_P&?|RkV(bL(8xM${~WGFBq
+z;y`A;D(NX;rI)Y20Ph25fXg*S^`1f6K5Y91+u!yh84*86#M`z{4u3myptcXRAiwX_
+zQ?DDHjfj)ONp)U1`C1pro_f00f;={@%v-Ji@^EIJmh>2KSI3i?xdB|r%r)T4VVm9S
+zcv6F&?vV5(aHQi&NfY3Lq_;{bpVt^gY5?5=CYfnTjigQBJh0Y*tg(ow(L%3h=9N}-
+z+~`rzrGD{DJ9^ZZLVuNXF*A>5<`0tIETvrOw^T_}N3_OVKgrBb+gx2QrF=3hoErP5
+zYD==r+$U+Pl;X~xnN^k#|H<01)1z~n-50j7h5fz#0duZrOqrnzSpWb407*qoM6N<$
+Eg5;yLasU7T
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/icons/back.png b/shared/style_hvga/headers/images/icons/back.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..db185dbd58b89d3fd7dc2a1aae33e80fab56d434
+GIT binary patch
+literal 937
+zcmV;a16KTrP)<h;3K|Lk000e1NJLTq001fg001fo1^@s6#ly*400001b5ch_0Itp)
+z=>Px#24YJ`L;(K){{a7>y{D4^000SaNLh0L01FcU01FcV0GgZ_00007bV*G`2iyw{
+z2^lDj_N7$-00SvWL_t(o!|j*9i(GXS#Xo0v;rkd&1QCC9ij{&AvIGSe!WLr0peY2w
+z%Amo3+Xyy-SP4S%2M9JMD#k_yA&7;LMi3W*jgSZi@dt`c;+l>32s_up_r=F#l<dxA
+zUWz#|%un7sbI-Z=o-fQX#~e2vY-5{<82jBMSehou%%o|W`o6T+|1&d(rId-Tzc4ML
+znK}B=BfxXOost$Oz5c{RyE4~mM#Kv6Y-T<UJPhof^gc_|kh_wMhy~yQ;7Dd302VTH
+zRnj_eu{WY)e77uV4R|Uu2S7;LlbO4EspvSlZST*_!@wb6Ac@Q@z-~!PGbdWdOzrSi
+z?q%Sxq{m16_$}~0@as(HWJFvwBW>@oeKI0`x1F8GcM<Wr?L}sdQKAvCV*8}+&4|c|
+zNZT0^KigijebclC{=#<T9`WRgr00QyZR1p2kn~1oepE`iJgp*KlSfBJ&?0buW*(7r
+zFf(sy8wW|}fDbeCMAI~vyMJ`j&9oEw_jTp2o{WeeZNJisC&yUeLECTI-e}3C?V;@-
+zY`<XpwrK{D9gnBXd{okb%-kgjNdV`7cYu#eDZh0aZ<=y%caAOtcXfRG7jRb6@lwiG
+zw~EvD<aR?zsg2cEb0}#D<o~3o*%OuYm873K?+dUOc**vybuyGvrs~g~RP;1(TGD3a
+z3fu?02s~NIR_Vtj{aJSYLlN<T?ah&udBOI}wikMnzAIy9t^>z_Pk>9AS$%nT8<t;<
+zh{1oQt?RzyM+ry7s_pk8;$oet?OZ)?`>5?ZuGdVxrpk7!V|&&1sqU6)pTCcYqqYaV
+z5RHhdZfJXNM4XC<jm|nv+vg+VwP|@)JGFtN+S!Ye_GRXpq{l`=$~W!SdbgDF%S=z9
+zP18_`*rsWkty0RDlHLYB1^(##{9fQ0;Pzh5OykyLDdlt9o9!9?2}uLMz!hNF>v6f-
+zpoZzpT$gnGpO<+^QUYI(RC)G9+aTQy$6LVJh<FPaw343zF7-;ZTg`5gZ<^*zMBEJA
+zlbK&g+UT8VH#N11s^YWET#|GpGl$$rsHfC%E3?;tGRGWq{ENQ<zN}t`)FIx%00000
+LNkvXXu0mjfJE+F!
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/icons/clear.png b/shared/style_hvga/headers/images/icons/clear.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..b5c37a0a9367f2f86a6bb7b5003c800e261326ec
+GIT binary patch
+literal 1433
+zcmV;K1!nq*P)<h;3K|Lk000e1NJLTq000;O000;W1^@s6;CDUv00001b5ch_0Itp)
+z=>Px#24YJ`L;(K){{a7>y{D4^000SaNLh0L01FcU01FcV0GgZ_00007bV*G`2iyw{
+z2^$j*%P#W(00kLIL_t(Y$8DBRZyU)G#edb^Ly99&qGYW^aUnx8xJx(^gdqRV0RkkK
+zobokBABOWW5+LVfb66zVHC8};pjMKJFd%3fOGyw3Ib04ca;7VX%ow!S0}N(>?t0Z#
+zU9VnA9LE4eQN+idcDubJB9DPbKn?J~7#OMQtJBld(T6t6nC@esaU2`q05}5bz$#D%
+z%Brd&@}Q~@z$A|2?^Lw|e0O?!`U5Qai05h!{$t>mz=o=3BH{sEva|XB2>41>zZH?!
+zQ4~#=qmYk){|5LeuwAUFDkAdU7eM5lxv1(Z5%~uAGK!*kfoYZk*aUuGfUBy_vP`}A
+zS^zD7MFj7?W?81HYDDBy;8(zJ+wFGsy%fc9T**`N2Vf)1GOwy>7>1?AV&NByMQW`z
+zl6z29&9ck~LEwTQFiDckMI^A+DsZE!e-x3+D2mb|g3o}Tsp^`ls<l?D)#}Q@!NG35
+zUf*!e*#cPe{5a=qy<XoqI5^m?R;w%4+Dugqup=TTz&`M<iVlINBEoz=U+nMiZyp^T
+zH4hIDKOc|Bx98{Q7u{}mSb&R&v|6qD$;ru4tybIV_xmp{E-wD_`t|EKrBcZNC%_Qs
+zyLP+11AGFk0W<HtI_GQ{hLuXCvc9*sx2CGzd#}A-?*^dRZ0;T(A3v?v>rad^CJe(c
+z2m<T9_xXiyi%30=<Fd<3vI=-r#ab&#l01w?qtT;BkH*z%b*s^6G_x#AiwKU6jy`WR
+z8ck!2nM@|*@pwE=l4NeJl{`QPtOIoi>;M&2^&*0E&fMMIegFLV^In>!S*z9hQLR?n
+zef;?G(=ZIz0k*fdKNS(VzrVlfcDt9IPN$zF$=o?t+-a5*^Ajf`6~KzfyZi#0B+2~p
+z@^YZ6+H5xG+uPgwTU%T8V$a>(-K$=&_wTE#tCvZV%$ID**&YB@llK-~X0)}|7-M8O
+z98Ly<!S!e~y7k^?)>>z+b>91IG#cFw27~M2a5yo>h_%)fq+F(e0lo(o`Q;SMRe;si
+z)nILHtx_(RS3YPfQZAQQ*4EZ4tE;QQvP~X@0CQmCfLm34D<Y;~YL;c*IcHm~R{i++
+z`03u>-V<YtnNFu~a>pC{`}-~DTwtv=y<YDoP1DRdXLCOmn5pW}0WU>lQk>9xuccDS
+z)$8@z$;ru4QHuBX_c#51zXx!5c-XAfYP&@xB}p>BzP`Rs)6^Sd$TRX^5xFr@6perz
+z;7yUkAPDUG`g*vzxw%`EVz=A9JUctPIy*bN>UO)AlgVUkj4_*=n>*|4>tPTC#py*=
+zZ-DD4iqe9~Jz!5&e{PJi)9LhKFc{o68jWrkhLzE1H0pFZ{kL!5rU0Ezr|+DzTU%RO
+zNs=Uk!Qgf}ojzD=OL@`!3+OJlioU9@ipUdSTSS7{Y&O5Rxac|OY?34oMJWO#Niu)&
+z;>F7_46hf9MK+tw<|0xOkwu>JZ&h{pp&nF$Ujsh@>Z)oNi^be~uhv>|&b`-7(=_#2
+zmZ>qu1VIoK;J`EBn<$EAaUB0Z(H!tQRsDsC>=b(Qq4F(>P_ZVe+82>$z~7@N^2I*W
+zZntT-+l5G{z?UNOC*Z4`BP*&}QPooM0woa%fdIGzz7UZ==O_31u<(Beg*q)cnE)5S
+zKY_mhe*>P0NC!9<k#nE}`~&za@CEQS(2b&KR!HSL^;_2DLUWf#m^hBhKqGI8MLWnu
+n<fW?Ko}Qlir4fe@CyW09$U>@Hr1CQy00000NkvXXu0mjfi}bd5
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/icons/close.png b/shared/style_hvga/headers/images/icons/close.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..737bfd54bba7c6177b78723386bc306ba2b5c95f
+GIT binary patch
+literal 416
+zcmV;R0bl-!P)<h;3K|Lk000e1NJLTq0015U0015c1^@s6J20-I0004JNkl<Zc-rmO
+zu}g$d90%~rE~@KDDB4=0DT3OfKcR-8KOpE2Xt;*JJA$a8r74UW`XgL&*Tsy$McbSd
+zmjmZRhqSNLgV+0U;OnqK;Va7T$NTV}kB6PIEE~!HfoE{Fa0`p!JkL*%Au%T3JE;2q
+z3VugQ4yVu}%d!u=u1LWcXbUMSnBfG<`U+jw4`tya4rVy(x#W9H)4V`wsV=M_{Uk|7
+zBAh}U$9Y9*7g?71#$7~>qUc(HzY*v@qDn3Gbeu-zVTLOJ1_J!s^Sq~Oc^N7J6TA0D
+zG~4lbe2enpEKV+l(izIZG|JD?7T_ZZcsgoX)(c7pVHn<1xa<LP$`5SY_A^R*$Qq)?
+zaeT-31VM0yno<{@!ywxPy2^I@Z(P%~V|HHGfUDbNGWjIXjtEcF^b7AhNLS_?FZjNH
+z?z-+HkBV?C@q=L)S9so(-CXlX4_W6>3hyHuNU#0%Y2ilUM)Cunq3I+;st>3D0000<
+KMNUMnLSTX|?ZEN?
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/icons/edit.png b/shared/style_hvga/headers/images/icons/edit.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..8042b2020560e6cc77dff4d1bc040308b563a46b
+GIT binary patch
+literal 1232
+zcmV;>1TXuEP)<h;3K|Lk000e1NJLTq001fg001fo1^@s6#ly*400001b5ch_0Itp)
+z=>Px#24YJ`L;(K){{a7>y{D4^000SaNLh0L01FcU01FcV0GgZ_00007bV*G`2iyw{
+z2^t8Uwbot$00dA;L_t(o!|j;Qi<M;*$3Nf4dz~5s%@zf<h_X#ZO7xQ)@K=T6u1(mg
+zT0|R5=r5>ML{uAFYC=-b!e*f^a%GtnB?h&vB&f(N9d#^c&bP&!H{QA3U+-L}A@IOu
+zF3;TedB4y1obx^BJg`I-5k3EB`(JB?|A}cSUTPaj6|*ZOtp>(zpOJJ%(rm?gDRW%5
+zmV_P6<L7>0o9){r9RUsj-vR%CToNX$*o=s_?M)GJ(Dv`P&)Pm^d!OxX!^Co<AYUNh
+zmhCOJKd?RRw1{v-oKLW8Y%i;xX*G!{Nkjya+O}8a-%eNd+QX7;dj_}<cnWwTpLZ=R
+zRsfrT6SnsQzcd2cp%ixmZvuA$@&KyyAOXxKsO7+TJzlE==T<8vZ3YfE0@@MOYivK7
+z&;Bt8V7_=-(n{cF+smr;1nIe-&as+nGr-rt)Iis#i@UjXxui?B->=-+&l$<&IPjqD
+z&5~9DrDI>$r1FyOqrfC^`oGThO_?}7Eh4I~@7bOhDZ86WMat1cL`>SAs)30vSf_07
+zvArQ8T0<+1ZETl_SZDj8ruEzQnC;CS5)`#hr=5z3Ep<t%gY1_~E#NNTN!zo)@j)P~
+zq_ZvH5#X6_64WJ*W&1qvm898fuX-H!t5K_fS0!z4=xzZUfnC6kE+umwQ?}0mmn0QQ
+z?QXvxhS580kLRiT7K2g>5iyob?n<zA*6Ok);4E-31%541@{nDD4yyW=)Kh}$RmpZ+
+z(t6-o+uMN^T@I-HTm+5)Zv$Tf=WX}JG7xBo#`WuhCV=OG9kq3J0Icjo;5A7{6ZF`i
+zGTa(Qrn<$L?aJM4NfW?JJ>0F@VFTC)?3Hx9MwSN2P^&@TIIm(=5(KPICN~1tbc^S?
+z0;Y56?mZm}q71RVU>i5iH3=%2I8XPHAmw@_$Tw_%TuN!&FD}&eW55R6J0)%F#eS_L
+z+M7&%(hKBBt{;$uj{y&KbU~debOAU3yaRkzfgHAn9Xji4-IHrET7VmDpO*APHHcMN
+zomwd1g6)rh-N3O@%H@cd7vqESVI)Q+t<6E~b>Ju9#T4w$srG=R-I9*==xY}}Mjw{+
+zob4$|hk@UKSF-D0mJ+l#-TisDUSJ_HI;`vKwi>uc(hJ$Ne34_x3E*c*lfWL^pGumk
+zKn!B@inzYxw9~n^H8+0?*bm&8jm%-&$4V(t9|}jcg}A<5n}@bay2bX(z`Hp*L@A~5
+zFg~(8b<xm6DLXTguFY$hZ*2cqcW<xkUKB=aFN#{`o&-)doLu|%+#~B~HI7v7UL<Sh
+zRO(S&UnJdR`*GX90)N^rqq;PcY&I_<wgR`>{=VP7{eWJU^eu23aIfv_CC%h!qXu8a
+zUdiGS`L4^2f!dx1CMAtYS_fR0?b^tfWi{q3=}c<yWF>u#E^;G6nbqStbS=uIZ-&8N
+uwl7MW9u%vKa=mz^@Aj|SRl90e!2Sm8O8M2E(}w~80000<MNUMnLSTX=RZTYl
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/icons/menu.png b/shared/style_hvga/headers/images/icons/menu.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..005134d20e8d30b226eddc48a258a85b6e519659
+GIT binary patch
+literal 478
+zcmV<40U`d0P)<h;3K|Lk000e1NJLTq001fg001fo1^@s6#ly*400001b5ch_0Itp)
+z=>Px#24YJ`L;(K){{a7>y{D4^000SaNLh0L01FcU01FcV0GgZ_00007bV*G`2iyw{
+z2@EW~E{9kE00CY}L_t(o!|hkGN&`U@oOwh}?i55jA>W|s)7$$Yf*&G+Kj0sv75h|L
+zs9<kr7ZJUPiDAb=i;$e`HTqWFDVHr~-<vn{7RboR_@|JRG$%`$=sdW15JEU4xdY(E
+ziBl=*#>|dmM6UqslJso(wVCzi&upp0<WmBjUgFScxKt&e*(yp@(iwme$=ZqJnxu>9
+zFiG0}d{J;BY5>M0?_)#_06kkzQY4!T6+%F2Xf%9JJNi>-GW-(&eE`o+`dpVZG_!-4
+zkM>FSQp^5M!;5N3-kPo37=GcMOeBjo6+M-7Nz!e50&v?VnKl6wUdbfMNKQyT{BEDh
+z$@E=@FKJ8C>X%Ew4`>v?tC@{rL<a!&Bt1G=(}tvTGuw|PQ&&<+vUJpCw`oaTyf{rj
+zlG7+rk~7z#`55Y1o6p@5fB}Gs6W4;|U7M+|0IUFzqZ7T697oMHX~WOR$jC?w@0fd?
+UeQ0^4FaQ7m07*qoM6N<$f@rYEhyVZp
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/icons/reply-all.png b/shared/style_hvga/headers/images/icons/reply-all.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..b07b6da715950f5a0dc6d4a2cbe2c112b5a0eb90
+GIT binary patch
+literal 4136
+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
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/icons/reply.png b/shared/style_hvga/headers/images/icons/reply.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..747413e778b929307779178dfbf96cf47b3f5230
+GIT binary patch
+literal 3867
+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
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/icons/send.png b/shared/style_hvga/headers/images/icons/send.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..f4bbb949d42db4ed1f1c1512b6b02820626046d9
+GIT binary patch
+literal 1063
+zcmV+?1laqDP)<h;3K|Lk000e1NJLTq001fg001fo1^@s6#ly*400001b5ch_0Itp)
+z=>Px#24YJ`L;(K){{a7>y{D4^000SaNLh0L01FcU01FcV0GgZ_00007bV*G`2iyw{
+z2^uxU-I`AT00XB<L_t(o!|j;QYg|<v#Xsj}CYem5Xswp1CA1)w2wD~GN)-H6ce;+W
+zh*($t0fH+x?p^D`A}!sB1O!2Mf*=&@La^8>6jZ8IT}VyRBy*38-WzYmH)MXip)TeN
+z!#v)bci)-s_k7Ry+y~Q`#xy1uwkQ6K7~@dCZ&WQHDT9^m+a<NrF_K39|3KIF8n6~Z
+z*cuCH24Y*1?f~8dPS|danr+=&v<qAXRwSJRF4h7xW$}675O5vPh*=a6f&IWyN%OWZ
+z3=Pyawh1Bp2ea*2NnZh9N{XX!J^k?w+s7omX#0qydxl-B(T{VIt^*&|*gThkMM+PL
+zQk_uMeZzL-fU#+NYd4<vyB2cEZSS}JY>aVl1r5dyNizliOJFm$+qM_-wJNY7{rFzs
+zIPfaanV@`DmAnNk0Z+#m?<ys*1e{ZM5_k((kTiL<-x+hjOThcU8%bsQ0_^~YZO`0-
+zDJWnMa5wM@a5BbtU*hF9*piHvWREyM2WY@8ASOBN7UwsBztiy{U>R7peIRo-#<&gC
+z=`(T+(0~mfNJ3Isxh61EaPxjir-0Wo*bu_MlWEL3p4T{R`x!|O0`n=0Bw1Pn9<be%
+zv}}6`n6uroeY9ttg9$9Q&q=z}=pCJ7MhAEfcoJC1KvT7vz+B4a<G@471}FjU9lHl@
+zzbt9p_UT5=z0sD`0rr(Xq9O@x+wJmvp*Bj#l61uOaY^5XIz4D!qiU_}De|>JDp=C7
+z){IJ8O;+yrs?tlEOV3;bZln_D(zg;Q7vA>=+n)g!>gMQG+n-DNwQMF}OVT3n2yg&6
+z4}6ovzLo6XqviCH^b2rC(u$<ta*E%zy>9!H7~|4}g#9VopW0rv{d%Fldu_iHW3+9j
+z@1JeIoksi4(vK@oyWMYlD|^~f@Fi{b41mkPS>U~t)ti2~uF~&zzobT<gr(ryo(1-#
+z`>z0JY@f{_^B%6jtq-Rryk`3YNv9=U>D%>nOr{az2CxErE$Iv3k1EOB(e<AEhTavF
+zSO>nd{e1}GuUzgB!Vdq?=()*xyD)+1_Tg@~a8KJHD;<8}3!9Rf6OyOqAOohK3u_dF
+zo&_GWeaiO5v{kMP<c6eUz{9}&C=|;;e@bI-A8-QrvjC|vIjN+d9ox4_`ccxgk$~Dh
+zFX<!OFQje3opqR%yrWFto4_UD<0R_C?+TOXwr#hv3$IhI3dhv7y(Vc@(r`^Xp_dK+
+hi&vY|n8q|J;veC`3A(NY2~Pk3002ovPDHLkV1kX)`G5cb
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/icons/user.png b/shared/style_hvga/headers/images/icons/user.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..9be1226d29deb3f27eec2cfa1b75d51d69e9f7b7
+GIT binary patch
+literal 1263
+zcmV<L1Q7d)P)<h;3K|Lk000e1NJLTq001fg001fo1^@s6#ly*400001b5ch_0Itp)
+z=>Px#24YJ`L;(K){{a7>y{D4^000SaNLh0L01FcU01FcV0GgZ_00007bV*G`2iyw{
+z2^#|wd_I=|00eJIL_t(o!`+$9j}%oD#eb)#r^+xIK|UNMegqUSV2l#i#1J(G1ID<)
+zl|f@d3|sjh*t%z>J26C!(WNXgYBVB_x{!}S1Sen&1Mf03$IYvuXs5r5o-y$yo$l(c
+z`|hpt&b{y4*Kmg;B1UpgztQ6VJR+hiN)b^+MA6MIrPRo$Mi_h>xF2``!1nKw{wRuK
+zZWQwm9cW64vMlS@8-Uj&?E)SJsvi^Zo9!=w56iN=R7bWbij_k&BAx;E0xttk11;OP
+zCYKg~Z*6}n>Eog(zG>>K-2}~)k|eDM-UQwT+P0Bo>DIH`Zb{lH=_z1+M4Y#MxhzW$
+zi)y2+mox#qWBd8)Ve0|b?yCZB11|uFvhDJgry4ic+uj2_UPI5BN{cVocwqZ6+b;nd
+zfT20sYLHBY?M;$4XT+S*(-Md(zgrTLHUpbdO65uv{B@F^sDY&+lXjb=waXr;q{8+@
+z&AA6Kt5_gl0w|U>>$At}lCIoARl5RQUkOC7+WxiXtQWHGpzHN)dv)0ZEs7#ZngY%a
+zxa{@iKMPD1MUj>@&`MC)o&k;mr#lkH9cb2*=(MDxz)TbA*KR^GNeMUxJPfP>CTsPx
+zGt+JRqNL-%v244t>M0^N0<Qq?0vmy`j$7t|Y2XNOyeNw4|3p3IJ%63;t-!OAwgPK&
+zDVhPMfUolVpJiEkDFrsNKq~>!%Rxj;+I|SQH`C)U+vm!%yx8l32Nfq8G|1X@3%Cnd
+z1q3kLPaLO|+LBh;E+oy`zEPIt!Z7-@$ric+*l+uN;4rXb0GsW=VM!kVuUEokBugI=
+z*j`-fh#0f|D)6GDoxs-2!_R>CZ2wR#Wo4Jk*>>O%ut(B5;3wc~;0xfRqA2DoDo7ey
+zRdoivIwJN(#EF!WBclGAiHIW+@nl4(&cTS-5fMjHN;8#R&HhA0>`N)F9#zxUiio`t
+zaUmiWmI%}lF_(kgQ44f?{%)>|%|f1YZ|42*1;2ybdu$&BCaVqGwrlELlE#3yfK@4_
+zqdDsj*xnC})pcubSt?;Y2^`G7ebOtj+FkbZifiM*E=jv>FN)y$u2Z{SlbgJW9N2S`
+z?&~5>7P|pSyMa>?@i}m_8%NuH(B1-U1I9ZXEVaKIcm#MOqt<!<zw9K*_PC^N+1C^>
+zH&l7D-IlZk7?|w!R=NJUk8Z&B>KtghNgWk%Plp;;zY>>wqe04`>RkhHcdv5U>h+{q
+zR1B&)Z|m=>zHY#kSjfJH-<figGYi}tbQv2fBWW(He>c&i3r+i*27TBK;7UFM8k(c?
+zzy;gaYD+pwXkA0}8gS9}e4{{ZpU=(Q$d4&I=DI3rx))E|eU5KtQ%aXt;B5F(Q51g<
+zolNz{OVT+>XNIYbL-O-X?oMxOAO{MxV;lP!_^#WD-3T)Nd*GKP4&sIu&OZVtmjTJ@
+z<H?S;yICueQW}@^U{><2T((9rs<}?to-WJsW}{iM@MWb&zkf_xeZ)fJzgwD|!1T(2
+Ze*naQtH4X%utNX<002ovPDHLkV1mREP+9;0
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/ui/dark/header.png b/shared/style_hvga/headers/images/ui/dark/header.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..0ce9ea4c2cffd1adc732d5071d5548932f263393
+GIT binary patch
+literal 224
+zcmeAS@N?(olHy`uVBq!ia0vp^j6m$h!2~3mv@$^wjKx9jP7LeL$-D$|*pj^6T^Rm@
+z;DWu&Cj&(|3p^r=85p>QL70(Y)*K0-AbW|YuPgf<ZeC7f;oxZvkwBpYPZ!4!iOaG5
+z2YC+|a4`4oPN=(E->4(d`MQ157JiW>lh3;(-<ek&HA!`5RjW>-%VxPt39BQmI-8Rp
+z6kPIad00BPT53_1c5vU^lb>AfdwzPIU|isFZu9zx1@G^dy^GS858vj_cz4-y8K7MZ
+Mp00i_>zopr01=c-4gdfE
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/ui/dark/negative.png b/shared/style_hvga/headers/images/ui/dark/negative.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..f3d505b1d717201e61cba242572ffbbb07aec730
+GIT binary patch
+literal 139
+zcmeAS@N?(olHy`uVBq!ia0vp^j6iI_!2~4Z1KY0wsUS}m#}E!#)`JHb4>9l@F_=Gd
+zmHoH*oyR<E&R;)Owf5%R>#tj5ubtP{d@m%hK}g78gTN$%Nk-33IGj45$EeJx%*mO2
+o$Wl$?v~MKe9kp7XD{KBT>MeA>zJ+0%4A682Pgg&ebxsLQ0DXKfEC2ui
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/ui/dark/separator.png b/shared/style_hvga/headers/images/ui/dark/separator.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..c87aa177eabe24b3f12e55530bbb48d9740312d6
+GIT binary patch
+literal 168
+zcmeAS@N?(olHy`uVBq!ia0vp^Oh7Ep!3HGH{*y@rQu&@Pjv*4^zNZbj4h0CfUVO~L
+z(%o_FnC=aZNB^!TJQs^;a8v2J|B7|@;ko9e7IXX8ZmnH-eANa=(QPldoKNYc9;=bs
+zaH2XqV)>VwYl5aZikoQEH2Z&W)Al*|TAs_lra4R^_}CQpQ?@%;#eG_}kICPRk^jG)
+SgQpp2HG`+CpUXO@geCyr+CLls
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/ui/dark/subheader.png b/shared/style_hvga/headers/images/ui/dark/subheader.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..4c7699fcf7db4c54b0ee65931934684f2cd82418
+GIT binary patch
+literal 90
+zcmeAS@N?(olHy`uVBq!ia0vp^j6iI}!2~3QW~$u<Qi`4~jv*W~lUJ=@pPrPE!0`D0
+o|NqGwIu~+wPF&nBA=Syt5Ov#U`n_vOJwU|_p00i_>zopr0PmU`e*gdg
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/ui/header.png b/shared/style_hvga/headers/images/ui/header.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..b79a76127b26285dc7fe95941219000a0239cadf
+GIT binary patch
+literal 149
+zcmeAS@N?(olHy`uVBq!ia0vp^j6iI}!3HGf{@&OHq+&c>978ywWBX6@HZX8F$0tAD
+z!1qex-kd`$HWQAWZw>gxxF>&0<_4B`ev%OhEXtKP<}=$J>F^9^6`NV=s`IGUbDpfQ
+yLd;f{Bp>#$#>BI%%m?otnq)8U+wh?<?#`S%)A@26ukHid!{F)a=d#Wzp$Py!z%zCL
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/ui/negative.png b/shared/style_hvga/headers/images/ui/negative.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..9e9f4281b3cfec843f97415462ea0f455ff77697
+GIT binary patch
+literal 114
+zcmeAS@N?(olHy`uVBq!ia0vp^j6iJ2!2~3y@P-rvDN9cm#}JO_(!PV73<ey`i)WXe
+z%9}3Y7!du-;!&&3m%R@h7B<ZMb@<(xzRURyGY{SF_pR7}nRWI2RCc~FJF7z5qhUZp
+O7(8A5T-G@yGywn!sU~0m
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/ui/organic/header.png b/shared/style_hvga/headers/images/ui/organic/header.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..0d6ef17397e7789f8c08a12b80b1de4d33e1c083
+GIT binary patch
+literal 177
+zcmeAS@N?(olHy`uVBq!ia0vp^j6m$h!3GlX_!kQjC=POWVpw-h<|UBBmgMd3!tfsi
+z7wla=87RV8;1OBOz`!jG!i)^F=12eq*-JcqUD@w&^Ku#*ZaJ{n9w=n!>Eak7aXI<N
+z|Nr*P!pzLfLI)23L5J3{6D`g>_T43_Jtd)s92$j~9v(Ual;B}#Ghp7ZE~Rr8P&0$4
+LtDnm{r-UW|D$X<{
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/ui/organic/negative.png b/shared/style_hvga/headers/images/ui/organic/negative.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..b6639019763a45d58b0b742a5bf29d76d323794d
+GIT binary patch
+literal 73
+zcmeAS@N?(olHy`uVBq!ia0vp^j6iJ2!3HFy^AD>4DFIIx#}E$L<dlR2gJhXR7KYzP
+WxH?X1z1jnmWAJqKb6Mw<&;$V3oDf|A
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/ui/organic/pattern.png b/shared/style_hvga/headers/images/ui/organic/pattern.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..202db196e99d8204e01ef8c46fbc71ac55b63a87
+GIT binary patch
+literal 1852
+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
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/ui/organic/separator.png b/shared/style_hvga/headers/images/ui/organic/separator.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..c87aa177eabe24b3f12e55530bbb48d9740312d6
+GIT binary patch
+literal 168
+zcmeAS@N?(olHy`uVBq!ia0vp^Oh7Ep!3HGH{*y@rQu&@Pjv*4^zNZbj4h0CfUVO~L
+z(%o_FnC=aZNB^!TJQs^;a8v2J|B7|@;ko9e7IXX8ZmnH-eANa=(QPldoKNYc9;=bs
+zaH2XqV)>VwYl5aZikoQEH2Z&W)Al*|TAs_lra4R^_}CQpQ?@%;#eG_}kICPRk^jG)
+SgQpp2HG`+CpUXO@geCyr+CLls
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/ui/organic/subheader.png b/shared/style_hvga/headers/images/ui/organic/subheader.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..8df7e08feaf1885b5f6fc6bb447b34f6d366e4b3
+GIT binary patch
+literal 828
+zcmV-C1H=4@P)<h;3K|Lk000e1NJLTq001HY001Hg0{{R34VnA!0001oP)t-sSYcyT
+zUtv~XVO3sWR$yUJT3lCQVNqLMQe0kBU0+mQU{6_FPFPw{SzB3RWLIHgQ(RtGU}9BY
+zU{YIMPFGn}U0+RCSyWwKR$yXLTU<|AT2ozKQCeJ0R#;bIV^UmQSYl*UUSCpLTvS|M
+zPgz<}T3c0JUrtzAOjTD<SXxtCT~=RUOjcN6l^KTs00MAHL_t(|UOi3)mL)d~l+4%+
+zpJ5O-_dj1so=x=Hk_%LB(ps-CFIq49deQUOprx+*^#bm<=<gi#=~aKv8bX6t9FX6@
+z^!2hJVb+&fR}sH2uP3BH`T}}I97VRXWoGMHDsKOvXZG97Gjjn$o8P!HhnW+HRb0*6
+z?9w)-t<2kshzdpsu7xuO!fHTX2&4w3R`p+<mZgoV=BiF7rIw$S>hhsJ)DOUNReHHx
+zny2DmbFJ7$%H^c$u*i<oe4W)SD<6`N^(#_9x0lcsjoI#Xsd`x9k(5<Lt#nfnQ0rRj
+z@BiSB;2~p*G11syj5QiPdXooZ44VwVp%4^njJIWIX7EK9KNyP{+1SBQ3Oab%3Wd>O
+zi#!;HI~CZVP%>M=9qS3U5KMwogNR#1Iv%0BJHF%F-|z13p1b>;+|i*XX`jx$J96k}
+z=Z?>_+xOk=M{!Kk^Zwk=Z_fR3Zv^@2_Om;?H^h9xa&~_N9F05P?+%u}?+-ny^r7z+
+zknQ^%58me7ClNA9>m!a}pQH5BdknNT35yAa=2UIAyN!8jhQopSJb6j*e{I6Y)E+Ou
+zzAq%jn#eG^rbKxZ#xez>k!(mr02IY&Fu{YNG#bG{8tOJ;CLlBqT_~$51j_b?6!2r)
+zBoDwNFyc9gm5B`_M^dp1E#P4322NA<6b&H<yRvRY1H%^68v4JQz(}@aZos0&M(Z5u
+zc58+ayX3pBn{W=@!*&9?)IGXK?EJ(HGIe7oHKs{MoZyB3fdi#+Ed{`1HkDFB5I#hX
+z1j17ktLP!MKp$ntihnx%rf_HdBL&Hwz$ejInxyiCg?|BqPcF+BBFk+60000<MNUMn
+GLSTZ(TX!4)
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/ui/overlay/header.png b/shared/style_hvga/headers/images/ui/overlay/header.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..fb3ead527d9e035a593a92fe1bc04299e2c9ae98
+GIT binary patch
+literal 73
+zcmeAS@N?(olHy`uVBq!ia0vp^j3CUx1|;Q0k8}bl0Z$jlkcwN3tPH>Y1Gx-08SXLM
+T%3JmN6^P^M>gTe~DWM4f?nDt{
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/ui/overlay/separator.png b/shared/style_hvga/headers/images/ui/overlay/separator.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..e02f24a0da39cc1b3a20f281eeae47add9c63b26
+GIT binary patch
+literal 142
+zcmeAS@N?(olHy`uVBq!ia0vp^OhBx}!3HEtr8tCuRH&zmV~9j}=?QPHLk0}22R<GZ
+zaozLZ^Y4|qM_K_KcX@@cT#Mp-x8fjk@CO$wuY%XcrB{^oWSd@Fo@(GRSipP3dfVs7
+rzRm2f8ziGYy!(7esOBTLUBrLsMN;vp{FAGJ7BG0a`njxgN@xNA#62<7
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/ui/search.png b/shared/style_hvga/headers/images/ui/search.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..08e7e1ecc535d5fa325f2e91a15317236c2e52a1
+GIT binary patch
+literal 92
+zcmeAS@N?(olHy`uVBq!ia0vp^j6kf+!2~3434ebK;&{3^hHykD|N8it{qq0+|7S`_
+qNE|S+lAbSNIAcPj!ME4f*E8;644c2ydsQq@IfJLGpUXO@geCxSI~_>?
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/ui/separator-large.png b/shared/style_hvga/headers/images/ui/separator-large.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..84abc5f28acd2fa7321cfa2f59c9b474be534a4e
+GIT binary patch
+literal 372
+zcmeAS@N?(olHy`uVBq!ia0vp^%s}kI!3H8r`?G-*V{wqX6T`Z5GB1G~wj^(N7l!{J
+zxM1({$v_d#0*}aI1_o|n5N2eUHAey{$X?><>&kwIo0n76z(~J{A1L(2)5S4F<9zQV
+z!@R==0xaqNC38;2fByeJQDU0Ly=4MRJvwA&91v~38NEs2K*9d|hqrMB<ZX{;(mSB4
+zBsGC`#|<$9@dvYJ-Y8>;-+E0+lW9la<A@x0hWn2#_!t;tqO+slXd8Fux~`XFU^QS+
+z^kfuqs5V}6m07{lWqrTyHThi*X~%vwUDf$%%QN%mu|4-Iv#+EZ*N9n5_%+t{H2>t$
+zIr)6qdA9bspCkTdpL-ZkYp}MN`Gnn?57~G88D`GZJXxP~wk*$j=1d1RgZI9yx444;
+zf8_r1f@$kDwUw*^%QI)?ZfAJ*{Iliyv^pEP+`Y@+E!-Qoe##Sh_MQ_nWdAvc0R7M4
+M>FVdQ&MBb@03z^?2><{9
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/ui/separator.png b/shared/style_hvga/headers/images/ui/separator.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..fc8278800a50944a4cadb6c3cc35f220e90a3ba7
+GIT binary patch
+literal 415
+zcmeAS@N?(olHy`uVBq!ia0vp^%s_0$!3HFm<|{7*QjEnx?oJHr&dIz4a@dl*-CY>|
+zgW!U_%O?XxI14-?iy0WWg+Z8+Vb&Z8pdfpRr>`sf9d2GuG409eFBE{L$a}gthG?8`
+zofz$R*g(YPe2n@_X01@BBSI1U(FyKrT520zCTf_d_O<sP%YDgjKdtZl+?~_Td_G+D
+z_0t!N&2yO|ZpSg@GOuYAl#qHLmYKhs|AF5Ird<s08mBH{zM)>s922^ODb0Z^f%9F%
+zjD~Id5*SM+Epm!B{>&W^&AqB~Mw!Wf=XQ^6%FAx6crrG4mhyBms4*x0W;xD$VI@P!
+zyoWVsra#z!ti8rkGLTR5_T}jo4U8o%@|_pIF*XEFV!qM5>8%lCWDw^9_fuOJOkeRp
+zHiN+{q3Q@rL0W=(Cc`lXyXC(ObM|X4UHew%M*hT0VL^Pm_qbiIV|3mz<$K2Me1&%J
+zn@jS(@%983{mXdPeXlIfOK*0XnY?PR@4KI`)`c_tVVaoP!IrV&r4KOl7(8A5T-G@y
+GGywo2NuLq`
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/ui/shadow.png b/shared/style_hvga/headers/images/ui/shadow.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..aec120c92a0186c5c9126a315cc7f9efde3a13f3
+GIT binary patch
+literal 76
+zcmeAS@N?(olHy`uVBq!ia0vp^j6lrH!3HFQ?xr>YDPd0+#}E$L<b;F-50)ghWPyYH
+Y46M}*OF}|}6@bzVp00i_>zopr0PTDa3;+NC
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/images/ui/subheader.png b/shared/style_hvga/headers/images/ui/subheader.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..6bd5a2342a7fbf9ce928d6852007a9ecc8f1be9d
+GIT binary patch
+literal 73
+zcmeAS@N?(olHy`uVBq!ia0vp^j3CUx1|;Q0k8}bl0Z$jlkcwN3tPH>YGyMPme>3NL
+W=8Y!Lk3Is*F?hQAxvX<aXaWEz8xz6+
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/headers/index.html b/shared/style_hvga/headers/index.html
+new file mode 100644
+index 0000000..3e402fe
+--- /dev/null
++++ b/shared/style_hvga/headers/index.html
+@@ -0,0 +1,134 @@
++<!DOCTYPE html>
++<html>
++<head>
++  <meta charset="utf-8">
++  <title>Headers</title>
++  <meta name="description" content="Providing top-level navigation and inputs for the active view">
++  <!--
++    - This <style> and <link> is only used for the example preview,
++    - it isn't needed for the real use case.
++    -->
++  <link rel="stylesheet" href="../headers.css">
++  <style type="text/css">
++    html, body {
++      margin: 0;
++      padding: 0;
++      font-size: 10px;
++      background-color: #fff;
++    }
++    body {
++      background: none;
++    }
++    section[role="region"] {
++      margin-bottom: 1.5rem;
++      position: relative;
++    }
++  </style>
++</head>
++<body role="application">
++  <section role="region">
++    <header>
++      <menu type="toolbar">
++        <a href="#"><span class="icon icon-edit">edit</span></a>
++        <a href="#"><span class="icon icon-add">add</span></a>
++      </menu>
++      <h1>Messages</h1>
++    </header>
++  </section>
++
++  <section role="region">
++    <header>
++      <a href="#"><span class="icon icon-back">back</span></a>
++      <menu type="toolbar">
++        <button><span class="icon icon-edit">edit</span></button>
++      </menu>
++      <h1>Mark Alfenito</h1>
++    </header>
++  </section>
++
++  <section role="region">
++    <header>
++      <button><span class="icon icon-menu">menu</span></button>
++      <menu type="toolbar">
++        <button><span class="icon icon-edit">edit</span></button>
++        <button><span class="icon icon-add">add</span></button>
++      </menu>
++      <h1>Inbox <em>(2)</em></h1>
++    </header>
++  </section>
++
++  <section role="region">
++    <header>
++      <button><span class="icon icon-close">close</span></button>
++      <menu type="toolbar">
++        <button>done</button>
++      </menu>
++      <h1>Title</h1>
++    </header>
++    <header>
++      <h2>Subheader text</h2>
++    </header>
++  </section>
++
++  <section role="region">
++    <header>
++      <button><span class="icon icon-back">back</span></button>
++      <menu type="toolbar">
++        <button><span class="icon icon-user">user</span></button>
++      </menu>
++      <form action="#">
++        <input type="text" placeholder="search" required="required">
++        <button type="reset">Remove text</button>
++      </form>
++    </header>
++  </section>
++
++  <section role="region" class="skin-dark">
++    <header>
++      <a href="#"><span class="icon icon-back">back</span></a>
++      <h1>Song title</h1>
++    </header>
++    <header>
++      <h2>Subheader text</h2>
++    </header>
++  </section>
++
++  <section role="region" class="skin-dark">
++    <header>
++      <h1>Song title</h1>
++    </header>
++  </section>
++
++  <section role="region" class="skin-organic">
++    <header>
++      <a href="#"><span class="icon icon-back">back</span></a>
++      <h1>Settings</h1>
++    </header>
++    <header>
++      <h2>Subheader text</h2>
++    </header>
++  </section>
++
++  <div class="skin-organic">
++    <section role="region">
++      <header>
++        <h1>Settings</h1>
++      </header>
++      <header>
++        <h2>Subheader text</h2>
++      </header>
++    </section>
++
++    <section role="region">
++      <header>
++        <a href="#"><span class="icon icon-close">close</span></a>
++        <h1>Settings</h1>
++      </header>
++      <header>
++        <h2>Subheader text</h2>
++      </header>
++    </section>
++  </div>
++
++</body>
++</html>
+diff --git a/shared/style_hvga/switches.css b/shared/style_hvga/switches.css
+new file mode 100644
+index 0000000..60b3eaf
+--- /dev/null
++++ b/shared/style_hvga/switches.css
+@@ -0,0 +1,20 @@
++label:not([for]) input[type="checkbox"] + span {
++  background: url(switches/images/check/default.png) no-repeat center top;
++}
++
++label:not([for]) input[type="radio"] + span {
++  background: url(switches/images/radio/default.png) no-repeat center top;
++}
++
++label:not([for]).danger input[type="checkbox"] + span {
++  background-image: url(switches/images/check/danger.png);
++}
++
++label:not([for]).danger input[type="radio"] + span {
++  background-image: url(switches/images/radio/danger.png);
++}
++
++label:not([for]) input:checked + span {
++  background-position: center bottom;
++}
++
+diff --git a/shared/style_hvga/switches/images/check/danger.png b/shared/style_hvga/switches/images/check/danger.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..8276eaeb205cc341f0f73da5cdfdbd862410c2e8
+GIT binary patch
+literal 3577
+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
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/switches/images/check/default.png b/shared/style_hvga/switches/images/check/default.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..034d49f108fd48d73e5cba32ddeeb25c3910f566
+GIT binary patch
+literal 3223
+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
+JPDHLkV1nxX9Blvq
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/switches/images/radio/danger.png b/shared/style_hvga/switches/images/radio/danger.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..fe1b19a4210c578080f5d27e5a84c79fc6ac106e
+GIT binary patch
+literal 2392
+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
+KMNUMnLSTY|6ho5$
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/switches/images/radio/default.png b/shared/style_hvga/switches/images/radio/default.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..689244dec7dfa4b8f71d49b72cecc1d5a2f26b4c
+GIT binary patch
+literal 2899
+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
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/switches/images/switch/background.png b/shared/style_hvga/switches/images/switch/background.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..8bf0778cf84ae2201f22a31d77418c92d5447f03
+GIT binary patch
+literal 1015
+zcmbVLzi-n(6m|;(s?-6M0hmtiz(Q=FV_zIAp>q6#M#7~^BayL=eMzjwK4V{rTM3Dx
+zs-j}*g2cpM01`7uAi>gse}Do000tJs%sGh*L)8Jx_WgR__ul*Nz2nV|yUR;AmpG1F
+zZm(M%HZHL5+LcB2|1|#in+-Rp-J@G%Kqp>`IU^u_4BC-5#2xGfdk;@>gX1m@!fucD
+z+<UrDBEc(cggi<Zn&TR4dE)syn1VhYhH;bs`R)S`!l21NP+iGQOgswL_fx#JztQ#g
+zcl>(5uiXKSTxSFkrXI+nah&OSlb`bHY+h`OJeZo$ohCmEs^@M3lcX4^Lbc*c5CVh*
+zsHh0R+d!6}EK2M}6{zSc(&ZYMKRol61_QlgIdflZ)#OK%Cb}q2CKF*&6-YW1VZB~2
+zIApoPEGpSvOuf7kXR9THg)=`56B?2j6pUV<?9wLBBAulWC9Zo$9A|T(m}Fw^B_b3g
+zF^Y=3rq&tl;J;y<Yn^rX5-fIbMs`!5-N#_H1T*a}c2pR$X!QGO$S%bjTg2aua7^1)
+zlV>MF5C*!T$c`jeYe<tNq(N9$9owlRrmSh(s^OFz=V299gBp|GYRL#f8@6hyW!6=s
+z)ilXAs%D98#~JlvAD4bZ=68-&FU0C*iakowE+ONx0yam4l59j0U~Z|v_53g{*2VSA
+zvbAs;KEi>Mk_b%o)x&fABV=fXtyLX!mba#vs8y2;Nm8JS6qTQ2ga6S?WWk6<ar{#(
+z<rb^JVtQ8kY;o2+IA$G_ver0y^5Yw8t6Oc$=;mMh+r7sxjt@?*K6?q2m6gLUpAS!u
+ip2O9*C%+_l@$z-<pt11%z4-c7(TZ(*!+O)&e)<PL<~g<i
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/switches/images/switch/handler.png b/shared/style_hvga/switches/images/switch/handler.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..5d014f62a298754e3cf3976ea1e7da23acd24ded
+GIT binary patch
+literal 769
+zcmV+c1OEJpP)<h;3K|Lk000e1NJLTq000&M000&U1^@s6#I$TX00009a7bBm000XU
+z000XU0RWnu7ytkOAY({UO#lFGbpQZ!pa1~#nE(KZlmGyJ-T(mX_y7Pin*ab1<*I$k
+zLjV8*he<?1RCwB~RY6M|K^T3r$wK1V^$;Rap@BjP3WZ*xRu67Lr2c@CQz-N*6mR0O
+z$6VsgL!gC9FZSTQ2T_n-x)h6L521ySns$|HLbBbRiR<pyiz~q-Hc=nE+sxz5`@Z=;
+zhW{f9;2r=O00VFizy|P_h^X78@HK*QS(Zoh`TT^YX;Z4IjxxrW<2Y5rFupD?FMno?
+z{Q_`8MCUyigsLdY<DH$IRok{JuIrKzf;i{oI1ULR=<Mu_n$4zV7{>bK<m5DfI1!<h
+zR}s@RZRYs+cuxpHmSs_`R-<aQ+QvqsL7a24EUS{s<(>mbv<kOIF{o);YHMrjZ6p#&
+zHJeTNz7GIkjI}xNJP*F_BODHoEiEm*u`Dag82dy-C%7m^fMlsuDhv+~FSxFYYwFSl
+zS(YJ$__?^an9+6p3lX_ekn6_A#<O@lzTkP@rORIFc^;zC=>0;W@De}_00QCI+}zv?
+z03f2iM1z=!2+3qJGcqzV${1r3fYAK>{MgXY&{RLq@058c6jF1!TpEB91`x?)G7lw5
+zk^;B4!T9+2BLD*u06CFJ#BfJY6eSKo4!0KSE)eL10k}s;N2hls>^ROJ0Imc;Y;JCT
+z2jKVH4V_pl7QX@Dfz1b|X}(ug^~r7AdY;!vrBY8#)7%gG_;h!7_uXyXmdoW2rfL4Z
+zI!=>^hld|I=X4X+YPE7Yot_3D6Vc_*1Ax<PHv5`$Uc5mBRz9D9rR(|+B62&OiD{ZP
+zW18lk5Q2JPy<YD)HoFe`?d|Q=dc9uhCTQEXb#QR7e)0UaLC^lTn%36VCT3@6r!Q6$
+zIOjFPF!ongR`gP-ROz;wdifOt00#SArvC;23Z&uur(Gu?00000NkvXXu0mjfsNPzH
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/switches/images/switch/icon.png b/shared/style_hvga/switches/images/switch/icon.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..bf7a35580c874174ca3ea76800adda671ea4a5ed
+GIT binary patch
+literal 326
+zcmV-M0lEH(P)<h;3K|Lk000e1NJLTq000dD000yS1^@s6Rx-CQ00009a7bBm000XU
+z000XU0RWnu7ytkOAY({UO#lFGbpQZ!pa1~#nE(KZlmGyJ-T(mX_y7Pin*ab1<*I$k
+zLjV8(%t=H+RCwCl)1gX)K@^7J?_b4Y5QEvGU@?0K+AM<63ox3*=0)fgcpE0cZeF7n
+zlSPyI7(71=%fHL6!Qg>`neXs2FK3tzS+qv^Mg0lXCCT!F&{dLgFz-6|Q_u4Phxo)7
+zj{9(B2C#>>y5#~1*6@In0bmO+1>B(Pp`!|)u-X9Y7+3GUwFySJtL9~+dt2EfHd=#z
+zvyJz1-z*h)#qOkbdpK(};R6Rl!)Xso<=)rnw24jzJEeI&>)nRJ{knB3)cvpjlqC5c
+Y09Lox8d{m5qW}N^07*qoM6N<$g8PJpi~s-t
+
+literal 0
+HcmV?d00001
+
+diff --git a/shared/style_hvga/switches/index.html b/shared/style_hvga/switches/index.html
+new file mode 100644
+index 0000000..c91c134
+--- /dev/null
++++ b/shared/style_hvga/switches/index.html
+@@ -0,0 +1,89 @@
++<!DOCTYPE html>
++<html>
++<head>
++  <meta charset="utf-8">
++  <title>Switches</title>
++  <meta name="description" content="Activates/Deactivates a given item. It's also used to select an element within a list">
++  <link rel="stylesheet" href="../switches.css">
++  <!--
++    - This <style> element is only used for the example code;
++    - it is not required for the real use case.
++    -->
++  <style type="text/css">
++    html, body {
++      margin: 0;
++      padding: 0;
++      font-size: 10px;
++      background-color: #fff;
++    }
++    body {
++      background: none;
++    }
++    h2.bb-docs {
++      font-size: 1.8rem;
++      font-family: "MozTT", Sans-serif;
++      font-weight: lighter;
++      color: #666;
++      margin: -1px 0 0;
++      background-color: #f5f5f5;
++      padding: 0.4rem 0.4rem 0.4rem 3rem;
++      border: solid 1px #e8e8e8;
++    }
++  </style>
++</head>
++<body role="application">
++
++  <h2 class="bb-docs">Checkbox, commonly used in edit mode</h2>
++  <label>
++    <input type="checkbox" checked>
++    <span></span>
++  </label>
++
++  <label>
++    <input type="checkbox">
++    <span></span>
++  </label>
++
++  <label class="danger">
++    <input type="checkbox" checked>
++    <span></span>
++  </label>
++
++  <label class="danger">
++    <input type="checkbox">
++    <span></span>
++  </label>
++
++  <h2 class="bb-docs">Radio, commonly used in settings</h2>
++  <label>
++    <input type="radio" name="example" checked>
++    <span></span>
++  </label>
++
++  <label>
++    <input type="radio" name="example">
++    <span></span>
++  </label>
++
++  <label class="danger">
++    <input type="radio" name="example2" checked>
++    <span></span>
++  </label>
++
++  <label class="danger">
++    <input type="radio" name="example2">
++    <span></span>
++  </label>
++
++  <h2 class="bb-docs">Switch, commonly used in settings</h2>
++  <label>
++    <input type="checkbox" data-type="switch" checked>
++    <span></span>
++  </label>
++
++  <label>
++    <input type="checkbox" data-type="switch">
++    <span></span>
++  </label>
++</body>
++</html>
+-- 
+1.7.10.4
+

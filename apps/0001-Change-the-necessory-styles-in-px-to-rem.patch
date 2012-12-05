@@ -1,0 +1,226 @@
+From 5ab92af94388b51005f4d31b8330ed07db10bc39 Mon Sep 17 00:00:00 2001
+From: pzhang <pzhang@mozilla.com>
+Date: Tue, 13 Nov 2012 15:03:21 +0800
+Subject: [PATCH 1/4] Change the necessory styles in px to rem
+
+---
+ apps/email/style/compose-cards.css            |    2 +-
+ apps/email/style/custom_dialog.css            |    2 +-
+ apps/email/style/mail.css                     |   14 +++++++-------
+ apps/email/style/message-cards.css            |   25 ++++++++++++++-----------
+ apps/email/style/progress_activity/index.html |    2 +-
+ apps/email/style/setup-cards.css              |    4 ++--
+ apps/email/style/value_selector.css           |    4 ++--
+ 7 files changed, 28 insertions(+), 25 deletions(-)
+
+diff --git a/apps/email/style/compose-cards.css b/apps/email/style/compose-cards.css
+index f291d19..5cf4b9d 100644
+--- a/apps/email/style/compose-cards.css
++++ b/apps/email/style/compose-cards.css
+@@ -42,7 +42,7 @@
+ }
+ 
+ .cmp-addr-text, .cmp-dot-text {
+-  margin-top: 2px;
++  margin-top: .2rem;
+   float: left;
+   width: 0.5rem;
+ }
+diff --git a/apps/email/style/custom_dialog.css b/apps/email/style/custom_dialog.css
+index eca6632..8108b4a 100644
+--- a/apps/email/style/custom_dialog.css
++++ b/apps/email/style/custom_dialog.css
+@@ -3,7 +3,7 @@ body[role="application"] [role="dialog"]:before {
+   display: inline-block;
+   height: 100%;
+   vertical-align: middle;
+-  width: 1px;
++  width: .1rem;
+ }
+ 
+ body[role="application"] [role="dialog"] {
+diff --git a/apps/email/style/mail.css b/apps/email/style/mail.css
+index 19e0c5e..9d1dc96 100644
+--- a/apps/email/style/mail.css
++++ b/apps/email/style/mail.css
+@@ -67,7 +67,7 @@ body {
+ }
+ 
+ .top-header {
+-  background: -moz-linear-gradient(to top, #ffffff 0, #a3a3a3 5px, #992f21 5px, #992f21 6px, #bb492d 6px, #cc6523 100%);
++  background: -moz-linear-gradient(to top, #ffffff 0, #a3a3a3 .5rem, #992f21 .5rem, #992f21 .6rem, #bb492d .6rem, #cc6523 100%);
+   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,  #cc6523), color-stop(100%, #bb492d));
+   height: 5.2rem;
+   width: 100%;
+@@ -78,7 +78,7 @@ body {
+ .top-header.top-edit-header {
+   background: url("images/ui/dark_header.png") repeat-x scroll left top transparent;
+   background-size: auto 5.2rem;
+-  /*background: -moz-linear-gradient(to top, #ffffff 0, #a3a3a3 5px, #888888 5px, #999999 6px, #bbbbbb 6px, #cccccc 100%);
++  /*background: -moz-linear-gradient(to top, #ffffff 0, #a3a3a3 .5rem, #888888 .5rem, #999999 .6rem, #bbbbbb .6rem, #cccccc 100%);
+   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,  #cccccc), color-stop(100%, #bbbbbb));*/
+ }
+ 
+@@ -119,9 +119,9 @@ body {
+ .scrollregion-below-header {
+   overflow-y: auto;
+   overflow-x: hidden;
+-  height: -moz-calc(100% - 5.8rem + 5px);
+-  height: -webkit-calc(100% - 5.8rem + 5px);
+-  height: calc(100% - 5.8rem + 5px);
++  height: -moz-calc(100% - 5.8rem + .5rem);
++  height: -webkit-calc(100% - 5.8rem + .5rem);
++  height: calc(100% - 5.8rem + .5rem);
+ }
+ 
+ .bottom-toolbar {
+@@ -164,12 +164,12 @@ body {
+   width: 26rem;
+   padding: 0.8rem;
+   border: 1px solid black;
+-  border-radius: 6px;
++  border-radius: .6rem;
+   background-color: white;
+ }
+ 
+ .menu-item {
+-  padding: 4px;
++  padding: .4rem;
+   font-size: 160%;
+   border-bottom: 1px solid gray;
+   display: block;
+diff --git a/apps/email/style/message-cards.css b/apps/email/style/message-cards.css
+index 1abbe9b..df5f92f 100644
+--- a/apps/email/style/message-cards.css
++++ b/apps/email/style/message-cards.css
+@@ -29,17 +29,18 @@
+ .msg-search-tease-bar {
+   height: 4.8rem;
+   background-color: #eee;
+-  border-radius: 4px;
++  border-radius: .4rem;
+   text-align: center;
+ }
+ 
+ .msg-search-text-tease {
+   width: 90%;
+-  height: calc(100% - 1rem - 2px);
++  height: calc(100% - 1rem - .2rem);
+   padding: 0;
+   border: 1px solid;
+-  border-radius: 3px;
++  border-radius: .3rem;
+   margin: 0.5rem 0;
++  font-size: 1.35rem;
+ }
+ 
+ /* Sections horizontally chop up the item: unread, details, icons, avatar.
+@@ -215,8 +216,8 @@
+   background: -moz-linear-gradient(top, #FFFFFF, #DDDDDD);
+   border: 1px solid #CCCCCC;
+   border-radius: 1rem;
+-  margin: 1px 0;
+-  padding: 2px 0.8rem;
++  margin: .1rem 0;
++  padding: .2rem 0.8rem;
+   font-size: 80%;
+ }
+ .msg-peep-bubble * {
+@@ -290,21 +291,23 @@
+ 
+ .msg-body-content {
+   color: black;
+-  margin: 4px 0px;
++  margin: .4rem 0px;
+   word-wrap: break-word;
++  font-size: 1rem;
+ }
++
+ .msg-body-signature {
+   color: blue;
+-  margin: 4px 0px;
++  margin: .4rem 0px;
+ }
+ .msg-body-leadin {
+   color: gray;
+-  margin: 4px 0px;
++  margin: .4rem 0px;
+ }
+ .msg-body-q1, .msg-body-q2, .msg-body-q3, .msg-body-q4,
+ .msg-body-q5, .msg-body-q6, .msg-body-q7, .msg-body-q8, .msg-body-q9 {
+-  padding: 2px;
+-  margin: 4px 0px;
++  padding: .2rem;
++  margin: .4rem 0px;
+ }
+ .msg-body-q1 {
+   border-left: 1px solid gray;
+@@ -335,7 +338,7 @@
+ }
+ .msg-body-disclaimer, .msg-body-list, .msg-body-product, .msg-body-ads {
+   color: gray;
+-  margin: 4px 0px;
++  margin: .4rem 0px;
+ }
+ 
+ .msg-reader-load-infobar {
+diff --git a/apps/email/style/progress_activity/index.html b/apps/email/style/progress_activity/index.html
+index 3a70ca2..4f7feed 100644
+--- a/apps/email/style/progress_activity/index.html
++++ b/apps/email/style/progress_activity/index.html
+@@ -28,7 +28,7 @@
+           font-family: "MozTT", Sans-serif;
+           font-weight: lighter;
+           color: #666;
+-          margin: 10px 0;
++          margin: 1rem 0;
+           background-color: #f5f5f5;
+           padding: 0.4rem 0.4rem 0.4rem 3rem;
+           border: solid 1px #e8e8e8;
+diff --git a/apps/email/style/setup-cards.css b/apps/email/style/setup-cards.css
+index 0de5457..d3a2eae 100644
+--- a/apps/email/style/setup-cards.css
++++ b/apps/email/style/setup-cards.css
+@@ -63,7 +63,7 @@
+   }
+ 
+   to {
+-    background-position: -390px top;
++    background-position: -3.9rem top;
+   }
+ }
+ 
+@@ -99,7 +99,7 @@ li {
+   border: solid 1px #dbd9d9;
+   border-right: none;
+   border-left: none;
+-  margin: -1px 0 0;
++  margin: -.1rem 0 0;
+   list-style-type: none;
+ }
+ 
+diff --git a/apps/email/style/value_selector.css b/apps/email/style/value_selector.css
+index 01bb457..f2ebaa0 100644
+--- a/apps/email/style/value_selector.css
++++ b/apps/email/style/value_selector.css
+@@ -17,7 +17,7 @@ section.valueselector [role="dialog"]:before {
+   display: inline-block;
+   height: 100%;
+   vertical-align: middle;
+-  width: 1px;
++  width: .1rem;
+ }
+ 
+ section.valueselector [role="dialog"] {
+@@ -80,7 +80,7 @@ section.valueselector [role="dialog"] li {
+   line-height: 5.9rem;
+   list-style: none outside none;
+   margin: 0;
+-  padding-bottom: 1px;
++  padding-bottom: .1rem;
+   position: relative;
+   overflow: hidden;
+   text-overflow: ellipsis;
+-- 
+1.7.10.4
+

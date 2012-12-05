@@ -266,7 +266,7 @@ var Cards = {
    */
   _eatingEventsUntilNextCard: false,
 
-  TRAY_GUTTER_WIDTH: 60,
+  TRAY_GUTTER_WIDTH: 90,
 
   /**
    * Initialize and bind ourselves to the DOM which should now be fully loaded.

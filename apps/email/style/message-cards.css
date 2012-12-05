@@ -499,7 +499,7 @@ ul[role="tablist"].filter li {
 
 ul[role="tablist"].filter li a {
   display: block;
-  padding: 1.3rem 0.5rem;
+  padding: 2rem 0.5rem;
   text-decoration: none;
   color: #737272;
   overflow: hidden;
