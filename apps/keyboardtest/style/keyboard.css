@@ -1,22 +1,48 @@
+* {
+  -moz-box-sizing: border-box;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+html {
+  height: 100%;
+  background-image: url("images/bg.jpg");
+}
+
 #keyboard {
-  margin-top: 200px;
   width: 320px;
+  position: fixed;
+  bottom: 0;
 }
 
 .key-row > div {
-  -moz-box-sizing: border-box;
-  position: relative;
   border: 1px solid #ccc;
   float: left;
   text-align: center;
   font-size: 14px;
   line-height: 36px;
   margin: 5px 0;
+  color: #FFF;
+  background: no-repeat scroll center bottom / 100% 100% #252220;
+}
+
+.key-row .highlighted {
+  background: no-repeat scroll center bottom / 100% 100% #6EC5D5;
 }
 
 #highlight {
   position: absolute;
+  color: #000;
   top: -47px;
   font-size: 33px;
+  background: url("images/dark-alpha.png") repeat scroll left top transparent;
+  border-radius: 5px 5px 0 0;
 }
 
+#highlight-box {
+  background: none repeat scroll 0 0 #6EC5D5;
+  line-height: 42px;
+  margin: 5px 5px 0;
+}
