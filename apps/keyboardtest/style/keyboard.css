@@ -1,0 +1,22 @@
+#keyboard {
+  margin-top: 200px;
+  width: 320px;
+}
+
+.key-row > div {
+  -moz-box-sizing: border-box;
+  position: relative;
+  border: 1px solid #ccc;
+  float: left;
+  text-align: center;
+  font-size: 14px;
+  line-height: 36px;
+  margin: 5px 0;
+}
+
+#highlight {
+  position: absolute;
+  top: -47px;
+  font-size: 33px;
+}
+
