@@ -163,12 +163,14 @@ const IMERender = (function() {
   var showIME = function hm_showIME() {
     delete this.ime.dataset.hidden;
     this.ime.classList.remove('hide');
+    _startLoop(true);
   }
 
   var hideIME = function km_hideIME() {
     this.ime.classList.add('hide');
     this.ime.classList.remove('candidate-panel');
     this.ime.dataset.hidden = 'true';
+    _startLoop(false);
   };
 
   // Highlight a key
@@ -496,8 +498,8 @@ const IMERender = (function() {
       content += ' data-' + data.key + '="' + data.value + '" ';
     });
     content += ' style="width: ' + width + '"';
-    content += '><span class="visual-wrapper"><span>' +
-               label + '</span>' + altNoteHTML + '</span></button>';
+    content += '>' + '<span class="visual-wrapper"><span>' + label + '</span>' + altNoteHTML + '</span>'
+                   + '<span class="visual-wrapper-origin"><span>' + label + '</span>' + altNoteHTML + '</span>'  + '</button>';
     return content;
   };
 
@@ -537,6 +539,47 @@ const IMERender = (function() {
     var rowCount = rows.length || 3;
     return Math.ceil(this.ime.clientHeight / rowCount);
   };
+
+
+  var keys = null;
+  var index = 0;
+  var timeout = null;
+  var elem = null;
+
+  function highlightNextKey() {
+    var start = new Date().getTime();
+    window.clearTimeout(timeout);
+
+    keys = document.getElementById('keyboard').querySelectorAll('.keyboard-key');
+
+    if (keys.length == 0) {
+      console.log('Keys is still empty');
+      keys = null;
+      return;
+    }
+
+    if (elem) {
+      IMERender.unHighlightKey(elem);
+    }
+    elem = keys[index];
+    IMERender.highlightKey(elem);
+    index = ++index % keys.length;
+
+    var end = new Date().getTime();
+    console.log('cost: ' + (end - start));
+
+    // timeout = window.setTimeout(highlightNextKey, 20);
+  }
+
+  function _startLoop(start) {
+    if (start) {
+      console.log('start loop');
+      highlightNextKey();
+    } else {
+      console.log('end loop');
+      window.clearTimeout(timeout);
+    }
+  }
 
   // Exposing pattern
   return {
