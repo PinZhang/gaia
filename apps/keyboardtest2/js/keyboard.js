@@ -419,46 +419,47 @@ function initKeyboard() {
     }
   });
 
-  var keys = null;
-  var index = 0;
-  var timeout = null;
-  var elem = null;
-
-  function highlightNextKey() {
-    window.clearTimeout(timeout);
-
-    keys = document.getElementById('keyboard').querySelectorAll('.keyboard-key');
-
-    if (keys.length == 0) {
-      console.log('Keys is still empty');
-      keys = null;
-      return;
-    }
-
-    if (elem) {
-      IMERender.unHighlightKey(elem);
-    }
-    elem = keys[index];
-    IMERender.highlightKey(elem);
-    index = ++index % keys.length;
-
-    timeout = window.setTimeout(highlightNextKey, 20);
-  }
-
-  function _startLoop(start) {
-    if (start) {
-      console.log('start loop');
-      highlightNextKey();
-    } else {
-      console.log('end loop');
-      window.clearTimeout(timeout);
-    }
-  }
-
-
   // Handle resize events
   window.addEventListener('resize', onResize);
 }
+
+var keys = null;
+var index = 0;
+var timeout = null;
+var elem = null;
+
+function highlightNextKey() {
+  console.log('Highlightkey: ' + (new Date().getTime() % 1000));
+  window.clearTimeout(timeout);
+
+  keys = document.getElementById('keyboard').querySelectorAll('.keyboard-key');
+
+  if (keys.length == 0) {
+    console.log('Keys is still empty');
+    keys = null;
+    return;
+  }
+
+  if (elem) {
+    IMERender.unHighlightKey(elem);
+  }
+  elem = keys[index];
+  IMERender.highlightKey(elem);
+  index = ++index % keys.length;
+
+  timeout = window.setTimeout(highlightNextKey, 45);
+}
+
+function _startLoop(start) {
+  if (start) {
+    console.log('start loop');
+    highlightNextKey();
+  } else {
+    console.log('end loop');
+    window.clearTimeout(timeout);
+  }
+}
+
 
 function setKeyboardName(name) {
   var keyboard = Keyboards[name];

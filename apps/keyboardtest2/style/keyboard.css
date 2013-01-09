@@ -77,7 +77,8 @@ button::-moz-focus-inner {
 }
 
 /* Visible keys */
-.keyboard-key > .visual-wrapper {
+.keyboard-key > .visual-wrapper,
+.keyboard-key > .visual-wrapper-origin {
   display: inline-block;
   height: 4rem;
   width: 100%;
@@ -89,7 +90,8 @@ button::-moz-focus-inner {
 }
 
 /* Standard key styles. */
-.keyboard-key > .visual-wrapper > span {
+.keyboard-key > .visual-wrapper > span,
+.keyboard-key > .visual-wrapper-origin > span {
   /*
     top - begin | top - end
     bottom - begin  | bottom - end
@@ -688,4 +690,24 @@ bubble above the key when you tap and hold. */
 
 .keyboard-key.highlighted  .alt-note {
   visibility: hidden;
+}
+
+/** Added by pzhang **/
+.highlighted > span:first-child {
+  position: absolute;
+  top: 0;
+  left: 0px;
+  transform: translateX(-640px);
+  z-index: 1000;
+}
+
+.highlighted > span:last-child {
+  display: block;
+}
+
+.highlighted-show > span:first-child {
+  transform: translateX(0);
+}
+
+.highlighted-show > span:last-child {
 }

@@ -175,7 +175,7 @@ const IMERender = (function() {
 
   // Highlight a key
   var highlightKey = function kr_updateKeyHighlight(key, alternativeKey) {
-    key.classList.add('highlighted');
+    key.classList.add('highlighted-show');
 
     if (alternativeKey) {
       var spanToReplace = key.querySelector('.visual-wrapper span');
@@ -185,7 +185,7 @@ const IMERender = (function() {
 
   // Unhighlight a key
   var unHighlightKey = function kr_unHighlightKey(key) {
-    key.classList.remove('highlighted');
+    key.classList.remove('highlighted-show');
   };
 
   // Show pending symbols with highlight (selection) if provided
@@ -493,7 +493,7 @@ const IMERender = (function() {
     }
 
 
-    var content = '<button class="keyboard-key ' + className + '"';
+    var content = '<button class="keyboard-key highlighted ' + className + '"';
     dataset.forEach(function(data) {
       content += ' data-' + data.key + '="' + data.value + '" ';
     });
