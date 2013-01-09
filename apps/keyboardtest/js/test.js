@@ -1,4 +1,8 @@
 var Keyboard = (function() {
+  function log(str) {
+    console.log('-*- Keyboard -*-' + (new Date().getTime() % 10000) + ' ' + str);
+  }
+
   function createRow(keys) {
     var rowElement = document.createElement('div');
     rowElement.className = 'key-row';
@@ -34,7 +38,7 @@ var Keyboard = (function() {
       timeout = window.setTimeout(highlightNextKey, 20);
     }
 
-    highlightNextKey();
+    // highlightNextKey();
 
     document.getElementById('id-Space').onclick = function onclick_space() {
       if (timeout) {
@@ -44,14 +48,77 @@ var Keyboard = (function() {
         highlightNextKey();
       }
     };
+
+    // Helper function to iterate through a touch event's
+    // changedTouches array. For each touch, it calls a callback
+    // function with the touch and touchId as arguments.
+    function handleTouches(evt, callback) {
+      for (var i = 0; i < evt.changedTouches.length; i++) {
+        var touch = evt.changedTouches[i];
+        var touchId = touch.identifier;
+        callback(touch, touchId);
+      }
+    }
+
+    var oldTarget = null;
+    function onTouchMove(event) {
+      event.preventDefault();
+      handleTouches(event, function handleTouchMove(touch, touchId) {
+        log('Touch Event: ' + touch.pageX + ', ' + touch.pageY);
+        var target = document.elementFromPoint(touch.pageX, touch.pageY);
+        if (target == oldTarget) {
+          return;
+        }
+
+        oldTarget = target;
+        movePress(target, touch, touchId);
+      });
+    }
+
+    function movePress(target, touch, touchId) {
+      if (target.classList.contains('key-button')) {
+        highlightKey(target);
+      } else {
+        log('ignore');
+      }
+    }
+
+    function onMousemove(event) {
+      movePress(event.target, event, null);
+    }
+
+    var keyboard = document.getElementById('keyboard');
+    keyboard.addEventListener('touchstart', function() {
+      log('trouch start');
+      keyboard.addEventListener('touchmove', onTouchMove);
+    });
+
+    keyboard.addEventListener('mousedown', function() {
+      log('trouch start');
+      keyboard.addEventListener('mousemove', onMousemove);
+    });
+
+    keyboard.addEventListener('touchend', function() {
+      keyboard.removeEventListener('touchmove', onTouchMove);
+    });
+
+    keyboard.addEventListener('mouseup', function() {
+      keyboard.removeEventListener('mousemove', onMousemove);
+    });
   }
 
   var highlightedKeyElem = null;
 
   function highlightKey(keyElem) {
+    if (highlightedKeyElem == keyElem) {
+      return;
+    }
+
     if (highlightedKeyElem) {
       highlightedKeyElem.classList.remove('highlighted');
     }
+
+    log('Highlight key: ' + keyElem.textContent);
 
     highlightedKeyElem = keyElem;
 
