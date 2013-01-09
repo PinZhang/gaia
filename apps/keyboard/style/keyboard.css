@@ -77,7 +77,8 @@ button::-moz-focus-inner {
 }
 
 /* Visible keys */
-.keyboard-key > .visual-wrapper {
+.keyboard-key > .visual-wrapper,
+.keyboard-key > .visual-wrapper-origin {
   display: inline-block;
   height: 4rem;
   width: 100%;
@@ -89,7 +90,8 @@ button::-moz-focus-inner {
 }
 
 /* Standard key styles. */
-.keyboard-key > .visual-wrapper > span {
+.keyboard-key > .visual-wrapper > span,
+.keyboard-key > .visual-wrapper-origin > span {
   /*
     top - begin | top - end
     bottom - begin  | bottom - end
@@ -688,4 +690,72 @@ bubble above the key when you tap and hold. */
 
 .keyboard-key.highlighted  .alt-note {
   visibility: hidden;
+}
+
+.highlighted > span:first-child {
+  position: absolute;
+  top: -40px;
+  left: 0px;
+  visibility: hidden;
+  z-index: -1;
+}
+
+.highlighted > span:last-child {
+  display: block;
+}
+
+.highlighted-show > span:first-child {
+  visibility: visible;
+  z-index: 1000;
+}
+
+.highlighted-show > span:last-child {
+  display: none !important;
+}
+
+.keyboard-new,
+.keyboard-new div {
+  -moz-box-sizing: border-box;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+#keyboard-new {
+  width: 320px;
+  position: fixed;
+  bottom: 0;
+}
+
+.key-row > div {
+  border: 1px solid #ccc;
+  float: left;
+  text-align: center;
+  font-size: 14px;
+  line-height: 36px;
+  margin: 5px 0;
+  color: #FFF;
+  background: no-repeat scroll center bottom / 100% 100% #252220;
+  position: relative;
+  -moz-box-sizing: border-box;
+}
+
+.key-row .highlighted {
+  background: no-repeat scroll center bottom / 100% 100% #6EC5D5;
+}
+
+#highlight {
+  position: absolute;
+  color: #000;
+  top: -47px;
+  font-size: 33px;
+  background: url("images/dark-alpha.png") repeat scroll left top transparent;
+  border-radius: 5px 5px 0 0;
+}
+
+#highlight-box {
+  background: none repeat scroll 0 0 #6EC5D5;
+  line-height: 42px;
+  margin: 5px 5px 0;
 }
