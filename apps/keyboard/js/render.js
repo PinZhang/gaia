@@ -256,98 +256,150 @@ const IMERender = (function() {
       }
 
       // Make sure all of the candidates are defined
-      candidates = candidates.filter(function(c) { return !!c });
+      //candidates = candidates.filter(function(c) { return !!c });
 
-      candidates.forEach(function buildCandidateEntry(candidate) {
-        // Each candidate gets its own div
-        var div = document.createElement('div');
-        // Size the div based on the # of candidates (-2% for margins)
-        div.style.width = (100 / candidates.length - 2) + '%';
-        candidatePanel.appendChild(div);
+      var docFragment = document.createDocumentFragment();
 
-        var text, data, correction = false;
-        if (typeof candidate === 'string') {
-          if (candidate[0] === '*') { // it is an autocorrection candidate
-            candidate = candidate.substring(1);
-            correction = true;
-          }
-          data = text = candidate;
-        }
-        else {
-          text = candidate[0];
-          data = candidate[1];
-        }
+      if (inputMethodName == 'jspinyin') {
+        if (candidates.length > 0) {
+          delete candidatePanel.dataset.truncated;
 
-        var span = fitText(div, text);
-        span.dataset.selection = true;
-        span.dataset.data = data;
-        if (correction)
-          span.classList.add('autocorrect');
+          var toggleButton = document.createElement('div');
+          toggleButton.id = 'keyboard-candidate-panel-toggle-button';
 
-        // Put the text in a span and make it fit in the container
-        function fitText(container, text) {
-          container.textContent = '';
-          if (!text)
-            return;
-          var span = document.createElement('span');
-          span.textContent = text;
-          container.appendChild(span);
+          docFragment.appendChild(toggleButton);
 
-          // Measure the width of the element, and return the scale that
-          // we can use to make it fit in the container. The return values
-          // are restricted to a set that matches the standard font sizes
-          // we use in Gaia.
-          //
-          // Note that this only works if the element is display:inline
-          function getScale(element, container) {
-            var elementWidth = element.getBoundingClientRect().width;
-            var s = container.clientWidth / elementWidth;
-            if (s >= 1)
-              return 1;    // 10pt font "Body Large"
-            if (s >= .8)
-              return .8;   // 8pt font "Body"
-            if (s >= .7)
-              return .7;   // 7pt font "Body Medium"
-            if (s >= .65)
-              return .65;  // 6.5pt font "Body Small"
-            if (s >= .6)
-              return .6;   // 6pt font "Body Mini"
-            return s;      // Something smaller than 6pt.
-          }
+          var rowDiv = document.createElement('div');
+          rowDiv.classList.add('candidate-row');
+          rowDiv.classList.add('candidate-row-first');
+          var nowUnit = 0;
+          var rowCount = 0;
 
-          var limit = .6;  // Dont use a scale smaller than this
-          var scale = getScale(span, container);
+          candidates.forEach(function buildCandidateEntry2(candidate, i) {
+            var cand = candidate[0];
+            var span = document.createElement('span');
+            var unit = 1;
+            span.textContent = cand;
 
-          // If the text does not fit within the scaling limit,
-          // reduce the length of the text by replacing characters in
-          // the middle with ...
-          if (scale < limit) {
-            var charactersReplaced = text.length % 2;
-            while (scale < limit && charactersReplaced < text.length - 2) {
-              charactersReplaced += 2;
-              var halflen = (text.length - charactersReplaced) / 2;
-              span.textContent = text.substring(0, halflen) +
-                '…' +
-                text.substring(text.length - halflen);
-              scale = getScale(span, container);
+            if (cand.length > 3) {
+              unit = 3;
+            } else if (cand.length > 1) {
+              unit = 2;
             }
-          }
 
-          // The scaling and centering we do only works if the span
-          // is display:block or inline-block
-          span.style.display = 'inline-block';
-          if (scale < 1) {
-            span.style.width = (100 / scale) + '%';
-            span.style.transformOrigin = 'left';
-            span.style.transform = 'scale(' + scale + ')';
+            span.style.width = '-moz-calc(' + (unit * 4) + 'rem - 2px)';
+
+            nowUnit += unit;
+
+            if ((rowCount == 0 && nowUnit > 7) || nowUnit > 8) {
+              docFragment.appendChild(rowDiv);
+              rowCount++;
+              rowDiv = document.createElement('div');
+              rowDiv.classList.add('candidate-row');
+              nowUnit = unit;
+            }
+
+            rowDiv.appendChild(span);
+          });
+
+          docFragment.appendChild(rowDiv);
+          rowDiv = null;
+        }
+      } else {
+        candidates.forEach(function buildCandidateEntry(candidate) {
+          // Each candidate gets its own div
+          var div = document.createElement('div');
+          // Size the div based on the # of candidates (-2% for margins)
+          div.style.width = (100 / candidates.length - 2) + '%';
+          docFragment.appendChild(div);
+
+          var text, data, correction = false;
+          if (typeof candidate === 'string') {
+            if (candidate[0] === '*') { // it is an autocorrection candidate
+              candidate = candidate.substring(1);
+              correction = true;
+            }
+            data = text = candidate;
           }
           else {
-            span.style.width = '100%';
+            text = candidate[0];
+            data = candidate[1];
           }
 
-          return span;
-        }
-      });
+          var span = fitText(div, text);
+          span.dataset.selection = true;
+          span.dataset.data = data;
+          if (correction)
+            span.classList.add('autocorrect');
+
+          // Put the text in a span and make it fit in the container
+          function fitText(container, text) {
+            container.textContent = '';
+            if (!text)
+              return;
+            var span = document.createElement('span');
+            span.textContent = text;
+            container.appendChild(span);
+
+            // Measure the width of the element, and return the scale that
+            // we can use to make it fit in the container. The return values
+            // are restricted to a set that matches the standard font sizes
+            // we use in Gaia.
+            //
+            // Note that this only works if the element is display:inline
+            function getScale(element, container) {
+              var elementWidth = element.getBoundingClientRect().width;
+              var s = container.clientWidth / elementWidth;
+              if (s >= 1)
+                return 1;    // 10pt font "Body Large"
+              if (s >= .8)
+                return .8;   // 8pt font "Body"
+              if (s >= .7)
+                return .7;   // 7pt font "Body Medium"
+              if (s >= .65)
+                return .65;  // 6.5pt font "Body Small"
+              if (s >= .6)
+                return .6;   // 6pt font "Body Mini"
+              return s;      // Something smaller than 6pt.
+            }
+
+            var limit = .6;  // Dont use a scale smaller than this
+            var scale = getScale(span, container);
+
+            // If the text does not fit within the scaling limit,
+            // reduce the length of the text by replacing characters in
+            // the middle with ...
+            if (scale < limit) {
+              var charactersReplaced = text.length % 2;
+              while (scale < limit && charactersReplaced < text.length - 2) {
+                charactersReplaced += 2;
+                var halflen = (text.length - charactersReplaced) / 2;
+                span.textContent = text.substring(0, halflen) +
+                  '…' +
+                  text.substring(text.length - halflen);
+                scale = getScale(span, container);
+              }
+            }
+
+            // The scaling and centering we do only works if the span
+            // is display:block or inline-block
+            span.style.display = 'inline-block';
+            if (scale < 1) {
+              span.style.width = (100 / scale) + '%';
+              span.style.transformOrigin = 'left';
+              span.style.transform = 'scale(' + scale + ')';
+            }
+            else {
+              span.style.width = '100%';
+            }
+
+            return span;
+          }
+        });
+      }
+
+      candidatePanel.appendChild(docFragment);
+      docFragment = null;
     }
   };
 
