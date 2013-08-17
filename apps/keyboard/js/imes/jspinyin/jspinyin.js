@@ -400,9 +400,6 @@ IMEngine.prototype = {
       var num = this.emEngine.search(pendingSymbols, pendingSymbols.length);
       var candidates = [];
 
-      // TODO: We need modifying the render engine to support paging mechanism.
-      if (num > 4) num = 4;
-
       for (var id = 0; id < num; id++) {
         var strs = this.emEngine.getCandidate(id);
 
