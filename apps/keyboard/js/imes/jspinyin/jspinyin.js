@@ -481,7 +481,7 @@ IMEngine.prototype = {
           var openDecoder =
             Module.cwrap('im_open_decoder', 'number', ['string', 'string']);
 
-          if (! openDecoder('data/dict.data', 'user.dict')) {
+          if (! openDecoder('data/dict.data', 'data/user_dict.data')) {
             debug('Failed to open emEngine.');
           }
 
@@ -519,10 +519,16 @@ IMEngine.prototype = {
         };
       }
 
+      // JS to support user dictionary.
       var script2 = document.createElement('script');
-      script2.id = 'libpinyin_js';
-      script2.src = path + '/libpinyin.js';
+      script2.id = 'user_dict_js';
+      script2.src = path + '/user_dict.js';
       document.body.appendChild(script2);
+
+      var script3 = document.createElement('script');
+      script3.id = 'libpinyin_js';
+      script3.src = path + '/libpinyin.js';
+      document.body.appendChild(script3);
     });
     document.body.appendChild(script1);
   },
@@ -540,6 +546,7 @@ IMEngine.prototype = {
 
     document.body.removeChild(document.getElementById('empinyin_files_js'));
     document.body.removeChild(document.getElementById('libpinyin_js'));
+    document.body.removeChild(document.getElementById('user_dict_js'));
 
     this.empty();
   },
@@ -625,6 +632,18 @@ IMEngine.prototype = {
         this._pendingSymbols = '';
         this._candidatesLength = 0;
         this._historyText = convertedText;
+
+        if (Module['saveUserDictFileToDB']) {
+          this.emEngine.flushCache();
+
+          var request = Module['saveUserDictFileToDB']('data/user_dict.data');
+          request.onsuccess = function() {
+            debug('Saved user dictionary to DB.');
+          };
+          request.onerror = function() {
+            debug('Failed to save user dictionary to DB.');
+          };
+        }
       }
     } else {
       // A predication candidate is selected.
