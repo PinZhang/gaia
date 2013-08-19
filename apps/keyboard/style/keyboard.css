@@ -516,29 +516,52 @@ bubble above the key when you tap and hold. */
   overflow-y: hidden;
 }
 
-#keyboard.candidate-panel #keyboard-candidate-panel.jspinyin {
+#keyboard.candidate-panel #keyboard-candidate-panel.jspinyin,
+#keyboard.full-candidate-panel #keyboard-candidate-panel.jspinyin {
   background: #252220;
+  padding: 0;
   margin: -1rem 0rem 0.8rem 0rem;
   border: none;
   border-top: 0.1rem solid #000000;
   border-bottom: 0.1rem solid #000000;
   height: 3.8rem;
   width: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
   white-space: normal;
 }
 
-#keyboard.candidate-panel #keyboard-candidate-panel.jspinyin #keyboard-candidate-panel-toggle-button {
+#keyboard.full-candidate-panel #keyboard-candidate-panel.jspinyin {
+  overflow-y: auto;
+
+  position: absolute;
+  top: 0.8rem;
+  height: 100%;
+  z-index: 1;
+  margin-bottom:0;
+}
+
+#keyboard.candidate-panel #keyboard-candidate-panel.jspinyin #keyboard-candidate-panel-toggle-button,
+#keyboard.full-candidate-panel #keyboard-candidate-panel.jspinyin #keyboard-candidate-panel-toggle-button {
   background: url('images/icon_extend.png') center center no-repeat;
   position: relative;
-  height: 3.8rem;
+  height: 3.9rem;
   float: right;
   margin: -0.2rem 0 0 0;
   width: 4rem;
 }
 
-#keyboard.candidate-panel #keyboard-candidate-panel.jspinyin span {
+#keyboard.candidate-panel #keyboard-candidate-panel.jspinyin #keyboard-candidate-panel-toggle-button.highlighted,
+#keyboard.full-candidate-panel #keyboard-candidate-panel.jspinyin #keyboard-candidate-panel-toggle-button.highlighted {
+  background-color: #008eab;
+  color: #333333;
+}
+
+#keyboard.full-candidate-panel #keyboard-candidate-panel.jspinyin #keyboard-candidate-panel-toggle-button {
+  background-image: url('images/icon_close.png');
+}
+
+#keyboard.candidate-panel #keyboard-candidate-panel.jspinyin span,
+#keyboard.full-candidate-panel #keyboard-candidate-panel.jspinyin span {
   display: inline-block;
   margin: 0;
   padding: 0 2px 0 0;
@@ -549,13 +572,16 @@ bubble above the key when you tap and hold. */
   text-align: center;
   line-height: 3.8rem;
   background: transparent url('images/divider.png') right center no-repeat;
+  border: none;
 }
 
-#keyboard.candidate-panel #keyboard-candidate-panel.jspinyin .candidate-row {
+#keyboard.candidate-panel #keyboard-candidate-panel.jspinyin .candidate-row,
+#keyboard.full-candidate-panel #keyboard-candidate-panel.jspinyin .candidate-row {
   border-top: 0.1rem solid #000000;
 }
 
-#keyboard.candidate-panel #keyboard-candidate-panel.jspinyin .candidate-row-first {
+#keyboard.candidate-panel #keyboard-candidate-panel.jspinyin .candidate-row-first,
+#keyboard.full-candidate-panel #keyboard-candidate-panel.jspinyin .candidate-row-first {
   border-top: none;
 }
 
@@ -574,7 +600,7 @@ bubble above the key when you tap and hold. */
 }
 
 #keyboard.full-candidate-panel {
-  padding-top: 6.6rem;
+  padding-top: 4.6rem;
 }
 
 #keyboard.full-candidate-panel #keyboard-candidate-panel {
@@ -673,7 +699,8 @@ bubble above the key when you tap and hold. */
   display: block;
 }
 
-#keyboard.candidate-panel #keyboard-candidate-panel-toggle-button.jspinyin {
+#keyboard.candidate-panel #keyboard-candidate-panel-toggle-button.jspinyin,
+#keyboard.full-candidate-panel #keyboard-candidate-panel-toggle-button.jspinyin {
   display: none;
 }
 

@@ -1465,6 +1465,12 @@ function endPress(target, coords, touchId) {
     // Expand / shrink the candidate panel
   case TOGGLE_CANDIDATE_PANEL:
     if (IMERender.ime.classList.contains('candidate-panel')) {
+      if (inputMethod.getMoreCandidates) {
+        inputMethod.getMoreCandidates(function(list) {
+          IMERender.showMoreCandidates(list);
+        });
+      }
+
       IMERender.ime.classList.remove('candidate-panel');
       IMERender.ime.classList.add('full-candidate-panel');
     } else {

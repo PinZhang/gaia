@@ -140,6 +140,9 @@ var IMEngine = function engine_constructor() {
   IMEngineBase.call(this);
 
   this._keypressQueue = [];
+  this._sendCandidatesTimer = null;
+  this._emEngineSearchTimer = null;
+  this._candidatesLength = 0;
 };
 
 /**
@@ -256,7 +259,16 @@ IMEngine.prototype = {
       var data = new IMEngine.CandidateData(id, strs);
       list.push([cand, data.serialize()]);
     }
-    this._glue.sendCandidates(list);
+
+    if (this._sendCandidatesTimer) {
+      clearTimeout(this._sendCandidatesTimer);
+      this._sendCandidatesTimer = null;
+    }
+
+    this._sendCandidatesTimer = setTimeout(
+      this._glue.sendCandidates.bind(this, list),
+      1
+    );
   },
 
   _start: function engine_start() {
@@ -280,8 +292,7 @@ IMEngine.prototype = {
 
     if (code == 0) {
       // This is a select function operation.
-      this._updateCandidateList(this._next.bind(this));
-      this._sendPendingSymbols();
+      this._updateCandidatesAndSymbols(this._next.bind(this));
       return;
     }
 
@@ -296,8 +307,7 @@ IMEngine.prototype = {
 
           // prevent updateCandidateList from making the same suggestions
           this._historyText = '';
-
-          this._updateCandidateList(this._next.bind(this));
+          this._updateCandidatesAndSymbols(this._next.bind(this));
         }
         // pass the key to IMEManager for default action
         debug('Default action.');
@@ -309,8 +319,8 @@ IMEngine.prototype = {
       this._pendingSymbols = this._pendingSymbols.substring(0,
         this._pendingSymbols.length - 1);
 
-      this._updateCandidateList(this._next.bind(this));
-      this._sendPendingSymbols();
+      this._updateCandidatesAndSymbols(this._next.bind(this));
+
       return;
     }
 
@@ -349,9 +359,7 @@ IMEngine.prototype = {
 
     // add symbol to pendingSymbols
     this._appendNewSymbol(code);
-
-    this._updateCandidateList(this._next.bind(this));
-    this._sendPendingSymbols();
+    this._updateCandidatesAndSymbols(this._next.bind(this));
   },
 
   _isSymbol: function engine_isSymbol(code) {
@@ -372,6 +380,20 @@ IMEngine.prototype = {
   _appendNewSymbol: function engine_appendNewSymbol(code) {
     var symbol = String.fromCharCode(code);
     this._pendingSymbols += symbol;
+  },
+
+  _updateCandidatesAndSymbols: function engine_updateCandsAndSymbols(callback) {
+    var _self = this;
+
+    if (this._emEngineSearchTimer) {
+      clearTimeout(this._emEngineSearchTimer);
+      this._emEngineSearchTimer = null;
+    }
+
+    this._emEngineSearchTimer = setTimeout(function() {
+      _self._updateCandidateList(callback);
+      _self._sendPendingSymbols();
+    },1);
   },
 
   _updateCandidateList: function engine_updateCandidateList(callback) {
@@ -399,6 +421,9 @@ IMEngine.prototype = {
       var pendingSymbols = this._pendingSymbols;
       var num = this.emEngine.search(pendingSymbols, pendingSymbols.length);
       var candidates = [];
+
+      this._candidatesLength = num;
+      if (num > 9) num = 9;
 
       for (var id = 0; id < num; id++) {
         var strs = this.emEngine.getCandidate(id);
@@ -630,6 +655,24 @@ IMEngine.prototype = {
     }
 
     this._glue.alterKeyboard(keyboard);
+  },
+
+  getMoreCandidates: function engine_getMoreCandidates(callback) {
+    var num = this._candidatesLength;
+    if (num == 0) return;
+
+    var candidates = [];
+
+    for (var id = 0; id < num; id++) {
+      var strs = this.emEngine.getCandidate(id);
+
+      // TODO: We will drop the support of Traditional Chinese.
+      candidates.push([strs, '']);
+    }
+
+    callback(candidates);
+
+    this._candidatesLength = 0;
   }
 };
 

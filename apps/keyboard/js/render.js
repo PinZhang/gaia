@@ -266,6 +266,8 @@ const IMERender = (function() {
 
           var toggleButton = document.createElement('div');
           toggleButton.id = 'keyboard-candidate-panel-toggle-button';
+          //if (inputMethodName) toggleButton.classList.add(inputMethodName);
+          toggleButton.dataset.keycode = -4;
 
           docFragment.appendChild(toggleButton);
 
@@ -275,8 +277,10 @@ const IMERender = (function() {
           var nowUnit = 0;
           var rowCount = 0;
 
-          candidates.forEach(function buildCandidateEntry2(candidate, i) {
-            var cand = candidate[0];
+          var candidatesLength = candidates.length;
+
+          for (var i = 0; i < candidatesLength; i++) {
+            var cand = candidates[i][0];
             var span = document.createElement('span');
             var unit = 1;
             span.textContent = cand;
@@ -292,6 +296,8 @@ const IMERender = (function() {
             nowUnit += unit;
 
             if ((rowCount == 0 && nowUnit > 7) || nowUnit > 8) {
+              break;
+
               docFragment.appendChild(rowDiv);
               rowCount++;
               rowDiv = document.createElement('div');
@@ -300,7 +306,7 @@ const IMERender = (function() {
             }
 
             rowDiv.appendChild(span);
-          });
+          }
 
           docFragment.appendChild(rowDiv);
           rowDiv = null;
@@ -396,6 +402,64 @@ const IMERender = (function() {
             return span;
           }
         });
+      }
+
+      candidatePanel.appendChild(docFragment);
+      docFragment = null;
+    }
+  };
+
+  var showMoreCandidates = function(candidates) {
+    var candidatePanel = document.getElementById('keyboard-candidate-panel');
+
+    if (candidatePanel) {
+      var docFragment = document.createDocumentFragment();
+
+      if (inputMethodName == 'jspinyin') {
+        if (candidates.length > 0) {
+          var rowDiv = document.createElement('div');
+          rowDiv.classList.add('candidate-row');
+          rowDiv.classList.add('candidate-row-first');
+          var nowUnit = 0;
+          var rowCount = 0;
+
+          var candidatesLength = candidates.length;
+
+          for (var i = 0; i < candidatesLength; i++) {
+            var cand = candidates[i][0];
+            var span = document.createElement('span');
+            var unit = 1;
+            span.textContent = cand;
+
+            if (cand.length > 3) {
+              unit = 3;
+            } else if (cand.length > 1) {
+              unit = 2;
+            }
+
+            span.style.width = '-moz-calc(' + (unit * 4) + 'rem - 2px)';
+
+            nowUnit += unit;
+
+            if ((rowCount == 0 && nowUnit > 7) || nowUnit > 8) {
+              if (rowCount == 5) break;
+
+              if (rowCount != 0) {
+                docFragment.appendChild(rowDiv);
+              }
+
+              rowCount++;
+              rowDiv = document.createElement('div');
+              rowDiv.classList.add('candidate-row');
+              nowUnit = unit;
+            }
+
+            rowDiv.appendChild(span);
+          }
+
+          docFragment.appendChild(rowDiv);
+          rowDiv = null;
+        }
       }
 
       candidatePanel.appendChild(docFragment);
@@ -747,6 +811,7 @@ const IMERender = (function() {
     'getHeight': getHeight,
     'getKeyArray': getKeyArray,
     'getKeyWidth': getKeyWidth,
-    'getKeyHeight': getKeyHeight
+    'getKeyHeight': getKeyHeight,
+    'showMoreCandidates': showMoreCandidates
   };
 })();
