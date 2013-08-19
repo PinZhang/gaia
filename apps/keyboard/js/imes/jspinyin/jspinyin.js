@@ -491,6 +491,8 @@ IMEngine.prototype = {
                 Module.cwrap('im_close_decoder', '', []),
               search:
                 Module.cwrap('im_search', 'number', ['string', 'number']),
+              resetSearch:
+                Module.cwrap('im_reset_search', '', []),
               getCandidate:
                 Module.cwrap('im_get_candidate_char', 'string', ['number']),
               getPredicts:
@@ -604,26 +606,32 @@ IMEngine.prototype = {
    */
   select: function engine_select(text, data) {
     IMEngineBase.prototype.select.call(this, text, data);
+
     var candDataObject = new IMEngine.CandidateData(0, ['', '']);
     candDataObject.deserialize(data);
+
     if (this._pendingSymbols) {
       var candId = candDataObject.id;
       var candsNum = this.emEngine.choose(candId);
       var splStartLen = this.emEngine.getSplStart() + 1;
       var fixed = this.emEngine.getFixedLen();
+
       // Output the result if all valid pinyin string has been converted.
-      if (candsNum == 1 && fixed == splStartLen) {
-        var strs = this.emEngine.getCandidate(0);
-        var convertedText = this._inputTraditionalChinese ? strs[1] : strs[0];
+      if (candsNum == 1 && fixed == splStartLen - 1) {
+        var convertedText = this.emEngine.getCandidate(0);
+        this.emEngine.resetSearch();
+
         this._glue.sendString(convertedText);
         this._pendingSymbols = '';
-        this._historyText = strs[0];
+        this._candidatesLength = 0;
+        this._historyText = convertedText;
       }
     } else {
       // A predication candidate is selected.
       this._historyText = candDataObject.str;
       this._glue.sendString(text);
     }
+
     this._keypressQueue.push(0);
     this._start();
   },
@@ -659,18 +667,20 @@ IMEngine.prototype = {
 
   getMoreCandidates: function engine_getMoreCandidates(callback) {
     var num = this._candidatesLength;
-    if (num == 0) return;
 
-    var candidates = [];
+    if (num == 0) return;
+    if (num > 200) num = 200;
+
+    var list = [];
 
     for (var id = 0; id < num; id++) {
-      var strs = this.emEngine.getCandidate(id);
-
       // TODO: We will drop the support of Traditional Chinese.
-      candidates.push([strs, '']);
+      var cand = this.emEngine.getCandidate(id);
+      var data = new IMEngine.CandidateData(id, [cand, '']);
+      list.push([cand, data.serialize()]);
     }
 
-    callback(candidates);
+    callback(list);
 
     this._candidatesLength = 0;
   }

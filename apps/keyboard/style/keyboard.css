@@ -551,7 +551,9 @@ bubble above the key when you tap and hold. */
 }
 
 #keyboard.candidate-panel #keyboard-candidate-panel.jspinyin #keyboard-candidate-panel-toggle-button.highlighted,
-#keyboard.full-candidate-panel #keyboard-candidate-panel.jspinyin #keyboard-candidate-panel-toggle-button.highlighted {
+#keyboard.full-candidate-panel #keyboard-candidate-panel.jspinyin #keyboard-candidate-panel-toggle-button.highlighted,
+#keyboard.candidate-panel #keyboard-candidate-panel.jspinyin span.highlighted,
+#keyboard.full-candidate-panel #keyboard-candidate-panel.jspinyin span.highlighted {
   background-color: #008eab;
   color: #333333;
 }

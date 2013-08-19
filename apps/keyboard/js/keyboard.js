@@ -1400,15 +1400,17 @@ function endPress(target, coords, touchId) {
   // IME candidate selected
   var dataset = target.dataset;
   if (dataset.selection) {
+    IMERender.ime.classList.add('candidate-panel');
+    IMERender.ime.classList.remove('full-candidate-panel');
 
     if (inputMethod.select) {
       // We use dataset.data instead of target.textContent because the
       // text actually displayed to the user might have an ellipsis in it
       // to make it fit.
-      inputMethod.select(dataset.data);
+      inputMethod.select(target.textContent, dataset.data);
     }
 
-    IMERender.highlightKey(target);
+    IMERender.unHighlightKey(target);
     return;
   }
 
@@ -1466,9 +1468,7 @@ function endPress(target, coords, touchId) {
   case TOGGLE_CANDIDATE_PANEL:
     if (IMERender.ime.classList.contains('candidate-panel')) {
       if (inputMethod.getMoreCandidates) {
-        inputMethod.getMoreCandidates(function(list) {
-          IMERender.showMoreCandidates(list);
-        });
+        inputMethod.getMoreCandidates(IMERender.showMoreCandidates);
       }
 
       IMERender.ime.classList.remove('candidate-panel');

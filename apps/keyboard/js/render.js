@@ -281,9 +281,12 @@ const IMERender = (function() {
 
           for (var i = 0; i < candidatesLength; i++) {
             var cand = candidates[i][0];
+            var data = candidates[i][1];
             var span = document.createElement('span');
             var unit = 1;
             span.textContent = cand;
+            span.dataset.selection = true;
+            span.dataset.data = data;
 
             if (cand.length > 3) {
               unit = 3;
@@ -427,9 +430,12 @@ const IMERender = (function() {
 
           for (var i = 0; i < candidatesLength; i++) {
             var cand = candidates[i][0];
+            var data = candidates[i][1];
             var span = document.createElement('span');
             var unit = 1;
             span.textContent = cand;
+            span.dataset.selection = true;
+            span.dataset.data = data;
 
             if (cand.length > 3) {
               unit = 3;
