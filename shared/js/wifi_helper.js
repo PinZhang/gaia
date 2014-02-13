@@ -17,17 +17,8 @@ var WifiHelper = {
         network.psk = password;
         break;
       case 'WAPI-PSK':
-        // convert HEX to ASCII
-        if (wapiPasswordType === 'HEX') {
-          var asciiPassword = '';
-          for (var i = 0; i < password.length; i += 2) {
-            asciiPassword += String.fromCharCode(
-              parseInt('0x' + password.substring(i, i + 2)));
-          }
-          network.psk = asciiPassword;
-        } else {
-          network.psk = password;
-        }
+        network.psk = password;
+        network.pskType = wapiPasswordType;
         break;
       case 'WPA-EAP':
         network.eap = eap;
@@ -138,7 +129,7 @@ var WifiHelper = {
       case 'WAPI-PSK':
         if (!password || password.length < 8)
           return false;
-        // Make sure the length of the HEX password is odd.
+        // Make sure the length of the HEX password is even.
         if (wapiPasswordType === 'HEX' &&
             !/^([0-9a-f][0-9a-f])+$/i.test(password))
           return false;
