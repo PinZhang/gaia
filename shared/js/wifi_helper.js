@@ -127,12 +127,20 @@ var WifiHelper = {
           return false;
         break;
       case 'WAPI-PSK':
-        if (!password || password.length < 8)
+        if (!password)
           return false;
-        // Make sure the length of the HEX password is even.
-        if (wapiPasswordType === 'HEX' &&
-            !/^([0-9a-f][0-9a-f])+$/i.test(password))
+
+        // The length of password must be range of [8, 64], so for the
+        // password in HEX mode, the range is [8*2, 64*2]. Make sure the
+        // length of the HEX password is even.
+        if (wapiPasswordType === 'HEX') {
+          if (password.length < 16 || password.length > 128 ||
+              password.length % 2 === 1 ||
+              !/^[0-9a-f]+$/i.test(password))
+            return false;
+        } else if (password.length < 8 || password.length > 64) {
           return false;
+        }
         break;
       case 'WPA-EAP':
         switch (eap) {

@@ -237,7 +237,8 @@ var WifiUI = {
     passwordInput.addEventListener('keyup', function validatePassword() {
       // disable the "Join" button if the password is too short
       joinButton.disabled =
-        !WifiHelper.isValidInput(keyMgmt, passwordInput.value, userInput.value);
+        !WifiHelper.isValidInput(keyMgmt, passwordInput.value, userInput.value,
+          null /* eap */, wapiPasswordTypeSelect.value);
     });
 
     // Show / Hide password
